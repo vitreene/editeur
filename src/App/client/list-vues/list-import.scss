@@ -1,0 +1,72 @@
+*{
+  box-sizing: border-box;
+}
+
+.list-vues  {
+  width: 70%;
+  display: flex;
+  flex-flow: row wrap;
+  font-family: sans-serif;
+  outline: 1px solid green ;
+}
+
+.list-vue  {
+  flex: 0 0 30%;
+  //height: 20vh;
+  // background-color: royalblue ;
+  border: 1px solid white ;
+  padding: 1vh;
+  margin: 1vmin;
+  list-style-type: none;
+  font-size: 1.5rem;
+  color: white;
+  p{
+    margin: 0;
+    padding-top: 1vh;
+    vertical-align: bottom;
+  }
+}
+.list-vignette{
+  width: 100%;
+  padding-bottom : 56%;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.list-placeholder{
+  opacity: 0.8 ;
+}
+
+.list-dragged{
+  background-color: cyan ;
+}
+
+.list-ajouter{
+  position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: royalblue ;
+    p{
+      text-align: center;
+    }
+}
+.list-ajouter-btn{
+  font-size: 5vmax;
+  flex: 1;
+  line-height: 1.5;
+  cursor: pointer;
+  z-index: 1;
+
+  &::before{
+    content: '';
+    position: absolute;
+    left: calc(50% - 3vmax);
+    top : calc(50% - 4.7vmax);
+    width: 6vmax;
+    height: 6vmax;
+    z-index: -1;
+    // padding-bottom: 100%;
+    border-radius: 50% ;
+    background-color: darkblue;
+  }
+}
