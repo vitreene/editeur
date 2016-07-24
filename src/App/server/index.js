@@ -6,7 +6,7 @@ import Projections from 'App/collections/projections'
 import {liste} from 'App/imports/vues-liste'
 import Vues from 'App/collections/vues'
 
-
+import './methods'
 
 // attention, j'efface tout !
 Projections.remove('test');
@@ -21,7 +21,7 @@ if (Vues.find({}).count()===0) {
     })
 }
 
-
+console.log('PUBLISH');
 Meteor.publish('projection', function(test) {
   return Projections.find({});
 });

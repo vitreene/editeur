@@ -11,13 +11,18 @@
   "main": "src/server.js",
   "browser": "src/client.jsx",
   "dependencies": {
-    "sass-loader": "^3.1.2",
+    "classnames": "^2.2.5",
     "node-sass": "^3.4.2",
     "react": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.2.1",
     "react-dom": "^15.0.0",
+    "react-redux": "^4.4.5",
     "react-reorder": "^2.0.0",
     "react-sortablejs": "^1.1.0",
+    "redux": "^3.5.2",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.1.0",
+    "sass-loader": "^3.1.2",
     "sortablejs": "^1.4.2"
   },
   "devDependencies": {
