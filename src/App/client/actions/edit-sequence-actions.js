@@ -1,20 +1,32 @@
 
-import {ORDER_VUES} from 'App/client/constants/actionTypes'
-import {dispatch} from 'App/client/store'
+import {
+  ORDER_VIGNETTES,
+  TOGGLE_VISIBILITY,
+} from 'App/client/constants/actionTypes'
 
-/*
-les actions creator generent un appel à une methode Meteor
-*/
 
-// action creator : engeristrer sur meteor
+// ajouter error, result en retour de meteor.call
 
-export function orderList(data){
-  console.log('orderList(data)', data);
+export function orderList(dispatch, list){
+  console.log('orderList(list)', list);
+
   return dispatch( () => {
-    Meteor.call('orderList', data) ;
+    Meteor.call('orderList', list) ;
     return dispatch({
-      type: ORDER_VUES,
-      data: data
+      type: ORDER_VIGNETTES,
+      list: list
+    });
+  })
+}
+
+export function toggleVue(dispatch, _id){
+  console.log('TOGGLE_VISIBILITY', _id);
+
+  return dispatch( () => {
+    Meteor.call('toggleVue', _id) ;
+    return dispatch({
+      type: TOGGLE_VISIBILITY,
+      _id: _id
     });
   })
 }

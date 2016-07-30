@@ -15,9 +15,9 @@ if (Projections.find({}).count()===0) Projections.insert(composite);
 Vues.remove('liste');
 if (Vues.find({}).count()===0) {
 
-  liste.vues.map( vue => {
-    vue.sequence = liste._id ;
-    Vues.insert(vue);
+  liste.vignettes.map( vignette => {
+    vignette.sequence_id = liste._id ;
+    Vues.insert(vignette);
     })
 }
 
@@ -26,6 +26,8 @@ Meteor.publish('projection', function(test) {
   return Projections.find({});
 });
 
+/*
 Meteor.publish('vues', function(_id) {
-  return Vues.find({sequence:_id} );
+  return Vues.find({sequence_id:_id} );
 });
+*/

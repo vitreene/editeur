@@ -1,27 +1,37 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }  from 'react-redux';
-import { createContainer } from 'meteor/react-meteor-data'
-import {orderList} from 'App/client/actions/edit-sequence-actions'
+// import { createContainer } from 'meteor/react-meteor-data'
+import {orderList, toggleVue} from 'App/client/actions/edit-sequence-actions'
 
 import SortableList from './list-sortable'
 
-import Vues from 'App/collections/vues'
+
+// import SubscribeComponent from 'App/client/store/SubscribeComponent';
+
+// import Vues from 'App/collections/vues'
 
 
 export class EditSequence extends Component {
+// monter le composant quand listeSubs est ready ;
+/*
+  componentWillMount() {
+    this.props.subscribe('vues', 'liste');
+  }
+*/
   onChange(order){
-    orderList( order.filter( x=> x!=='ajouterBtn') )
+    orderList( this.props.dispatch, order.filter( x=> x!=='ajouterBtn') )
   }
   onAdd(){ addVue({type : 'ORDER_LIST'})
   }
-  onToggle(){ toggleVue({type : 'TOGGLE_VUE'})
+  onToggle(_id){ toggleVue(this.props.dispatch, _id)
   }
 
   render() {
-     console.log('PROPS ',  this.props );
+     console.log('PROPS ' , this.props );
+
       return (
         <SortableList
-          items= {this.props.liste}
+          items= {this.props.vignettes }
           onChange = {this.onChange.bind(this)}
           onAdd = {this.onAdd.bind(this)}
           onToggle = {this.onToggle.bind(this)}
@@ -30,25 +40,16 @@ export class EditSequence extends Component {
     }
   }
 
-const EditSequenceContainer = createContainer(() => {
-  const listeSubs = Meteor.subscribe('vues', 'liste');
-  return {
-    listeReady: listeSubs.ready(),
-    liste: Vues.find({}, { sort: { ordre: 1 } }).fetch() ,
-  };
-}, EditSequence);
-
-
-// export default EditSequenceContainer
-
 
 function mapStateToProps(state) {
   return {
-    orderList: state.orderList,
+    // orderList: ['01','02','03','04','05'] //state.orderList || [] ,
+  // orderList: state.orderList || [] ,
+    vignettes: state.vignettes || [] ,
   }
 }
-
-export default connect(mapStateToProps)(EditSequenceContainer);
+//export default connect(mapStateToProps) ( SubscribeComponent(EditSequence) );
+export default connect(mapStateToProps)(EditSequence) ;
 
 
 
@@ -85,8 +86,9 @@ function addVue() {
   console.log('AJOUTER une vue');
 
 }
-
+/*
 function toggleVue() {
   console.log('Basculer l’affichage');
 
 }
+*/

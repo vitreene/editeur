@@ -6,21 +6,29 @@ import Vues from 'App/collections/vues'
 console.log('METHODS');
 
 Meteor.methods({
-  orderList(data) {
-    check(data,[String]);
-    
-    console.log('ORDERLIST', data);
+  getCurrentSequence(sequence_id = 'liste'){
+    check(sequence_id,String);
 
-    for (let i=0 ; i< data.length ; i++){
-      Vues.update(data[i], {$set: {ordre:i}})
+    const vu =Vues.find ({ sequence_id: sequence_id }, { sort: { ordre: 1 } }).fetch() ;
+
+    // console.log('vu', vu);
+    return vu ;
+  },
+  orderList(list) {
+    check(list,[String]);
+
+    console.log('ORDERLIST', list);
+
+    for (let i=0 ; i< list.length ; i++){
+      Vues.update(list[i], {$set: {ordre:i}})
       }
-      /*
-    */
-    // marche po
-    //    const vu =Vues.update( { _id:{$each: data } },
-    //      { $push: {ordre:  { $each: [1,2,3,4,5,6,7,8,9,10,11,12] } }}) ;
+  },
+  toggleVue(_id){
+    check(_id, String) ;
 
-    // return vu ;
+    console.log('TOGGLE_VISIBILITY', _id);
+    const visible = Vues.findOne({_id:_id}).visible ;
+    Vues.update( {_id:_id}, {$set: {visible: !visible} }) ;
   }
 
 })

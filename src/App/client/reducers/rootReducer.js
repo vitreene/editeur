@@ -1,9 +1,13 @@
 
 import {combineReducers} from 'redux';
-import orderList from './order-list';
+//import orderList  from './order-vignettes';
+import vignettes from './set-vignettes';
+//import toggleVue from './toggle-visibility';
 
 const rootReducer = combineReducers({
-  orderList,
+//  orderList,
+  vignettes,
+//  toggleVue
 });
 
 export default rootReducer;
