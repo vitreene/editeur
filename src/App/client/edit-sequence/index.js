@@ -1,34 +1,51 @@
-import React, { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react'
 import { connect }  from 'react-redux';
-// import { createContainer } from 'meteor/react-meteor-data'
 import {orderList, toggleVue} from 'App/client/actions/edit-sequence-actions'
-
 import SortableList from './list-sortable'
-
+import initialState from 'App/client/actions/init-edit-sequence'
 
 // import SubscribeComponent from 'App/client/store/SubscribeComponent';
-
 // import Vues from 'App/collections/vues'
+// import { createContainer } from 'meteor/react-meteor-data'
 
-
-export class EditSequence extends Component {
-// monter le composant quand listeSubs est ready ;
 /*
-  componentWillMount() {
-    this.props.subscribe('vues', 'liste');
-  }
+ici composer la vue avec :
+ - la barre du haut -> toggle edit, titre sequence,
+ - editSequence
+ - la barre du bas -> telco et options
 */
+
+// uses the shorthand form of mapDispatchToProps where each property of the supplied object is expected to be an action creator and is wrapped in a call to dispatch.
+
+// simplifier les actions en envoyant l'index de l'élément qui génere l'action.
+// voir http://blog.scottlogic.com/2016/05/19/redux-reducer-arrays.html
+
+// pour tests
+const sequence_id = 'liste' ;
+
+class EditSequence extends Component {
+
+  componentWillMount() {
+    initialState(this.props.dispatch, sequence_id ) ;
+  }
+
   onChange(order){
-    orderList( this.props.dispatch, order.filter( x=> x!=='ajouterBtn') )
+    orderList(
+      this.props.dispatch,
+      order.filter( x=> x!=='ajouterBtn')
+    )
   }
-  onAdd(){ addVue({type : 'ORDER_LIST'})
+
+  onAdd(){
+    addVue({type : 'ORDER_LIST'})
   }
-  onToggle(_id){ toggleVue(this.props.dispatch, _id)
+
+  onToggle(_id){
+    toggleVue(this.props.dispatch, _id)
   }
 
   render() {
-     console.log('PROPS ' , this.props );
-
+    //   console.log('PROPS ' , this.props );
       return (
         <SortableList
           items= {this.props.vignettes }
@@ -42,14 +59,12 @@ export class EditSequence extends Component {
 
 
 function mapStateToProps(state) {
-  return {
-    // orderList: ['01','02','03','04','05'] //state.orderList || [] ,
-  // orderList: state.orderList || [] ,
-    vignettes: state.vignettes || [] ,
-  }
+  return { vignettes: state.vignettes || []  }
 }
-//export default connect(mapStateToProps) ( SubscribeComponent(EditSequence) );
+
 export default connect(mapStateToProps)(EditSequence) ;
+
+//export default connect(mapStateToProps) ( SubscribeComponent(EditSequence) );
 
 
 
