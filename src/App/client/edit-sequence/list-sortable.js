@@ -1,23 +1,32 @@
-import React, { Component, PropTypes } from 'react';
-
+import { Component, PropTypes } from 'react';
 import Sortable from 'react-sortablejs';
-import { Glyphicon, Button } from 'react-bootstrap';
+//import { Glyphicon, Button } from 'react-bootstrap';
+import {  Link } from 'react-router'
 
 import './list-import'
 
 
-// Functional Component
-const SortableList = ({ items, onChange, onAdd, onToggle }) => {
+const SortableList = (
+  { items, onChange, onAdd, onToggle, onEeditVue }
+) => {
 
     let sortable = null; // sortable instance
 
     const listItems = items.map( (item) => (
-      <Vignette key={item._id} item={item} onToggle={onToggle}/>
+      <Vignette
+        key={item._id}
+        item={item}
+        onToggle={onToggle}
+        onEeditVue = {onEeditVue}
+        />
     ) ) ;
-    listItems.push((
-      <AjoutItem key="ajouterBtn" onAdd={onAdd}/>
-    ));
-    // console.log('listItems', listItems );
+    listItems.push( (
+      <AjoutItem
+        key="ajouterBtn"
+        onAdd={onAdd}
+        />
+    ) );
+
 
     const options = {
       ghostClass: "list-dragged",
@@ -38,10 +47,7 @@ const SortableList = ({ items, onChange, onAdd, onToggle }) => {
           options={options}
           ref={(c) => { if (c) { sortable = c.sortable ;} } }
           tag="ul"
-          onChange={(order, sortable, evt) => {
-            console.log('sortable-order', order);
-            onChange(order);
-          }}
+          onChange={(order) => { onChange(order) } }
         >
             {listItems}
         </Sortable>
@@ -51,9 +57,9 @@ const SortableList = ({ items, onChange, onAdd, onToggle }) => {
 
 
 SortableList.propTypes = {
-    items: PropTypes.array,
-    onChange: PropTypes.func,
-    onAdd: PropTypes.func
+  items: PropTypes.array,
+  onChange: PropTypes.func,
+  onAdd: PropTypes.func
 };
 
 export default SortableList;
@@ -79,13 +85,17 @@ AjoutItem.propTypes = {
 };
 
 
-const Vignette = ({item, onToggle}) => {
+const Vignette = ({item, onToggle, onEeditVue}) => {
+
     const {_id,ordre,couleur, vignette, titre, visible} = item ;
+
     const bgImage = 'url('+require('App/ikono/'+vignette )+')' ;
-    const estVisible ='bg-circle ' +
+    const estVisible = 'bg-circle ' +
      ( (visible) ? 'fa-eye-open' : 'fa-eye-close' );
-    console.log('estVisible', visible, estVisible);
-    const getToggle = ()=>{return onToggle(_id)} ;
+
+    const getToggle = ()=>{ return onToggle(_id) } ;
+    const getEditvue = ()=>{ return onEeditVue(_id) } ;
+
     return (
       <li
        data-id={_id}
@@ -95,6 +105,7 @@ const Vignette = ({item, onToggle}) => {
         <div
           className="list-vignette"
           style={ {backgroundImage:bgImage} }
+          onDoubleClick = {getEditvue}
           >
           <i className={estVisible}
             onClick={getToggle}
@@ -107,21 +118,9 @@ const Vignette = ({item, onToggle}) => {
 }
 
 /*
-<Button bsSize="large" >
-<Glyphicon glyph="eye-open" />
-</Button>
 
-<label
-  htmlFor="toggle-view-btn"
-  className="list-vignette-visible"
-  ></label>
-<input
-  type="checkbox"
-  id="toggle-view-btn"
-  className="list-vignette-visible-input"
-  onChange={onToggle}
-  />
 */
+
 Vignette.propTypes = {
     item: PropTypes.object
 };

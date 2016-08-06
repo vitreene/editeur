@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import createStore from 'App/client/store';
-import App from 'App/client/edit-sequence';
+import {AppRoutes} from 'App/client/start/routes';
+
+
+
 
 function AppRoot() {
   return (
     <div className="container">
       <Provider store={createStore()}>
-        <App/>
+        <AppRoutes/>
       </Provider>
     </div>
   );
@@ -16,8 +19,6 @@ function AppRoot() {
 
 
 Meteor.startup(() => {
-
-
   ReactDOM.render(
     <AppRoot />,
     document.getElementById('app')
