@@ -3,6 +3,10 @@ import {LOAD_EDIT_VUE} from 'App/client/constants/actionTypes'
 // a faire :
 // distinguer les corrections non validées -> state des publications -> bdd
 
+// tester si la vue est en cache : actionCreators.js
+// http://redux.js.org/docs/recipes/ReducingBoilerplate.html
+
+
 export default (dispatch,_id) => {
   // console.log('EDITSEQthis', arguments);
   Meteor.call( 'getVue', _id,

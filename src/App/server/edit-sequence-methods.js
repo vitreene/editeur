@@ -1,5 +1,5 @@
 import Vues from 'App/collections/vues'
-import {Vue} from 'App/collections/vues'
+//import {Vue} from 'App/collections/vues'
 
 console.log('METHODS');
 
@@ -21,27 +21,28 @@ Meteor.methods({
     check(list, [String]);
     console.log('ORDERLIST', list);
     // list devrait se trouver plutot dans sequence ?
+    /*
     for (let i=0 ; i< list.length ; i++){
       const vue = Vue.findOne(list[i]);
       vue.ordre = i ;
       vue.save() ;
     }
-  /*
+    */
     for (let i=0 ; i< list.length ; i++){
       Vues.update(list[i], {$set: {ordre:i}})
       }
-      */
   },
 
   toggleVue(_id){
     check(_id, String) ;
     console.log('TOGGLE_VISIBILITY', _id);
+    /*
     let vue = Vue.findOne(_id) ;
     vue.toggle_visibility() ;
     vue.save() ;
-
-    //const visible = Vues.findOne({_id:_id}).visible ;
-    //Vues.update( {_id:_id}, {$set: {visible: !visible} }) ;
+*/
+    const visible = Vues.findOne({_id:_id}).visible ;
+    Vues.update( {_id:_id}, {$set: {visible: !visible} }) ;
   }
 
 })

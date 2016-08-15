@@ -5,7 +5,7 @@ import {Toolbar,NavItem,Space} from 'rebass'
 import { Link, NavLink } from 'react-router'
 
 import loadVue from 'App/client/actions/init-edit-vue'
-import {saisie} from 'App/client/actions/edit-vue-actions'
+import {saveVue, saisie} from 'App/client/actions/edit-vue-actions'
 
 import EditVue from 'App/client/edit-vue/edit-vue'
 
@@ -27,7 +27,7 @@ class EditVueContainer extends Component {
 }
 
   componentWillMount() {
-  //  console.log('THIS PROPS', this.props );
+    console.log('THIS PROPS', this.props.loadVue, this.props );
     // charger les sources
     const {loadVue, _id } = this.props ;
     loadVue(_id);
@@ -47,8 +47,10 @@ class EditVueContainer extends Component {
   }
   onSubmit(){
     const path = '/sequence' ;
-    this.context.router.push(path) ;
-    
+    const callback = ()=>this.context.router.push(path) ;
+    const {_id, vue,saveVue} = this.props ;
+    saveVue(_id, vue, callback ) ;
+
     console.log('--> SUBMIT') ;
   }
 
@@ -97,20 +99,36 @@ cependant, sa toute première valeur sera 'vide', cette variable doit etre intit
 }
 
 function mapDispatchToProps(dispatch) {
-  /*
-    return bindActionCreators(
-      Object.assign({}, loadVue), // si plusieurs actions
+
+  /* marche pas !
+    return  bindActionCreators(
+      {
+        loadVue:loadVue,
+        saisie: saisie
+      },
       dispatch
-    )
+      )
+
+    return {
+      actions : bindActionCreators(
+      Object.assign({}, loadVue, saisie),
+      dispatch
+      )
+    }
     */
+
   return {
     loadVue: (_id)=>{
       loadVue(dispatch, _id)
+    },
+    saveVue: (_id, vue,callback)=>{
+      saveVue(dispatch, _id, vue,callback)
     },
     saisie: (_id, name, value)=>{
       saisie(dispatch, _id, name, value)
     },
     }
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditVueContainer) ;

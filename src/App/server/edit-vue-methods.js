@@ -1,6 +1,9 @@
-/*
+//import {Vue} from 'App/collections/vues'
+// import {Source} from 'App/collections/schemas'
 import Vues from 'App/collections/vues'
-import {Vue} from 'App/collections/vues'
+import {SourceSchema} from 'App/collections/schemas'
+
+/*
 */
 
 //  import {Source} from 'App/collections/schemas'
@@ -19,6 +22,17 @@ Meteor.methods({
         instance: ''
       }
     }
+  },
+  saveVue(vue){
+    //check(vue, Object)
+    //console.log('VUE',vue);
+    const {source,instance,ikono} = vue ;
+    SourceSchema.clean(source) ;
+    console.log('Source clean', source);
+    check(source,SourceSchema);
+    Sources.update(source._id, source) ;
+
+
   }
 
 })

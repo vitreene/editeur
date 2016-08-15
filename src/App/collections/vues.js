@@ -1,10 +1,10 @@
 //import { Mongo } from 'meteor/mongo'
-import { Class } from 'meteor/jagi:astronomy';
+//import { Class } from 'meteor/jagi:astronomy';
 
 const  Vues = new Mongo.Collection("vues");
 
 export default Vues
-
+/*
 export let Vue = Class.create({
   name: 'Vue',
   collection: Vues,
@@ -34,3 +34,4 @@ export let Vue = Class.create({
     }
   }
 });
+*/
