@@ -13,6 +13,7 @@ import {
   componentWillMount() {
     let { sequence_id, initialState } = this.props ;
   //  console.log('this.props', sequence_id, initialState);
+  if (!this.props.vignettes.length)
     initialState( sequence_id ) ;
   }
 

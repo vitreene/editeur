@@ -1,34 +1,89 @@
 import { Component, PropTypes } from 'react'
+import {Input} from 'rebass'
+
+/*
+faire passer le onchange par redux ;
+copier les valeurs de initialstate vers "vakues" qui seront mutées.
+en comparant, je peux crer pristine
+touched est déclenché par onfocus ou onblur ?
+
+
+*/
 
 export default class EditVue extends Component {
-  constructor(props) {
-    super(props);
-  }
 
+// getvue est pour le conteneur !!
+/*
   componentWillMount() {
-    const {getVue,currentVue,sequence_id } = this.props ;
-    const _id = this.props.params._id ;
-
-    if (0<currentVue.length) {
-      console.log('get vue', _id);
-      getVue(
-        sequence_id,
-        _id
-      );
-    }
+    // charger les sources
+    const {getVue, _id } = this.props ;
+    getVue(_id);
+  }
+*/
+  submit(){
+    console.log('props (submit)', this.props);
+    this.props.onSubmit() ;
   }
   render() {
-    const {currentVue} = this.props ;
-    console.log('VUE currentVue',currentVue );
-    if (currentVue)
-    return(
-      <h1 style={{'color': currentVue.couleur}}>
-        edition : {currentVue.titre}
+    console.log('initialValues',this.props.initialValues);
+    if (!this.props.initialValues)
+      return (
+        <h2> Chargement... </h2>
+      )
 
-     </h1>
-    )
-    else return (
-      <h2 > chargement </h2>
+    const {
+      titre,
+      description,
+      prix,
+    } = this.props.initialValues ;
+
+    //console.log('PROPS', this.props);
+    //const { handleSubmit } = this.props ;
+
+    const { onSaisie } = this.props ;
+
+    return(
+      <form
+        onSubmit={this.submit}
+        >
+        <h1 >
+          edition
+        </h1>
+
+         <Input
+          name='titre'
+          label='titre'
+          type='text'
+          value={titre}
+          onChange={onSaisie}
+          />
+
+          <Input
+           name='description'
+           label='description'
+           type='text'
+           value={description}
+           onChange={onSaisie}
+           />
+
+         <Input
+          name='prix'
+          label='prix'
+          type='number'
+          value={prix}
+          onChange={onSaisie}
+          />
+
+      </form>
     )
   }
 }
+/*
+_id,
+titre,
+ikono_id,
+description,
+offre,
+prix,
+prix_promo
+*/

@@ -26,8 +26,6 @@ function loadEditVue(state, vue) {
 }
 
 function saisie(state,{_id, name, value}) {
-  console.log('STATE', state, state[_id]);
-  console.log('STATE.source', state[_id].source);
   return {
     ...state,
     [_id] : {

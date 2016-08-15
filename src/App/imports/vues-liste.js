@@ -1,5 +1,15 @@
 export const liste = {
   _id:'liste',
+  /*
+  _id (vue)
+vignette (image)
+titre (max 20 car)
+ordre
+sequence_id
+source_id:'',
+modele :'',
+skin:'',
+  */
   vignettes:[
     {
       _id : '01',
@@ -8,7 +18,10 @@ export const liste = {
       couleur : 'blue',
       vignette:'images-2iADQeK.jpg',
       visible : true,
-      sequence_id : "liste"
+      sequence_id : "liste",
+      source_id:'001',
+      modele :'',
+      skin:''
     },
     {
       _id : '02',
@@ -17,7 +30,10 @@ export const liste = {
       couleur : 'red',
       vignette:'images-5YdobdT.jpg',
       visible : true,
-      sequence_id : "liste"
+      sequence_id : "liste",
+      source_id:'',
+      modele :'',
+      skin:''
     },
     {
       _id : '03',
@@ -26,7 +42,10 @@ export const liste = {
       couleur : 'green',
       vignette:'images-oJqnwaA.jpg',
       visible : true,
-      sequence_id : "liste"
+      sequence_id : "liste",
+      source_id:'',
+      modele :'',
+      skin:''
     },
     {
       _id : '04',
@@ -35,7 +54,10 @@ export const liste = {
       couleur : 'purple',
       vignette:'images-oWWctqf.jpg',
       visible : true,
-      sequence_id : "liste"
+      sequence_id : "liste",
+      source_id:'',
+      modele :'',
+      skin:''
     },
     {
       _id : '05',
@@ -44,7 +66,10 @@ export const liste = {
       couleur : 'coral',
       vignette:'images-repZHikm.jpg',
       visible : true,
-      sequence_id : "liste"
+      sequence_id : "liste",
+      source_id:'',
+      modele :'',
+      skin:''
     },
     /*
     {

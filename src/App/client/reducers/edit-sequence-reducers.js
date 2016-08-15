@@ -36,7 +36,7 @@ function getVue (state, vue) {
   // remplacer, sinon ajouter la vue
   let flag = true ;
   const vignettes = state.map( vignette => {
-    if (vignette.id===vue.id) {
+    if (vignette._id===vue._id) {
       flag = false ; return vue ;
     } else return vignette ;
   })

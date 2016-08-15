@@ -14,7 +14,11 @@ export const TOGGLE_PLAY ='TOGGLE_PLAY'
 
 
 // edition de la vue
-export const GET_VUE ='GET_VUE'
-export const SET_VUE ='SET_VUE'
+export const LOAD_EDIT_VUE ='LOAD_EDIT_VUE'
+// à remplacer ?
+export const GET_EDIT_VUE ='GET_EDIT_VUE'
+
+export const SAISIE ='SAISIE'
+export const SET_EDIT_VUE ='SET_EDIT_VUE'
 export const IMPORT_PICT ='IMPORT_PICT'
 export const RESET_VUE ='RESET_VUE'

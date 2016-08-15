@@ -1,5 +1,5 @@
 import { Component, PropTypes } from 'react'
-import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 import editSequence from 'App/client/edit-sequence';
 import editVue from 'App/client/edit-vue';
 
@@ -10,7 +10,7 @@ export class AppRoutes extends Component {
   render() {
     console.log('PROPS', this.props);
       return (
-        <Router history={hashHistory} >
+        <Router history={browserHistory} >
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
           <Route path="sequence" component={editSequence} />
