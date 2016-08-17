@@ -1,7 +1,10 @@
 //import { Meteor } from 'meteor/meteor'
 
-//import {maSource} from 'App/imports/import-sources'
+//import {source} from 'App/imports/import-sources'
 //import Sources from 'App/collections/sources'
+
+import {metas} from 'App/imports/import-sources'
+import Metas from 'App/collections/metas'
 
 import {composite} from 'App/imports/demo-produits-01'
 import Projections from 'App/collections/projections'
@@ -20,6 +23,8 @@ if (Projections.find({}).count()===0) Projections.insert(composite);
 Sources.remove('01');
 if (Sources.find({}).count()===0) Sources.insert(maSource[0]);
 */
+
+if (Metas.find({}).count()===0) Metas.insert(metas[0]);
 
 Vues.remove({sequence_id:'liste'});
 if (Vues.find({}).count()===0) {

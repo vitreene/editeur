@@ -7,7 +7,7 @@ import './list-import'
 
 
 const SortableList = (
-  { items, onChange, onAdd, onToggle, onEeditVue }
+  { items, onChange, onAdd, onToggle, onEditVue }
 ) => {
 
     let sortable = null; // sortable instance
@@ -17,7 +17,7 @@ const SortableList = (
         key={item._id}
         item={item}
         onToggle={onToggle}
-        onEeditVue = {onEeditVue}
+        onEditVue = {onEditVue}
         />
     ) ) ;
     listItems.push( (
@@ -85,7 +85,7 @@ AjoutItem.propTypes = {
 };
 
 
-const Vignette = ({item, onToggle, onEeditVue}) => {
+const Vignette = ({item, onToggle, onEditVue}) => {
 
     const {_id,ordre,couleur, vignette, titre, visible} = item ;
 
@@ -94,7 +94,7 @@ const Vignette = ({item, onToggle, onEeditVue}) => {
      ( (visible) ? 'fa-eye-open' : 'fa-eye-close' );
 
     const getToggle = ()=>{ return onToggle(_id) } ;
-    const getEditvue = ()=>{ return onEeditVue(_id) } ;
+    const getEditvue = ()=>{ return onEditVue(_id) } ;
 
     return (
       <li

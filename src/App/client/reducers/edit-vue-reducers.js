@@ -3,6 +3,7 @@ import {
   SAISIE,
 } from 'App/client/constants/actionTypes'
 
+import update from 'immutability-helper'
 
 export default function  vueReducer (state = {}, action) {
   switch (action.type) {
@@ -11,7 +12,7 @@ export default function  vueReducer (state = {}, action) {
       return loadEditVue(state,action.vue);
 
     case SAISIE :
-      return saisie(state,action.modif);
+      return saisie(state,action.saisie);
 
     default :
       return state;
@@ -26,16 +27,29 @@ function loadEditVue(state, vue) {
 }
 
 function saisie(state,{_id, name, value}) {
-  return {
-    ...state,
-    [_id] : {
-      ...state[_id],
-      source: {
-      ...state[_id].source,
-      [name]:value
-      }
-    }
-  }
+//console.log('VALUE', typeof value, value);
+/*
+recuperer le chemin en découpant 'name' et en ajoutant _id
+*/
+let fields = name.split('.') ;
+fields.unshift(_id) ;
+
+const key = fields.splice(-1) ;
+/*
+update n'accepte qu'un objet en second parametre.
+Pour transformer le resultat de path en objet, il doit se conformer strictment à la syntaxe JSON
+*/
+value = (typeof value === 'string') ? `"${value}"` : value ;
+
+const path = JSON.parse(
+  fields.reduceRight( (prec, current) => {
+    return `{"${current}":${prec}}` ;
+  },
+  `{"${key}": { "$set": ${value}}}`)
+) ;
+
+ return update( state, path ) ;
+
 }
 /*
 function getVue (state, vue) {

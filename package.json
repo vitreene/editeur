@@ -12,6 +12,7 @@
   "browser": "src/client.jsx",
   "dependencies": {
     "classnames": "^2.2.5",
+    "immutability-helper": "^2.0.0",
     "node-sass": "^3.4.2",
     "react": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.2.1",

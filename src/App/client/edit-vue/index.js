@@ -1,8 +1,13 @@
 import { Component, PropTypes } from 'react'
 import { connect }  from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {Toolbar,NavItem,Space} from 'rebass'
-import { Link, NavLink } from 'react-router'
+import {
+  Toolbar,
+  NavItem,
+  Space,
+  Footer,
+} from 'rebass'
+import { Link } from 'react-router'
 
 import loadVue from 'App/client/actions/init-edit-vue'
 import {saveVue, saisie} from 'App/client/actions/edit-vue-actions'
@@ -27,16 +32,25 @@ class EditVueContainer extends Component {
 }
 
   componentWillMount() {
-    console.log('THIS PROPS', this.props.loadVue, this.props );
+    console.log('THIS PROPS',  this.props );
     // charger les sources
     const {loadVue, _id } = this.props ;
     loadVue(_id);
   }
 
   onSaisie(e){
-    e.preventDefault() ;
+  //  e.preventDefault() ;
     const {saisie, _id } = this.props ;
-    const {name, value} = e.target ;
+    const {name, type} = e.target ;
+
+    const filter = {
+      checkbox: e.target.checked,
+      number: Number(e.target.value),
+      text : e.target.value,
+      radio : e.target.value
+    }
+    const value = filter[type] ;
+
     saisie(_id, name, value) ;
   }
 
@@ -124,7 +138,7 @@ function mapDispatchToProps(dispatch) {
     saveVue: (_id, vue,callback)=>{
       saveVue(dispatch, _id, vue,callback)
     },
-    saisie: (_id, name, value)=>{
+    saisie: (_id,  name, value)=>{
       saisie(dispatch, _id, name, value)
     },
     }
@@ -150,6 +164,6 @@ const EditVueTop = ({onClick}) =>{
 EditVueTop.propTypes = {};
 
 const EditVueBottom = () => {
-  return(<div> fond </div> )
+  return(<Footer> fond </Footer> )
 }
 EditVueBottom.propTypes = {};

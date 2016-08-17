@@ -6,11 +6,10 @@ import {
 
 
 
-export function saisie(dispatch,_id, name, value) {
-//  console.log('AJOUTER une Vue');
+export function saisie(dispatch, _id, name, value) {
   return dispatch({
     type : SAISIE,
-    modif : {_id, name, value}
+    saisie : {_id, name, value}
     });
 }
 

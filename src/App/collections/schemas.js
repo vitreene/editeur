@@ -20,6 +20,7 @@ export let SourceSchema = new SimpleSchema({
 
 
 export let VueSchema = new SimpleSchema({
+  _id:{type:String}, // mongoId
   ordre: {type:Number},
   visible : {type:Boolean},
   titre: {
@@ -31,7 +32,7 @@ export let VueSchema = new SimpleSchema({
   sequence_id: {type:String},
   source_id: {type:String},
   modele: {type:String},
-  skin: {type:String},
+  skin: {type:String, optional: true },
   couleur:{ type:String, optional: true }
 
 });

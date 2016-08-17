@@ -19,9 +19,10 @@ skin:'',
       vignette:'images-2iADQeK.jpg',
       visible : true,
       sequence_id : "liste",
-      source_id:'001',
-      modele :'',
-      skin:''
+      source_id:'01',
+      metas_id:'met01',
+      modele :'affiche-produit',
+      skin:'default'
     },
     {
       _id : '02',

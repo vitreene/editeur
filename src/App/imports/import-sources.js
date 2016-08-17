@@ -1,4 +1,4 @@
-export let maSource = [
+export let source = [
     {
       _id : '01',
       titre : 'ma vignette 01',
@@ -10,6 +10,27 @@ export let maSource = [
     },
 
   ] ;
+
+export let metas = [
+  {
+    _id: 'met01',
+    source:{
+      lien: true,
+      position:'gauche'
+    },
+    ikono:{
+      horizontal:{
+        x:'30%',
+        y:'50%'
+      },
+      vertical:{
+        x:'50%',
+        y:'70%'
+      }
+    },
+    accroche:{}
+  }
+]
 /*
 
 */

@@ -1,5 +1,9 @@
 import { Component, PropTypes } from 'react'
-import {Input} from 'rebass'
+import {
+  Input,
+  Checkbox,
+  Radio,
+} from 'rebass'
 
 /*
 faire passer le onchange par redux ;
@@ -12,20 +16,12 @@ touched est déclenché par onfocus ou onblur ?
 
 export default class EditVue extends Component {
 
-// getvue est pour le conteneur !!
-/*
-  componentWillMount() {
-    // charger les sources
-    const {getVue, _id } = this.props ;
-    getVue(_id);
-  }
-*/
   submit(){
     console.log('props (submit)', this.props);
     this.props.onSubmit() ;
   }
   render() {
-    console.log('initialValues',this.props.initialValues);
+  //  console.log('initValues',this.props.initialValues);
     if (!this.props.initialValues)
       return (
         <h2> Chargement... </h2>
@@ -35,12 +31,16 @@ export default class EditVue extends Component {
       titre,
       description,
       prix,
-    } = this.props.initialValues ;
+    } = this.props.vue.source ;
 
+    const {
+      lien,
+      position,
+    } = this.props.vue.metas.source ;
     //console.log('PROPS', this.props);
-    //const { handleSubmit } = this.props ;
-
-    const { onSaisie } = this.props ;
+    const {
+      onSaisie,
+     } = this.props ;
 
     return(
       <form
@@ -51,15 +51,21 @@ export default class EditVue extends Component {
         </h1>
 
          <Input
-          name='titre'
+          name='source.titre'
           label='titre'
           type='text'
           value={titre}
           onChange={onSaisie}
           />
-
+          <Checkbox
+            checked = {lien}
+            label="lier"
+            name="metas.source.lien"
+            theme="primary"
+            onChange={onSaisie}
+          />
           <Input
-           name='description'
+           name='source.description'
            label='description'
            type='text'
            value={description}
@@ -67,12 +73,41 @@ export default class EditVue extends Component {
            />
 
          <Input
-          name='prix'
+          name='source.prix'
           label='prix'
           type='number'
+          step="0.01"
           value={prix}
           onChange={onSaisie}
           />
+          <Radio
+            name='metas.source.position'
+            value='gauche'
+            checked = {position == 'gauche'}
+            onChange={onSaisie}
+            label='Gauche'
+            />
+          <Radio
+            name='metas.source.position'
+            value='haut'
+            checked = {position == 'haut'}
+            onChange={onSaisie}
+            label='Haut'
+            />
+          <Radio
+            name='metas.source.position'
+            value='droite'
+            checked = {position == 'droite'}
+            onChange={onSaisie}
+            label='Droite'
+            />
+          <Radio
+            name='metas.source.position'
+            value='bas'
+            checked = {position == 'bas'}
+            onChange={onSaisie}
+            label='Bas'
+            />
 
       </form>
     )

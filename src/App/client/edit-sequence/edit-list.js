@@ -27,7 +27,7 @@ import {
 
   onToggle(_id){ this.props.toggleVue( _id) }
 
-  onEeditVue(_id){
+  onEditVue(_id){
   this.props.editVue(_id, this.props.router)
   }
 
@@ -38,7 +38,7 @@ import {
           onChange = {this.onChange.bind(this)}
           onAdd = {this.onAdd.bind(this)}
           onToggle = {this.onToggle.bind(this)}
-          onEeditVue = {this.onEeditVue.bind(this)}
+          onEditVue = {this.onEditVue.bind(this)}
           />
       );
     }
