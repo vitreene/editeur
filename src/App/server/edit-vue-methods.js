@@ -36,10 +36,10 @@ Meteor.methods({
     SourceSchema.clean(source) ;
     //console.log('Source clean', source);
     check(source,SourceSchema);
-    Sources.update(source._id, source) ;
+    Sources.upsert(source._id, source) ;
 
 // clean, puis check
-    Metas.update(metas._id, metas) ;
+    Metas.upsert(metas._id, metas) ;
 
   }
 

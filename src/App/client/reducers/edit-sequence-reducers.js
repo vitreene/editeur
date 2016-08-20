@@ -1,10 +1,12 @@
 import {
   SET_VIGNETTES,
   ORDER_VIGNETTES,
+  UPDATE_VIGNETTE,
   TOGGLE_VISIBILITY,
   ADD_VUE,
   EDIT_VUE,
 } from 'App/client/constants/actionTypes'
+
 
 
 export default function  vignettesReducer (state = [], action) {
@@ -15,6 +17,9 @@ export default function  vignettesReducer (state = [], action) {
     case ORDER_VIGNETTES :
       return setOrder(state,action.list);
 
+    case UPDATE_VIGNETTE :
+      return updateVignette(state,action.vignette);
+
     case TOGGLE_VISIBILITY :
       return toggleVisibility(state,action._id);
 
@@ -22,7 +27,7 @@ export default function  vignettesReducer (state = [], action) {
       return editVue(state,action._id,action.history);
 
     case ADD_VUE :
-      return addVue(state,action.sequence_id);
+      return addVue(state,action.vignette);
 
     case 'GET_VUE' :
       return getVue (state, action.vue)
@@ -69,12 +74,16 @@ function toggleVisibility ( state , _id ) {
 }
 
 
-function addVue(state, sequence_id) {
-  console.log('AJOUTER une vue à la sequence ${sequence_id}');
-  return state ;
+function addVue(state, vignette) {
+  //console.log('AJOUTER une vue à la sequence', state, vignette);
+  return state.concat([vignette]) ;
 }
 
 function editVue( state, _id, history) {
   history.push('/sequence/vue/' + _id );
   return state ;
+}
+
+function updateVignette(state, vignette){
+  return state.map( vue => (vue._id === vignette._id) ? vignette : vue ) ;
 }

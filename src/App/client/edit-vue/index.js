@@ -32,10 +32,11 @@ class EditVueContainer extends Component {
 }
 
   componentWillMount() {
-    console.log('THIS PROPS',  this.props );
-    // charger les sources
-    const {loadVue, _id } = this.props ;
-    loadVue(_id);
+    console.log('EDIT VUE PROPS',  this.props );
+    // charger les sources si pas en cache
+    const {loadVue, _id, vue } = this.props ;
+    if(!vue)
+      loadVue(_id);
   }
 
   onSaisie(e){
@@ -62,8 +63,8 @@ class EditVueContainer extends Component {
   onSubmit(){
     const path = '/sequence' ;
     const callback = ()=>this.context.router.push(path) ;
-    const {_id, vue,saveVue} = this.props ;
-    saveVue(_id, vue, callback ) ;
+    const {_id, vue,saveVue, vignette} = this.props ;
+    saveVue(_id, vue,vignette, callback ) ;
 
     console.log('--> SUBMIT') ;
   }
@@ -99,14 +100,18 @@ function mapStateToProps(state,ownProps) {
   // à mettre en localstate ?
   const _id = ownProps.params._id ;
   const vue = state.vue[_id] ;
+  const vignette = state.vignettes.find(
+    x=> x._id === _id
+  ) ;
   const init = vue ? vue.source : undefined ;
 /*
 initialValues doit garder intactes les valeurs de départ, à partir desquelles les values sont copiées pour etre appliquées au formulaire.
 cependant, sa toute première valeur sera 'vide', cette variable doit etre intitialisée au résultat de getEdit, (ou avec un statut loaded)
 */
   return {
-    _id : _id,
-    vue : vue,
+    _id,
+    vue,
+    vignette,
     initialValues: init,
 
     }
@@ -135,8 +140,8 @@ function mapDispatchToProps(dispatch) {
     loadVue: (_id)=>{
       loadVue(dispatch, _id)
     },
-    saveVue: (_id, vue,callback)=>{
-      saveVue(dispatch, _id, vue,callback)
+    saveVue: (_id, vue,vignette,callback)=>{
+      saveVue(dispatch, _id, vue,vignette,callback)
     },
     saisie: (_id,  name, value)=>{
       saisie(dispatch, _id, name, value)

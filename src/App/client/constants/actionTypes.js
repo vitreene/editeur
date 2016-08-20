@@ -1,5 +1,6 @@
 // edit Sequence
 export const SET_VIGNETTES = 'SET_VIGNETTES' // √
+export const UPDATE_VIGNETTE = 'UPDATE_VIGNETTE' // √
 export const ORDER_VIGNETTES = 'ORDER_VIGNETTES'  // √
 export const TOGGLE_VISIBILITY = 'TOGGLE_VISIBILITY'  // √
 

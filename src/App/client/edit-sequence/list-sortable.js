@@ -12,22 +12,6 @@ const SortableList = (
 
     let sortable = null; // sortable instance
 
-    const listItems = items.map( (item) => (
-      <Vignette
-        key={item._id}
-        item={item}
-        onToggle={onToggle}
-        onEditVue = {onEditVue}
-        />
-    ) ) ;
-    listItems.push( (
-      <AjoutItem
-        key="ajouterBtn"
-        onAdd={onAdd}
-        />
-    ) );
-
-
     const options = {
       ghostClass: "list-dragged",
       chosenClass: "list-placeholder",
@@ -39,6 +23,24 @@ const SortableList = (
         return evt.related.className.indexOf('ignore') === -1 ;
         }
     };
+
+    const listItems = items.map( (item) => (
+      <Vignette
+        key={item._id}
+        item={item}
+        onToggle={onToggle}
+        onEditVue = {onEditVue}
+        />
+    ) ) ;
+
+    if (items.length<12)
+
+      listItems.push( (
+        <AjoutItem
+          key="ajouterBtn"
+          onAdd={onAdd}
+          />
+      ) );
 
     return (
       <div>
@@ -116,10 +118,6 @@ const Vignette = ({item, onToggle, onEditVue}) => {
       </li>
     )
 }
-
-/*
-
-*/
 
 Vignette.propTypes = {
     item: PropTypes.object

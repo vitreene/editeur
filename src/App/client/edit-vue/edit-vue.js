@@ -1,4 +1,5 @@
 import { Component, PropTypes } from 'react'
+
 import {
   Input,
   Checkbox,
@@ -14,6 +15,7 @@ touched est déclenché par onfocus ou onblur ?
 
 */
 
+
 export default class EditVue extends Component {
 
   submit(){
@@ -21,7 +23,7 @@ export default class EditVue extends Component {
     this.props.onSubmit() ;
   }
   render() {
-  //  console.log('initValues',this.props.initialValues);
+// obsolete : usage de initialValues
     if (!this.props.initialValues)
       return (
         <h2> Chargement... </h2>
@@ -54,11 +56,11 @@ export default class EditVue extends Component {
           name='source.titre'
           label='titre'
           type='text'
-          value={titre}
+          value={titre || ''}
           onChange={onSaisie}
           />
           <Checkbox
-            checked = {lien}
+            checked = {lien || ''}
             label="lier"
             name="metas.source.lien"
             theme="primary"
@@ -68,7 +70,7 @@ export default class EditVue extends Component {
            name='source.description'
            label='description'
            type='text'
-           value={description}
+           value={description  || ''}
            onChange={onSaisie}
            />
 
@@ -77,7 +79,7 @@ export default class EditVue extends Component {
           label='prix'
           type='number'
           step="0.01"
-          value={prix}
+          value={prix  || '' }
           onChange={onSaisie}
           />
           <Radio

@@ -26,3 +26,4 @@ webpack:postcss
 webpack:sass
 react-meteor-data
 aldeed:simple-schema
+erasaur:meteor-lodash

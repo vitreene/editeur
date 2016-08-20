@@ -22,13 +22,21 @@ import {
   }
 
   onAdd(){
-    this.props.addVue(this.props.sequence_id)
+    const {
+      addVue,
+      sequence_id,
+      vignettes,
+      router
+     } = this.props ;
+
+    addVue(sequence_id, vignettes.length, router)
   }
 
   onToggle(_id){ this.props.toggleVue( _id) }
 
   onEditVue(_id){
-  this.props.editVue(_id, this.props.router)
+    const {router,editVue} = this.props ;
+    editVue(_id, router) ;
   }
 
   render() {

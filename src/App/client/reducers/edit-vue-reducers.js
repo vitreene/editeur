@@ -22,12 +22,10 @@ export default function  vueReducer (state = {}, action) {
 
 
 function loadEditVue(state, vue) {
-  console.log('loadEditVue', vue);
-  return vue ;
+  return {...state, ...vue} ;
 }
 
 function saisie(state,{_id, name, value}) {
-//console.log('VALUE', typeof value, value);
 /*
 recuperer le chemin en découpant 'name' et en ajoutant _id
 */
@@ -49,19 +47,4 @@ const path = JSON.parse(
 ) ;
 
  return update( state, path ) ;
-
 }
-/*
-function getVue (state, vue) {
-  // remplacer, sinon ajouter la vue
-  let flag = true ;
-  const vignettes = state.map( vignette => {
-    if (vignette._id===vue._id) {
-      flag = false ; return vue ;
-    } else return vignette ;
-  })
-  if (flag) vignettes.push(vue) ;
-
-  return vignettes ;
-}
-*/

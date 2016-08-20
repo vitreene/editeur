@@ -50,7 +50,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addVue: (sequence_id)=>{addVue(dispatch,sequence_id)},
+    addVue: (sequence_id, length,history)=>{addVue(dispatch,sequence_id, length,history)},
     editVue: (_id, history)=>{editVue(dispatch, _id, history)},
     orderList: (list)=>{orderList(dispatch,list)},
     toggleVue: (_id)=>{toggleVue(dispatch,_id)},

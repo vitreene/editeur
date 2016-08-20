@@ -1,4 +1,5 @@
 import Vues from 'App/collections/vues'
+import {VueSchema} from 'App/collections/schemas'
 //import {Vue} from 'App/collections/vues'
 
 console.log('METHODS');
@@ -43,6 +44,12 @@ Meteor.methods({
 */
     const visible = Vues.findOne({_id:_id}).visible ;
     Vues.update( {_id:_id}, {$set: {visible: !visible} }) ;
+  },
+
+  saveVignette(_id, vignette) {
+    VueSchema.clean(vignette) ;
+    check(vignette, VueSchema) ;
+    return Vues.upsert(vignette._id, vignette) ;
   }
 
 })
