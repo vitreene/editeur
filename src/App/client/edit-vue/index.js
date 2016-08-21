@@ -1,6 +1,6 @@
 import { Component, PropTypes } from 'react'
 import { connect }  from 'react-redux'
-import { bindActionCreators } from 'redux'
+//import { bindActionCreators} from 'redux'
 import {
   Toolbar,
   NavItem,
@@ -13,6 +13,7 @@ import loadVue from 'App/client/actions/init-edit-vue'
 import {saveVue, saisie} from 'App/client/actions/edit-vue-actions'
 
 import EditVue from 'App/client/edit-vue/edit-vue'
+import EditImage from 'App/client/edit-vue/edit-image'
 
 
 /*
@@ -34,14 +35,14 @@ class EditVueContainer extends Component {
   componentWillMount() {
     console.log('EDIT VUE PROPS',  this.props );
     // charger les sources si pas en cache
-    const {loadVue, _id, vue } = this.props ;
+    const {loadVue, _id, vue, dispatch } = this.props ;
     if(!vue)
-      loadVue(_id);
+      loadVue(dispatch, _id);
   }
 
   onSaisie(e){
   //  e.preventDefault() ;
-    const {saisie, _id } = this.props ;
+    const {saisie, _id ,dispatch} = this.props ;
     const {name, type} = e.target ;
 
     const filter = {
@@ -52,7 +53,7 @@ class EditVueContainer extends Component {
     }
     const value = filter[type] ;
 
-    saisie(_id, name, value) ;
+    saisie(dispatch,_id, name, value) ;
   }
 
   onClick(e){
@@ -63,8 +64,8 @@ class EditVueContainer extends Component {
   onSubmit(){
     const path = '/sequence' ;
     const callback = ()=>this.context.router.push(path) ;
-    const {_id, vue,saveVue, vignette} = this.props ;
-    saveVue(_id, vue,vignette, callback ) ;
+    const {_id, vue,saveVue, vignette,dispatch} = this.props ;
+    saveVue(dispatch,_id, vue,vignette, callback ) ;
 
     console.log('--> SUBMIT') ;
   }
@@ -82,6 +83,7 @@ class EditVueContainer extends Component {
           onSaisie={this.onSaisie}
           {...this.props}
           />
+        <EditImage/>
         <EditVueBottom />
         </div>
       )
@@ -118,25 +120,14 @@ cependant, sa toute première valeur sera 'vide', cette variable doit etre intit
 }
 
 function mapDispatchToProps(dispatch) {
-
-  /* marche pas !
-    return  bindActionCreators(
-      {
-        loadVue:loadVue,
-        saisie: saisie
-      },
-      dispatch
-      )
-
-    return {
-      actions : bindActionCreators(
-      Object.assign({}, loadVue, saisie),
-      dispatch
-      )
-    }
-    */
-
   return {
+    dispatch,
+    loadVue,
+    saveVue,
+    saisie
+    //bindActionCreators({saisie},dispatch)
+  }
+  /*
     loadVue: (_id)=>{
       loadVue(dispatch, _id)
     },
@@ -146,8 +137,7 @@ function mapDispatchToProps(dispatch) {
     saisie: (_id,  name, value)=>{
       saisie(dispatch, _id, name, value)
     },
-    }
-
+    */
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditVueContainer) ;
@@ -158,10 +148,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(EditVueContainer) ;
 const EditVueTop = ({onClick}) =>{
   return(
     <Toolbar>
-      <Link to="/sequence">annuler</Link>
+      <Link to="/sequence">retour</Link>
       <Space  auto  x={1} />
       <NavItem onClick={onClick} >
-        OK
+        PUBLIER
       </NavItem>
     </Toolbar>
    )

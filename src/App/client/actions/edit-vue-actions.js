@@ -7,11 +7,12 @@ import {
 
 
 
-export function saisie(dispatch, _id, name, value) {
+export function saisie(dispatch,_id, name, value) {
+  console.log('ARGUMENTS', arguments);
   return dispatch({
     type : SAISIE,
     saisie : {_id, name, value}
-    });
+  });
 }
 
 export function saveVue(dispatch, _id, vue, vignette, callback){
@@ -77,13 +78,3 @@ Meteor.call('saveVue', vue,
  ) ;
 
 }
- /*
- return dispatch( () => {
- Meteor.call('saveVue', vue) ;
- return dispatch({
- type: SAVE_EDIT_VUE,
- vue: vue
- });
- })
- }
- */

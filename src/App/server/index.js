@@ -2,6 +2,8 @@
 
 //import {source} from 'App/imports/import-sources'
 //import Sources from 'App/collections/sources'
+import Ikonos from 'App/collections/ikonos'
+import {IkonosStore} from 'App/collections/ikonos'
 
 import {metas} from 'App/imports/import-sources'
 import Metas from 'App/collections/metas'
