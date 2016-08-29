@@ -3,7 +3,7 @@ import * as e from 'App/client/reducers/vue-empty'
 
 export default function newVue(sequence_id, length){
 
-  const ikono = e.emptyMetas() ;
+  const ikono = e.emptyIkono({preview:'#'}) ;
   const source = e.emptySources({ikono_id:ikono._id}) ;
   const metas = e.emptyMetas() ;
   const vignette = e.emptyVues({
@@ -11,7 +11,7 @@ export default function newVue(sequence_id, length){
     source_id : source._id,
     metas_id : metas._id,
     ordre: length+1,
-    vignette: 'images-2iADQeK.jpg'
+    vignette: '#'
     // ikono_id : ikono._id
   })
 

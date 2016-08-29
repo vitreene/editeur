@@ -8,7 +8,7 @@ export default (dispatch,_id) => {
   Meteor.call( 'getVue', _id,
     (error, initialState) => {
       if (error) { // handle error
-        console.log('error',error);
+        console.log('ID', _id,'error',error);
         }
       else {
          console.log('LOAD_EDIT_VUE initialState',initialState);

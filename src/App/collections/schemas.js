@@ -12,6 +12,7 @@ export let VueSchema = new SimpleSchema({
   vignette: {type:String}, // idem ikono
   sequence_id: {type:String},
   source_id: {type:String},
+  metas_id: {type:String},
   //ikono_id: {type:String}, -> ikono est dans source
   modele: {type:String},
   skin: {type:String, optional: true },

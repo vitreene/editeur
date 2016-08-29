@@ -22,5 +22,5 @@ export const GET_EDIT_VUE ='GET_EDIT_VUE'
 export const SET_EDIT_VUE ='SET_EDIT_VUE'
 
 export const SAISIE ='SAISIE'
-export const IMPORT_PICT ='IMPORT_PICT'
+export const IMPORT_IMG ='IMPORT_IMG'
 export const RESET_VUE ='RESET_VUE'

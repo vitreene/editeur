@@ -12,6 +12,8 @@ import { Link } from 'react-router'
 import loadVue from 'App/client/actions/init-edit-vue'
 import {saveVue, saisie} from 'App/client/actions/edit-vue-actions'
 
+import {uploadFile} from 'App/client/actions/edit-image-actions'
+
 import EditVue from 'App/client/edit-vue/edit-vue'
 import EditImage from 'App/client/edit-vue/edit-image'
 
@@ -21,16 +23,19 @@ EditVueContainer est le conteneur des trois parties de l'éditeur.
 il charge les données et les dispatche dans les parties.
 -> des données sont aussi transmises à la zone "options"
 
+ATTENTION : erreur si rechargement de la page : les données sont effacées !
+Cannot read property 'source_id'
 */
 
 class EditVueContainer extends Component {
   constructor(props) {
-  super(props);
-  this.state = {};
-  this.onSaisie = this.onSaisie.bind(this);
-  this.onClick = this.onClick.bind(this);
-  this.onSubmit = this.onSubmit.bind(this);
-}
+    super(props);
+    this.state = {};
+    this.onSaisie = this.onSaisie.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.upload = this.upload.bind(this) ;
+  }
 
   componentWillMount() {
     console.log('EDIT VUE PROPS',  this.props );
@@ -38,6 +43,11 @@ class EditVueContainer extends Component {
     const {loadVue, _id, vue, dispatch } = this.props ;
     if(!vue)
       loadVue(dispatch, _id);
+  }
+
+  upload(){
+    const {_id, uploadFile, dispatch} = this.props ;
+    uploadFile(dispatch,_id) ;
   }
 
   onSaisie(e){
@@ -71,7 +81,10 @@ class EditVueContainer extends Component {
   }
 
   render() {
-
+    if (!this.props.vue)
+      return(<h1> Chargement…</h1>) ;
+      
+    const {_id, vue:{ikono}} = this.props ;
       return (
         <div>
         <EditVueTop
@@ -83,7 +96,11 @@ class EditVueContainer extends Component {
           onSaisie={this.onSaisie}
           {...this.props}
           />
-        <EditImage/>
+        <EditImage
+          _id= {_id}
+          ikono={ikono}
+          upload = {this.upload}
+          />
         <EditVueBottom />
         </div>
       )
@@ -124,20 +141,10 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     loadVue,
     saveVue,
-    saisie
+    saisie,
+    uploadFile
     //bindActionCreators({saisie},dispatch)
   }
-  /*
-    loadVue: (_id)=>{
-      loadVue(dispatch, _id)
-    },
-    saveVue: (_id, vue,vignette,callback)=>{
-      saveVue(dispatch, _id, vue,vignette,callback)
-    },
-    saisie: (_id,  name, value)=>{
-      saisie(dispatch, _id, name, value)
-    },
-    */
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditVueContainer) ;

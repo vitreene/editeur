@@ -54,8 +54,8 @@ const ikono = [
     _id : '01',
     src: 'images-2iADQeK.jpg', // original
     vignette:'', // sur les listes,
-    proxy:'', // dans l'éditeur,
-    instance_01: '' // provisoire : version par ecran
+    preview:'', // dans l'éditeur,
+    proxys: [] // provisoire : version par ecran
     // ajouter : cerne et point focal
   }
 ] ;

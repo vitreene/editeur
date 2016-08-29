@@ -2,6 +2,7 @@
 // import {Source} from 'App/collections/schemas'
 import Vues from 'App/collections/vues'
 import Metas from 'App/collections/metas'
+import {Ikonos} from 'App/collections/ikonos'
 import {SourceSchema} from 'App/collections/schemas'
 
 /*
@@ -16,23 +17,29 @@ Meteor.methods({
     check(_id, String);
     const vue = Vues.findOne({_id:_id}) ;
     const {source_id,metas_id,ikono_id} = vue ;
+
+    console.log('vue',source_id,metas_id,ikono_id);
+
     const source = Sources.findOne({_id:source_id}) ;
     const metas = Metas.findOne({_id:metas_id}) ;
+    const ikono = Ikonos.findOne({_id:source.ikono_id}) || {};
+
     console.log('VUE', vue);
-// console.log('getVue(_id)', source_id, source, metas_id, metas);
 
     return {
       [_id]:{
-        source : source,
-        ikono: '',
-        metas: metas
+        source,
+        ikono,
+        metas
       }
     }
   },
   saveVue(vue){
     //check(vue, Object)
+    
     //console.log('VUE',vue);
     const {source,metas,ikono} = vue ;
+
     SourceSchema.clean(source) ;
     //console.log('Source clean', source);
     check(source,SourceSchema);

@@ -2,9 +2,15 @@
 
 //import {source} from 'App/imports/import-sources'
 //import Sources from 'App/collections/sources'
-import Ikonos from 'App/collections/ikonos'
-import {IkonosStore} from 'App/collections/ikonos'
-
+import  'App/collections/ikonos'
+/*
+import {Ikonos} from 'App/collections/ikonos'
+import {Proxys} from 'App/collections/ikonos'
+import {
+  IkonosStore,
+  ProxysStore
+} from 'App/collections/ikonos'
+*/
 import {metas} from 'App/imports/import-sources'
 import Metas from 'App/collections/metas'
 
@@ -25,6 +31,8 @@ if (Projections.find({}).count()===0) Projections.insert(composite);
 Sources.remove('01');
 if (Sources.find({}).count()===0) Sources.insert(maSource[0]);
 */
+//const test = Proxys.find({}).fetch() ;
+// console.log('Proxys', test);
 
 if (Metas.find({}).count()===0) Metas.insert(metas[0]);
 
