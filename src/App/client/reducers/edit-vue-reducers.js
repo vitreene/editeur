@@ -53,7 +53,7 @@ function saisie(state,{_id, name, value}) {
   return update( state, path ) ;
 }
 
-function importIMG(state,{_id, img_ID, preview }) {
+function importIMG(state,{_id, img_ID, preview,vignette }) {
   /*
   _id, // id de la vue,
   img_ID, // ajouter à source
@@ -64,5 +64,6 @@ function importIMG(state,{_id, img_ID, preview }) {
   vue.source.ikono_id = img_ID ;
   vue.ikono._id = img_ID ;
   vue.ikono.preview = preview.src ;
+  // vue.ikono.vignette = vignette.src ;
   return {...state, [_id]:{...vue} }
 }

@@ -46,8 +46,8 @@ class EditVueContainer extends Component {
   }
 
   upload(){
-    const {_id, uploadFile, dispatch} = this.props ;
-    uploadFile(dispatch,_id) ;
+    const {vignette,  uploadFile, dispatch} = this.props ;
+    uploadFile(dispatch,vignette) ;
   }
 
   onSaisie(e){
@@ -83,7 +83,7 @@ class EditVueContainer extends Component {
   render() {
     if (!this.props.vue)
       return(<h1> Chargement…</h1>) ;
-      
+
     const {_id, vue:{ikono}} = this.props ;
       return (
         <div>

@@ -21,6 +21,7 @@ export function saveVue(dispatch, _id, vue, vignette, callback){
   console.log('saveVue : callback -> ',callback);
 
   vue.metas.date = Date.now() ;
+
   /*
   à completer :
   choisir le titre : titre, ou description, ou modele de vue
@@ -32,15 +33,17 @@ export function saveVue(dispatch, _id, vue, vignette, callback){
 
   const report = {
     titre,
-    vignette: "images-2iADQeK.jpg",
-    visible: true,
+    //vignette: "images-2iADQeK.jpg",
+    // ref de l'image
+    visible : true,
     couleur : 'blue',
     modele : 'produit',
     skin: '',
   };
 
 
-  const vueVignette = Object.assign({}, vignette, report ) ;
+  //const vueVignette = Object.assign({}, vignette, report, {vignette: '#'} ) ;
+
   /*
   -  call saveVue :
   -si ok, call save vignette, en lui donnant :
@@ -66,15 +69,23 @@ export function saveVue(dispatch, _id, vue, vignette, callback){
           vue
         });
 
-        Meteor.call('saveVignette', _id, vueVignette,
-          (error, res) => {
+        Meteor.call('saveVignette',
+         _id,
+        Object.assign({},
+          vignette,
+          report,
+          // ne pas passer la vignette vers le serveur
+          {vignette: '#'}
+        ),
+         vue.source.ikono_id,
+
+         (error, res) => {
             if (error) { // handle error
               console.log('error', error);
             } else {
-              // console.log('initialState',initialState);
               dispatch({
                 type: UPDATE_VIGNETTE,
-                vignette:vueVignette
+                vignette: Object.assign({},vignette,report)
               });
 
             callback() ;

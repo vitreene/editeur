@@ -1,9 +1,12 @@
 
 import {
   IMPORT_IMG,
+  UPDATE_VIGNETTE,
 } from 'App/client/constants/actionTypes'
 
 import {UploadFS} from 'meteor/jalik:ufs';
+
+//import {imageClipper} from 'image-clipper';
 
 import {processImage} from 'meteor/ccorcos:clientside-image-manipulation'
 
@@ -13,7 +16,7 @@ import {IkonosStore} from 'App/collections/ikonos'
 //import {Previews} from 'App/collections/ikonos'
 //import {PreviewsStore} from 'App/collections/ikonos'
 
-export function uploadFile(dispatch,_id) {
+export function uploadFile(dispatch,vignette) {
 
   /*
   - nettoyer les fonctions ;
@@ -23,8 +26,10 @@ export function uploadFile(dispatch,_id) {
   */
 
   // _id = _id de la vue editée
+  const {_id} = vignette ;
   let img_ID ;
   let preview = new Image();
+  let vignetteIMG = new Image();
 
   UploadFS.selectFile( (file) => {
   //  console.log('FILE', file);
@@ -33,13 +38,25 @@ export function uploadFile(dispatch,_id) {
         size: file.size,
         type: file.type
     };
-
+/*
+    imageClipper(file, function() {
+        this.quality(10).crop(0, 0, 200, 150).toDataURL(function(dataUrl) {
+            vignette.src = dataUrl;
+        });
+    });
+*/
     processImage(
       file,
-      1000, 1000, 0.5,
-      (data) => preview.src = data
+      500, 500, 0.5,
+      (dataUrl) => preview.src = dataUrl
     ) ;
-
+    processImage(
+      file,
+      200, 150, 0.5,
+      (dataUrl) => vignetteIMG.src = dataUrl
+    ) ;
+    /*
+*/
     // l'action est dispatchée dès la création de la preview
     preview.onload = ()=>{
       return dispatch({
@@ -47,8 +64,16 @@ export function uploadFile(dispatch,_id) {
         img : {
           _id, // id de la vue,
           img_ID, // ajouter à source
-          preview // à part, variable locale
+          preview, // à part, variable locale
         }
+      });
+    } ;
+
+    vignetteIMG.onload = ()=>{
+      vignette.vignette = vignetteIMG.src ;
+      return dispatch({
+        type : UPDATE_VIGNETTE,
+        vignette
       });
     } ;
 

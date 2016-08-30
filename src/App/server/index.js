@@ -46,6 +46,8 @@ if (Vues.find({}).count()===0) {
 }
 
 console.log('PUBLISH');
+//console.log('__dirname', __dirname);
+//console.log('process.env.PWD ', process.env.PWD );
 Meteor.publish('projection', function(test) {
   return Projections.find({});
 });

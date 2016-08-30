@@ -36,7 +36,7 @@ Meteor.methods({
   },
   saveVue(vue){
     //check(vue, Object)
-    
+
     //console.log('VUE',vue);
     const {source,metas,ikono} = vue ;
 
@@ -47,7 +47,6 @@ Meteor.methods({
 
 // clean, puis check
     Metas.upsert(metas._id, metas) ;
-
   }
 
 })

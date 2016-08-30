@@ -91,7 +91,8 @@ const Vignette = ({item, onToggle, onEditVue}) => {
 
     const {_id,ordre,couleur, vignette, titre, visible} = item ;
 
-    const bgImage = 'url('+require('App/ikono/'+vignette )+')' ;
+    const bgImage = `url( ${vignette} )` ;
+    // const bgImage = 'url('+require('App/ikono/'+vignette )+')' ;
     const estVisible = 'bg-circle ' +
      ( (visible) ? 'fa-eye-open' : 'fa-eye-close' );
 
