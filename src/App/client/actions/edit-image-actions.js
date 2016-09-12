@@ -10,7 +10,7 @@ import {UploadFS} from 'meteor/jalik:ufs';
 
 import {processImage} from 'meteor/ccorcos:clientside-image-manipulation'
 
-//import Ikonos from 'App/collections/ikonos'
+import {Ikonos} from 'App/collections/ikonos'
 import {IkonosStore} from 'App/collections/ikonos'
 
 //import {Previews} from 'App/collections/ikonos'
@@ -93,7 +93,8 @@ export function uploadFile(dispatch,vignette) {
         img_ID = file._id ;
         },
         onComplete: (file) => {
-            console.log(file.name + ' has been uploaded');
+          console.log(file._id, file.name + ' has been uploaded');
+        //  updateVignetteFromServer (dispatch, vignette, file._id)
         },
         onProgress: (file, progress) => {
           //  comment faire passer cette valeur à state ?
@@ -107,6 +108,35 @@ export function uploadFile(dispatch,vignette) {
   }) ;
 
 }
+
+
+/*
+bien tenté, mais ca marche pas. les liens ne sont pas encore disponible lorsque la requete est envoyée.
+tenter plutot un observable sur la vue Liste de vues qui trackera les modifications sur Ikonos.
+/////
+export function updateVignetteFromServer (dispatch, vignette, file_id) {
+  // console.log('EDITSEQthis', arguments);
+  Meteor.call( 'updateVignetteFromServer', file_id,
+    (error, imgSRC) => {
+      if (error) { // handle error
+        console.log('error',error);
+        }
+      else {
+        console.log('imgSRC', imgSRC );
+
+        vignette.vignette = vignetteIMG.src ;
+
+        // console.log('initialState',initialState);
+        dispatch({
+          type: UPDATE_VIGNETTE,
+          vignette
+        });
+
+      }
+    }
+   ) ;
+}
+*/
 
 /*
 

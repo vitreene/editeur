@@ -2,6 +2,7 @@ import { Component, PropTypes } from 'react'
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 import editSequence from 'App/client/edit-sequence';
 import editVue from 'App/client/edit-vue';
+import Instance from 'App/Instance';
 
 
 
@@ -15,6 +16,7 @@ export class AppRoutes extends Component {
           <IndexRoute component={Home} />
           <Route path="sequence" component={editSequence} />
           <Route path="sequence/vue/:_id" component={editVue} />
+          <Route path="instance" component={ShowInstance} />
       </Route>
     </Router>
       )
@@ -53,3 +55,21 @@ class editVue extends Component {
   }
 }
 */
+class ShowInstance extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      out: Instance('01')
+    };
+  }
+
+  render() {
+
+    return(
+      <div>
+        <h2> resultat instance </h2>
+        <p>   {JSON.stringify(this.state.out)} </p>
+      </div>
+    )
+  }
+}

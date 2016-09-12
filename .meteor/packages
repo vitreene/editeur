@@ -31,3 +31,6 @@ shell-server@0.2.1
 jalik:ufs-local
 ccorcos:clientside-image-manipulation
 jalik:ufs
+practicalmeteor:chai
+practicalmeteor:mocha
+dispatch:mocha-phantomjs
