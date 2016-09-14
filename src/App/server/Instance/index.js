@@ -21,7 +21,9 @@
   Etapes Creer sequence
 
 */
-
+import {IkonosStore} from 'App/collections/ikonos'
+import {Ikonos} from 'App/collections/ikonos'
+import {ProxysStore} from 'App/collections/ikonos'
 
 const termes = {
   tempo : {
@@ -180,7 +182,7 @@ export default function Instance(_id) {
       if (err) {
         alert(err);
       } else {
-        console.log('VUE',vue);
+    //  console.log('VUE',vue);
         creerInstance(vue[_id]) ;
       }
     });
@@ -195,7 +197,7 @@ function  creerInstance( { source, ikono, metas } ){
   console.log('instanceSource', instanceSource);
   // traiter les blocs de placement
   const instanceBlocs = processBlocs( modele, metas ) ;
-  console.log('instanceBlocs', instanceBlocs);
+  // console.log('instanceBlocs', instanceBlocs);
   // traiter l'image
   const instanceIkono = processIkono(ikono, metas) ;
   // assembler le résultat
@@ -272,6 +274,34 @@ function processBlocs({composants, nom}, metas) {
 }
 
 function processIkono(ikono, metas) {
+
+//return ;
+
+  const fileId = ikono._id ;
+  //const fileId = '2ymdjysaByCHutAhR' ;
+
+  const transform = {
+    pox: 500,
+    poy: 40,
+    rot: -20,
+    ech: 1.56,
+    pivX: false,
+    pivY: false,
+  }
+
+/*
+la methode copy ne permet pas de transferer des parametres supplementaires. La seule façon est de modifier l'enregistrement  Ikono pour y rajouter les parametres, les lire, puis les effacer ensuite.
+*/
+// si la propriété transform n'est pas vide, alors appliquer proxy.
+  Ikonos.update(fileId, {$set:{transform:transform}}, (err,res)=>{
+    if (err) {console.log('ERREUR : ', err);}
+    else {
+      IkonosStore.copy(fileId, ProxysStore,
+        function(err, copyId, copyFile) {
+          !err && console.log(fileId + ' has been copied as ' + copyId) ;
+        });
+    }
+} ) ;
   /*
   metas : if cover ou contain -> creer proxyPlain ()
   // crer proxy (url, pox,poy, rot, scale, ecranx, ecrany)

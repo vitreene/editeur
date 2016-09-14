@@ -22,6 +22,7 @@ import Vues from 'App/collections/vues'
 
 import './edit-sequence-methods'
 import './edit-vue-methods'
+import './instances-methods'
 
 /*
 // attention, j'efface tout !

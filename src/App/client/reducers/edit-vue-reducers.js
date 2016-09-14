@@ -26,6 +26,9 @@ export default function  vueReducer (state = {}, action) {
 
 
 function loadEditVue(state, vue) {
+
+  console.log('loadEditVue', vue);
+
   return {...state, ...vue} ;
 }
 

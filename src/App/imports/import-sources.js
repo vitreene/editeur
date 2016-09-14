@@ -18,16 +18,18 @@ export let metas = [
       lien: true,
       position:'gauche'
     },
-    ikono:{
-      horizontal:{
-        x:'30%',
-        y:'50%'
-      },
-      vertical:{
-        x:'50%',
-        y:'70%'
+    ikono:[
+      {
+        ecran: {type:String},
+        placement: {type:String}, // cover, contains, libre
+        pox: {type:Number}, // deplacement horizontal
+        poy : {type:Number}, // deplacment vertical
+        rot : {type:Number}, // rotation en degrés
+        ech : {type:Number}, // echelle
+        pivX: {type:Boolean}, // miroir horizontal,
+        pivY: {type:Boolean}, // miroir vertical
       }
-    },
+    ],
     accroche:{}
   }
 ]

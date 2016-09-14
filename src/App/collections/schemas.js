@@ -39,9 +39,20 @@ export let SourceSchema = new SimpleSchema({
 
 const SourceMetasSchema =  new SimpleSchema({
   lien : {type: Boolean},
-  position : {type:String}
+  position : {type:String} // haut/bas/gauche/droite/centre
 })
 
+const IkonoPositionMetasSchema =  new SimpleSchema({
+  ecran: {type:String},
+  placement: {type:String}, // cover, contains, libre
+  pox: {type:Number}, // deplacement horizontal
+  poy : {type:Number}, // deplacment vertical
+  rot : {type:Number}, // rotation en degrés
+  ech : {type:Number}, // echelle
+  pivX: {type:Boolean}, // miroir horizontal,
+  pivY: {type:Boolean}, // miroir vertical
+})
+/*
 const IkonoPositionMetasSchema =  new SimpleSchema({
   x: {type:String},
   y : {type:String},
@@ -52,13 +63,12 @@ const IkonoPositionMetasSchema =  new SimpleSchema({
   pivotX: {type:Boolean},
   pivotY: {type:Boolean},
 })
-
+*/
+/*
 const IkonoMetasSchema =  new SimpleSchema({
-  // cover
-  horizontal : {type:IkonoPositionMetasSchema},
-  vertical : {type:IkonoPositionMetasSchema}
+  ecrans : {type:[IkonoPositionMetasSchema]},
 })
-
+*/
 const AccrocheMetasSchema =  new SimpleSchema({
   // à viendre
 })
@@ -66,7 +76,8 @@ const AccrocheMetasSchema =  new SimpleSchema({
 export let MetasSchema = new SimpleSchema({
   _id:{type:String}, // mongoId
   source: {type:SourceMetasSchema},
-  ikono : {type:IkonoMetasSchema},
+  ikono : {type:[IkonoPositionMetasSchema]},
+  // ikono : {type:IkonoMetasSchema},
   accroche: {type:AccrocheMetasSchema}
 });
 
@@ -86,25 +97,3 @@ export let IkonoSchema = new SimpleSchema({
   preview: {type:String}, // source URL dans l'éditeur,
   proxy: {type:IkonoPubschema}, // optimisé pour la Projection
 })
-
-/*
-  import { Class } from 'meteor/jagi:astronomy'
-  import Sources from 'App/collections/Sources'
-
-  export let  Source = Class.create({
-    name: 'Source',
-    collection: Sources,
-    fields: {
-      // _id: Mongo.ObjectID,
-      _id: String,
-      titre: {type: String, optional: true },
-      description: {type: String, optional: true }, // ou message ?
-      offre : {type: String, optional: true },
-      prix: {type: Number, optional: true },
-      prix_promo : {type: Number, optional: true },
-      ikono_id : {type: String, optional: true },
-    },
-    methods: {
-    }
-  });
-*/

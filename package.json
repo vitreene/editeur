@@ -3,7 +3,8 @@
   "version": "0.0.2",
   "description": "editeur pour Projecteur",
   "scripts": {
-    "test": "mocha ./tests --compilers js:babel-register"
+    "ex-test": "mocha ./tests --compilers js:babel-register",
+    "test": "TEST_WATCH=1 meteor test --driver-package dispatch:mocha-phantomjs --port 3100"
   },
   "author": "vitreene.com",
   "license": "ISC",

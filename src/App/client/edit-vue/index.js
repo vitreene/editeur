@@ -72,9 +72,13 @@ class EditVueContainer extends Component {
 
   }
   onSubmit(){
+    
+    // si submit un formulaire vide -> erreur !
+    // formulaire vide = annuler.
+
     const path = '/sequence' ;
     const callback = ()=>this.context.router.push(path) ;
-    const {_id, vue,saveVue, vignette,dispatch} = this.props ;
+    const {_id, vue, saveVue, vignette,dispatch} = this.props ;
     saveVue(dispatch,_id, vue,vignette, callback ) ;
 
     console.log('--> SUBMIT') ;

@@ -2,7 +2,7 @@ import { Component, PropTypes } from 'react'
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 import editSequence from 'App/client/edit-sequence';
 import editVue from 'App/client/edit-vue';
-import Instance from 'App/Instance';
+// import Instance from 'App/server/Instance';
 
 
 
@@ -55,11 +55,23 @@ class editVue extends Component {
   }
 }
 */
+function runInstance(_id) {
+  Meteor.call('runInstance',_id, (err, res) => {
+    if (err) {
+    //  console.log(err);
+    } else {
+    //  console.log('instance',res);
+
+    }
+  });
+}
+
+
 class ShowInstance extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      out: Instance('01')
+      out: runInstance('01')
     };
   }
 

@@ -23,7 +23,13 @@ function Empty( {_schemaKeys }, options ){
   let obj = {} ;
 
   _schemaKeys.forEach( (key)=>{
-    let value = undefined ;
+
+    // si l'element est dans un tableau
+    if (key.endsWith('$')) return ;
+    key = key.split('$.').join('') ;
+
+    //let value = undefined ;
+    let value = null ;
     if  (key ==='_id') value = Random.id() ;
 
     lodash.setWith(obj, key, value, Object);

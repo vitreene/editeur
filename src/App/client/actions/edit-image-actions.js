@@ -36,8 +36,17 @@ export function uploadFile(dispatch,vignette) {
     const ikono = {
         name: file.name,
         size: file.size,
-        type: file.type
+        type: file.type,
+/*
+        transform : {
+          pox: 100,
+          poy: 50,
+          rot: 45,
+          ech: 1.66
+        }
+ */
     };
+
 /*
     imageClipper(file, function() {
         this.quality(10).crop(0, 0, 200, 150).toDataURL(function(dataUrl) {
