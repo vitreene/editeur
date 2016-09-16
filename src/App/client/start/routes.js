@@ -91,8 +91,7 @@ class ShowInstance extends Component {
     return(
       <div>
         <h2> resultat instance </h2>
-        <p>   {JSON.stringify(this.state.out)} </p>
-        
+        <p> {JSON.stringify(this.state.out,4)} </p>
       </div>
     )
   }

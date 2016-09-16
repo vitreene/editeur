@@ -2,7 +2,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 //import chai  from 'chai';
 //import { shallow } from 'enzyme';
 
-import  {aDansB, aSomeB, aTousB} from 'App/Instance/index';
+import  {aDansB, aSomeB, aTousB} from 'App/Instance/utils';
 
 console.log("anybody out there ?");
 //import 'App/server/edit-vue-methods.js'

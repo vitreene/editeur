@@ -1,5 +1,5 @@
 import { Component, PropTypes } from 'react'
-import { connect }  from 'react-redux';
+import { connect }  from 'react-redux-meteor';
 
 import {
   orderList,
@@ -58,7 +58,11 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditSequence) ;
+export default connect(
+  null,
+  mapStateToProps,
+  mapDispatchToProps
+)(EditSequence) ;
 
 
 // barres d'etat provisoires

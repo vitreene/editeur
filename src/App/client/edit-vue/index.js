@@ -1,5 +1,5 @@
 import { Component, PropTypes } from 'react'
-import { connect }  from 'react-redux'
+import { connect }  from 'react-redux-meteor'
 //import { bindActionCreators} from 'redux'
 import {
   Toolbar,
@@ -72,7 +72,7 @@ class EditVueContainer extends Component {
 
   }
   onSubmit(){
-    
+
     // si submit un formulaire vide -> erreur !
     // formulaire vide = annuler.
 
@@ -151,7 +151,11 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditVueContainer) ;
+export default connect(
+  null,
+  mapStateToProps,
+  mapDispatchToProps
+)(EditVueContainer) ;
 
 
 ////////////////////////////////////
