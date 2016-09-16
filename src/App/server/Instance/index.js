@@ -173,36 +173,53 @@ const metas = {
 
 
 export default function Instance(_id) {
-  // const Instance = function(_id) {
-  // const vue = Meteor.call('getVue', _id) ;
-  // const _id = '01' ;
 
-  Meteor.call('getVue', _id,
-    (err, vue) => {
-      if (err) {
-        alert(err);
-      } else {
-    //  console.log('VUE',vue);
-        creerInstance(vue[_id]) ;
-      }
-    });
+  if (Meteor.isClient) console.log('INSTANCE est sur CLIENT');
+  if (Meteor.isServer) console.log('INSTANCE est sur SERVEUR');
+
+  const vue = Meteor.call('getVue', _id) ;
+  return creerInstance(vue[_id]) ;
 }
+
 
 function  creerInstance( { source, ikono, metas } ){
   // identifier le modele selon la source
   const modele = findModele(source, profils) ;
-  console.log('modele', modele);
+  //console.log('modele', modele);
   // traiter la source
   const instanceSource = processSource( modele, source, metas ) ;
-  console.log('instanceSource', instanceSource);
+  //console.log('instanceSource', instanceSource);
   // traiter les blocs de placement
   const instanceBlocs = processBlocs( modele, metas ) ;
-  // console.log('instanceBlocs', instanceBlocs);
+  //console.log('instanceBlocs', instanceBlocs);
   // traiter l'image
-  const instanceIkono = processIkono(ikono, metas) ;
-  // assembler le résultat
 
+  const instanceIkono = processIkono(ikono, metas) ;
+  //console.log('instanceIkono', instanceIkono);
+
+  // assembler le résultat
+  /*
+  */
+  return Promise.all ([
+    instanceSource,
+    instanceBlocs,
+    instanceIkono
+  ]).then(([source,blocs,ikono]) => {return {source,blocs,ikono}})
+  .catch( err => console.log('La création de l’instance à échoué', err) )
+  ;
+/*
+  return  {
+    instanceSource,
+    instanceBlocs,
+    instanceIkono
+  }
+  */
 }
+
+
+
+
+
 
 function findModele(source, profils){
   // cherche le bon modele pour la source dans les profils
@@ -275,11 +292,10 @@ function processBlocs({composants, nom}, metas) {
 
 function processIkono(ikono, metas) {
 
-//return ;
-
   const fileId = ikono._id ;
-  //const fileId = '2ymdjysaByCHutAhR' ;
+  const placement = metas.ikono.placement ;
 
+  // si la propriété transform n'est pas vide, alors appliquer proxy.
   const transform = {
     pox: 500,
     poy: 40,
@@ -288,30 +304,47 @@ function processIkono(ikono, metas) {
     pivX: false,
     pivY: false,
   }
-
-/*
-la methode copy ne permet pas de transferer des parametres supplementaires. La seule façon est de modifier l'enregistrement  Ikono pour y rajouter les parametres, les lire, puis les effacer ensuite.
-*/
-// si la propriété transform n'est pas vide, alors appliquer proxy.
-  Ikonos.update(fileId, {$set:{transform:transform}}, (err,res)=>{
-    if (err) {console.log('ERREUR : ', err);}
-    else {
-      IkonosStore.copy(fileId, ProxysStore,
-        function(err, copyId, copyFile) {
-          !err && console.log(fileId + ' has been copied as ' + copyId) ;
-        });
-    }
-} ) ;
   /*
-  metas : if cover ou contain -> creer proxyPlain ()
-  // crer proxy (url, pox,poy, rot, scale, ecranx, ecrany)
+    la methode copy ne permet pas de transferer des parametres supplementaires. La seule façon est de modifier l'enregistrement  Ikono pour y rajouter les parametres, les lire, puis les effacer ensuite.
+    */
+    // return
+  return new Promise( (resolve, reject) => {
 
-  // -> callback : vignette, url proxy dans ikono
-  sortie :
-  - url,
-  - styles  ou bien des metas pour le placement ?
-  */
-}
+    Ikonos.update( fileId, {$set:{transform:transform}},
+      (err,res) => {
+
+        if (err) { console.log('ERREUR : ', err); }
+        else {
+
+          IkonosStore.copy( fileId, ProxysStore,
+            function(err, copyId, copyFile) {
+
+              !err &&
+              //console.log(fileId + ' has been copied as ' + copyId) ;
+              //console.log(fileId + ' *-------> ' + copyFile.proxy ) ;
+
+              resolve(copyFile.proxy) ;
+            }
+          );
+        } // end else
+      } ) ;
+
+    })
+  .then ( url => {
+      return (
+      {
+        visuel: {
+          url,
+          placement
+        }
+      }
+    )
+    })
+    .catch( error => {
+      console.log("l'image n'a pu etre optimisée", fetchError) ;
+    })
+} // fin de processIkono
+
 
 function reCompose(composants){
   // presente les elements du profil : tous, ou requis+facultatif

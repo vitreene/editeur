@@ -78,7 +78,7 @@ export let VignettesStore = new UploadFS.store.Local({
     else {
       const {originalId:fileSourceId }= Proxys.findOne(file.originalId,{fields:{originalId:1}} ) ;
       Ikonos.update(fileSourceId, {$set: {"vignette": file.url}});
-      console.log('vignette-> source', fileSourceId);
+      //console.log('vignette-> source', fileSourceId);
     }
   }
 });
@@ -107,7 +107,7 @@ export let ProxysStore = new UploadFS.store.Local({
   transformWrite: function(from, to, fileId, file){
 
     const {transform:{rot,pox,poy,ech}} = file ;
-    console.log('FILE (ProxysStore)', rot,pox,poy,ech);
+    //console.log('FILE (ProxysStore)', rot,pox,poy,ech);
 
     let gm = Npm.require('gm');
       if (gm) {

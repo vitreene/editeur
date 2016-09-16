@@ -56,12 +56,12 @@ class editVue extends Component {
 }
 */
 function runInstance(_id) {
-  Meteor.call('runInstance',_id, (err, res) => {
+
+return  Meteor.call('runInstance',_id, (err, res) => {
     if (err) {
     //  console.log(err);
     } else {
-    //  console.log('instance',res);
-
+      console.log('instance',res);
     }
   });
 }
@@ -71,16 +71,28 @@ class ShowInstance extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      out: runInstance('01')
+      out: 'rien' //runInstance('01')
     };
   }
-
+  componentDidMount(){
+    const _id = '01' ;
+    Meteor.call('runInstance',_id, (err, res) => {
+        if (err) {
+        //  console.log(err);
+        } else {
+          console.log('instance',res, this.state.out);
+          this.setState({out:res}) ;
+        }
+      });
+  }
   render() {
+    console.log('OUT', this.state.out);
 
     return(
       <div>
         <h2> resultat instance </h2>
         <p>   {JSON.stringify(this.state.out)} </p>
+        
       </div>
     )
   }
