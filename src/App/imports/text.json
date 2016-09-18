@@ -1,4 +1,7 @@
 {
+    "_id": "01",
+    "modele": "produit",
+    "duree": 2600,
     "titre": {
         "text": "ma vignette de test",
         "position": "titre-position-BA",
@@ -15,12 +18,6 @@
         "text": "Test de la source",
         "position": "description-position-lien-BA",
         "aspect": "produit-description",
-        "transition": ""
-    },
-    "ikono_id": {
-        "text": "oFgF8q2MDaSvaBi53",
-        "position": "ikono-cover",
-        "aspect": "produit-ikono_id",
         "transition": ""
     },
     "prix_promo": {
@@ -61,16 +58,7 @@
         "transition": ""
     },
     "visuel": {
-        "url": "http://localhost:3000/ufs/proxys/JezBQCP4teHZbovR3/12631408_783612511743183_4080592185077407688_n.jpg",
+        "src": "http://localhost:3000/ufs/proxys/cz3qYfNGEMrKidN2T/12631408_783612511743183_4080592185077407688_n.jpg",
         "placement": "cover"
-    },
-    "_id": "01",
-    "modele": {
-        "nom": "produit",
-        "composants": {
-            "requis": ["titre", "prix"],
-            "facultatif": ["description", "ikono_id", "prix_promo", "offre"]
-        }
-    },
-    "duree": 2600
+    }
 }

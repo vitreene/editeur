@@ -1,3 +1,5 @@
+
+
 import {IkonosStore} from 'App/collections/ikonos'
 import {Ikonos} from 'App/collections/ikonos'
 import {ProxysStore} from 'App/collections/ikonos'
@@ -6,7 +8,7 @@ function getTransformFromZone(metas, zone) {
   // console.log('metas, zone',metas, zone);
   return metas.ikono.filter(
     transform => transform.zone===zone
-  )
+  )[0]
 }
 
 // creer un proxy à partir de la source, modifié par transform
@@ -29,7 +31,7 @@ export default function processIkono(ikono, metas, zone) {
     zone: zone || 'ecran01',
     placement: placement || "libre"
   };
-
+console.log('placement', placement, metas );
   /*
   const transform = {
     pristine: false,
@@ -62,8 +64,8 @@ export default function processIkono(ikono, metas, zone) {
     // si l'image n'a pas été manipulée, renvoyer proxy[zone]
     if (pristine) {
       const {proxy} = Ikonos.findOne(fileId) ;
-      const ilono = proxy.filter(x => x.zone===zone)
-      resolve(ikono.src)
+      const {src}  = proxy.filter(x => x.zone===zone)[0]
+      resolve(src) ;
       }
     else {
     Ikonos.update( fileId, {$set:{transform:transform}},
@@ -71,15 +73,17 @@ export default function processIkono(ikono, metas, zone) {
         if (err) { console.log('ERREUR : ', err); }
         else {
           IkonosStore.copy( fileId, ProxysStore,
-            function(err, copyId, copyFile) {
-              !err && resolve(copyFile.proxy) ;
-            });
+          function(err, copyId, copyFile) {
+            const {src} = copyFile.proxy.filter( x => x.zone === zone)[0];
+            //console.log('SRC', proxSRC,copyFile.proxy);
+            !err && resolve(src) ;
+          });
         } // end else
       });
     }
   })
-  .then ( url => {
-    return ( { visuel: { url, placement } }  )
+  .then ( src => {
+    return ( { visuel: { src, placement } }  )
   })
   .catch( error => {
     console.log("l'image n'a pu etre optimisée", fetchError) ;

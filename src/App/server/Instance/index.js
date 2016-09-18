@@ -81,7 +81,7 @@ function  creerInstance( { source, ikono, metas, vue } ){
     instanceIkono
   ])
   .then(([source,blocs,ikono]) => {
-    return Object.assign({}, source,blocs,ikono, opt)
+    return Object.assign({}, opt, source, blocs, ikono)
   })
   .catch( err =>
     console.log('La création de l’instance à échoué', err)
