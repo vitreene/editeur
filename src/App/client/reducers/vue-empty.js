@@ -26,20 +26,22 @@ function Empty( {_schemaKeys }, options ){
 
     // si l'element est dans un tableau
     if (key.endsWith('$')) return ;
-    key = key.split('$.').join('') ;
+    key = key.split('.$').join('[0]') ;
 
-    //let value = undefined ;
     let value = null ;
     if  (key ==='_id') value = Random.id() ;
 
-    lodash.setWith(obj, key, value, Object);
+    lodash.set(obj, key, value);
+    //lodash.setWith(obj, key, value, Object);
   });
+
+  //console.log('OBJ', obj);
 
   if (typeof (options) == 'object')
     for (let key in options) {
       const value = options[key] ;
 
-      lodash.setWith(obj, key, value, Object);
+      lodash.set(obj, key, value);
     }
 
   return obj ;

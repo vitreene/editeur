@@ -126,23 +126,47 @@ export let ProxysStore = new UploadFS.store.Local({
   },
   copyTo: [VignettesStore],
   onFinishUpload : function(file) {
+  /*
+    mettre à jour le tableau proxy :
+    si zone existe, alors mettre à jour src ;
+    sinon, ajouter {zone,src} au tableau.
 
-    /* à mettre à jour
-      proxys:[
-        {ecran: 'ecran1', link: file.url}
+    -> il faut le faire en deux fois, car mongo refuse upsert sur un tableau.
+
+      proxy:[
+        {zone: 'ecran01', src: file.url}
       ]
      */
+    //console.log('FILE', file);
+    let updateProxy;
+    const {proxy} = Ikonos.findOne({_id:file.originalId}) ;
+    const {transform:{zone}, url:src} = file ;
+    const hasZone = proxy.filter ( x => x.zone === zone) ;
 
-    Ikonos.update( file.originalId, {
-      $set:{
+    //console.log('proxy :', proxy);
+    // proxy : [ { zone: 'ecran012', src: 'http://....jpg' } ]
+    //console.log('hasZone', hasZone);
+
+    if(hasZone.length>0){
+      updateProxy = proxy.map( x =>
+        {if (x.zone === zone) x.src = src ; return x;}
+      );
+    } else {
+      //console.log('--> src', src);
+      // --> src =  "http://localhost:3000/..._n.jpg"
+      //console.log('--> zone', zone);
+      // --> zone = ecran01
+      updateProxy = proxy.concat({zone,src});
+    }
+      //console.log('updateProxy :', updateProxy);
+
+    Ikonos.update(
+      { _id:file.originalId},
+      { $set:{
         transform:'',
-        "proxy": file.url
+        proxy: updateProxy
       }
-    }, (err,res) => {
-        if (err) console.log(err);
-        // else console.log('RES', file._id, file.originalId) ;
-      }
-    );
+    }, errRes);
 
     // nettoyer Proxy apres la copie
     Proxys.update(file._id, {
@@ -151,10 +175,17 @@ export let ProxysStore = new UploadFS.store.Local({
         vignette:'',
         preview:'',
         transform:''
-      }});
+      }
+    }, errRes);
 
-    // copie vers Vignette,
-    // update lien
-    // callback link ?
-  }
+    }
+
+      // copie vers Vignette,
+      // update lien
+      // callback link ?
 });
+
+function errRes(err,res) {
+    if (err) console.log(err);
+    else console.log('RES', res) ;
+  }

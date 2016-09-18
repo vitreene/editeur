@@ -37,14 +37,11 @@ export function uploadFile(dispatch,vignette) {
         name: file.name,
         size: file.size,
         type: file.type,
-/*
-        transform : {
-          pox: 100,
-          poy: 50,
-          rot: 45,
-          ech: 1.66
-        }
- */
+        vignette:'',
+        preview:'',
+        proxy:[],
+        cerne:{},
+        transform:{}
     };
 
 /*
@@ -119,78 +116,6 @@ export function uploadFile(dispatch,vignette) {
 }
 
 
-/*
-bien tenté, mais ca marche pas. les liens ne sont pas encore disponible lorsque la requete est envoyée.
-tenter plutot un observable sur la vue Liste de vues qui trackera les modifications sur Ikonos.
-/////
-export function updateVignetteFromServer (dispatch, vignette, file_id) {
-  // console.log('EDITSEQthis', arguments);
-  Meteor.call( 'updateVignetteFromServer', file_id,
-    (error, imgSRC) => {
-      if (error) { // handle error
-        console.log('error',error);
-        }
-      else {
-        console.log('imgSRC', imgSRC );
-
-        vignette.vignette = vignetteIMG.src ;
-
-        // console.log('initialState',initialState);
-        dispatch({
-          type: UPDATE_VIGNETTE,
-          vignette
-        });
-
-      }
-    }
-   ) ;
-}
-*/
-
-/*
-
-*/
-
-/*
-function preview (file){
-  console.log('file', file,file.name, file._id );
-
-  const img = processImage(
-    file,
-    1000, 1000, 0.5,
-    createPreview.bind(null,file.name, file._id )
-  ) ;
-  console.log('IMG', img);
-  return img ;
-}
-
-function createPreview(name,img_ID, data){
-  console.log( 'img_ID', img_ID);
-
-    const previewFile = dataURLToBlob(data) ;
-
-    const upPreview = new UploadFS.Uploader({
-      store: ProxysStore,
-      adaptive: true,
-      data: previewFile,
-      // The document to save in the collection
-      file: {
-          name: name,
-          size: previewFile.size,
-          type: previewFile.type,
-          originalStore : "ikonos",
-          originalId : img_ID,
-      },
-      onComplete: function (file) {
-        console.log('preview ' + file.name + ' à été chargée');
-      }
-    });
-// console.log('upPreview', upPreview );
-    upPreview.start() ;
-
-    return data ;
-}
-*/
 
 
 ////////// HELPERS

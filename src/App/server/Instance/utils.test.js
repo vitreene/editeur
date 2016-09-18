@@ -1,11 +1,17 @@
-import { chai } from 'meteor/practicalmeteor:chai';
-//import chai  from 'chai';
+//import { chai } from 'meteor/practicalmeteor:chai';
+
+import chai  from 'chai';
 //import { shallow } from 'enzyme';
 
-import  {aDansB, aSomeB, aTousB} from 'App/Instance/utils';
+import  {aDansB, aSomeB, aTousB, getPosition} from 'App/server/Instance/utils';
+// import {termes} from 'App/server/Instance/reglages'
 
 console.log("anybody out there ?");
 //import 'App/server/edit-vue-methods.js'
+
+
+
+/////////////////////
 
 const a = ["titre", "description", "ikono_id", "prix_promo", "offre", "prix", "accroche", "bloc-titre", "bloc-prix", "bloc-message","bloc-zone"] ;
 
@@ -36,8 +42,6 @@ describe('a est dans b', function() {
   });
 
 });
-
-
 
 describe('a egale b', function() {
 
@@ -103,15 +107,70 @@ describe('certains de a sont dans b', function() {
 
  });
 
+describe('attribue le style de position', function() {
 
-/*
-*/
+   it("position -> toto-position-HA ", function() {
+     const item = 'toto' ;
+     const metas = {
+       source:{
+         position:'haut',
+         lien: false
+       }
+     } ;
+     const res = getPosition(item, metas) ;
+     console.log(res);
+     chai.assert.strictEqual(
+       res,
+     'toto-position-HA'
+     );
+   });
+   it("lien est ignoré -> toto-position/ * /-HA ", function() {
+     const item = 'toto' ;
+     const metas = {
+       source:{
+         position:'haut',
+         lien:true // false
+       }
+     };
+     const res = getPosition(item, metas);
+     chai.assert.strictEqual( res, 'toto-position-HA' ) ;
+   });
+
+
+   it("position -> description-position-lien-BA ", function() {
+     const item = 'description' ;
+     const metas = {
+       source:{
+         position:'bas',
+         lien:true
+       }
+     };
+     chai.assert.equal(
+       getPosition(item, metas),
+     'description-position-lien-BA'
+     );
+   });
+
+   it("ikono_id n'est pas traité ", function() {
+     const item = 'ikono_id' ;
+     const metas = {
+       source:{
+         position:'bas',
+         lien:false
+       }
+     };
+     chai.assert.isNotOk(getPosition(item, metas) ) ;
+   });
+
+  });
+
+
 describe('Mocha', function () {
   it('il fonctionne', function () {
     // This code will be executed by the test driver when the app is started
     // in the correct mode
   })
-})
+});
 /*
   describe('Hello', function() {
     it('should start with Hello', function() {

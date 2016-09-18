@@ -11,18 +11,20 @@ import Sources from 'App/collections/sources'
 
 Meteor.methods({
 
-  getVue(_id){
+  getVue(_id, option){
+    // option est 'complet' ou undefined
     check(_id, String);
     const vue = Vues.findOne({_id:_id}) ;
-    if (vue===undefined)
+
+    if ('undefined'===vue)
       try {
         throw new Error('Il y a pas d‘enregistrement avec cet id');
       } catch (e) {
         console.log('id : ', _id);
         console.log(e.name + ': ' + e.message);
       }
-    const {source_id,metas_id,ikono_id} = vue ;
 
+    const {source_id,metas_id,ikono_id} = vue ;
     // console.log('vue',source_id,metas_id,ikono_id);
 
     const source = Sources.findOne({_id:source_id}) ;
@@ -31,13 +33,23 @@ Meteor.methods({
 
     // console.log('VUE', vue);
 
+    if ('vue'===option) return {
+      [_id]:{
+        vue,
+        source,
+        ikono,
+        metas
+      }
+    };
+
     return {
       [_id]:{
         source,
         ikono,
         metas
       }
-    }
+    };
+
   },
   saveVue(vue){
     //check(vue, Object)

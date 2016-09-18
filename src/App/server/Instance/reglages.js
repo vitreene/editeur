@@ -129,6 +129,12 @@ export let profils = [
       'titre',
     ]}
   },
+  {
+    nom : 'defaut',
+    composants : {
+      tous:[]
+    }
+  },
 
 ]
 

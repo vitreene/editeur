@@ -9,14 +9,17 @@ export function reCompose(composants){
 }
 
 
-// definit les termes de Position
+// definit les termes pour Position
 export function getPosition(item, metas){
-  if (item==='ikono_id') {
-    item = 'ikono' ;
-    const {placement} = metas.ikono ;
-    return `${item}-${placement}` ;
-  };
+  if (item==='ikono_id') return ;
+  /*
+    {
+      item = 'ikono' ;
+      const {placement} = metas.ikono ;
+      return `${item}-${placement}` ;
+    };
 
+    */
   const {position, lien} = metas.source ;
   const pos = termes.position[position] ;
   const lier = (item==='description' && lien) ? 'lien-' : '' ;

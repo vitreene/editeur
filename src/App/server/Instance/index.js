@@ -35,14 +35,18 @@ import processSource from 'App/server/Instance/process-source'
 import processBlocs  from 'App/server/Instance/process-blocs'
 import processIkono  from 'App/server/Instance/process-ikono'
 
+//temp : nom de la zone de diffusion
+const zone = 'ecran01' ;
+
 
 export default function Instance(_id) {
-  const vue = Meteor.call('getVue', _id) ;
+  // ->  source, ikono, metas, + vue
+  const vue = Meteor.call('getVue', _id, 'vue') ;
   return creerInstance(vue[_id]) ;
 }
 
 
-function  creerInstance( { source, ikono, metas } ){
+function  creerInstance( { source, ikono, metas, vue } ){
 
   if (Meteor.isClient) console.log('INSTANCE est sur CLIENT');
   if (Meteor.isServer) console.log('INSTANCE est sur SERVEUR');
@@ -50,6 +54,13 @@ function  creerInstance( { source, ikono, metas } ){
   // identifier le modele selon la source
   const modele = findModele(source, profils) ;
   //console.log('modele', modele);
+
+  // les options venant de Vue
+  const opt = {
+    _id: vue._id,
+    modele: modele.nom,
+    duree: vue.duree || 2600,
+  };
 
   // traiter la source
   const instanceSource = processSource( modele, source, metas ) ;
@@ -60,7 +71,7 @@ function  creerInstance( { source, ikono, metas } ){
   //console.log('instanceBlocs', instanceBlocs);
 
   // traiter l'image
-  const instanceIkono = processIkono(ikono, metas) ;
+  const instanceIkono = processIkono(ikono, metas, zone) ;
   //console.log('instanceIkono', instanceIkono);
 
   // assembler le résultat
@@ -70,7 +81,7 @@ function  creerInstance( { source, ikono, metas } ){
     instanceIkono
   ])
   .then(([source,blocs,ikono]) => {
-    return {source,blocs,ikono}
+    return Object.assign({}, source,blocs,ikono, opt)
   })
   .catch( err =>
     console.log('La création de l’instance à échoué', err)

@@ -43,8 +43,9 @@ const SourceMetasSchema =  new SimpleSchema({
 })
 
 const IkonoPositionMetasSchema =  new SimpleSchema({
-  ecran: {type:String},
+  zone: {type:String}, // zone composite ou ecran
   placement: {type:String}, // cover, contains, libre
+  pristine: {type:Boolean}, //indique si l'image a été manipulée
   pox: {type:Number}, // deplacement horizontal
   poy : {type:Number}, // deplacment vertical
   rot : {type:Number}, // rotation en degrés
@@ -69,6 +70,7 @@ const IkonoMetasSchema =  new SimpleSchema({
   ecrans : {type:[IkonoPositionMetasSchema]},
 })
 */
+
 const AccrocheMetasSchema =  new SimpleSchema({
   // à viendre
 })
@@ -82,7 +84,7 @@ export let MetasSchema = new SimpleSchema({
 });
 
 const IkonoPubschema = new SimpleSchema({
-  src: {type:String},  // URL, optimisée
+
   x: {type:String}, // point focal : x
   y : {type:String},// point focal : y
   rx : {type:String},// longueur de l'axe x du cerne
@@ -95,5 +97,7 @@ export let IkonoSchema = new SimpleSchema({
   src: {type:String},  // URL, original
   vignette: {type:String}, // source URL sur les listes,
   preview: {type:String}, // source URL dans l'éditeur,
-  proxy: {type:IkonoPubschema}, // optimisé pour la Projection
+  "proxy.$.src": {type:String},  // URL, optimisée
+  "proxy.$.zone":{type:String},  // zone de projection
+  cerne: {type:IkonoPubschema},
 })

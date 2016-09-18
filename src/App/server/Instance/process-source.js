@@ -11,12 +11,14 @@ function processSource( {composants, nom}, source, metas ){
   let out = {} ;
   // donner les definitions precises des termes
   composant.map(function (item) {
-     out[item] = {
-       text : this[item],
-       position: getPosition(item, metas),
-       aspect : `${nom}-${item}`,
-       transition : '' // ajouter
-     } ;
+    //ignorer ikono_id, ikono est traité à part.
+    if (item==='ikono_id') return null ;
+    out[item] = {
+      text : this[item],
+      position: getPosition(item, metas),
+      aspect : `${nom}-${item}`,
+      transition : '' // ajouter
+    } ;
   },source) ;
 
   return out ;
