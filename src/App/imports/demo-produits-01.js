@@ -33,13 +33,13 @@ export const composite = {
       ordre :['jus','soda','pago'],
       vuesData : [
         {
-          id:'jus',
-          template:'produit',
+          id:'jus', // _id
+          template:'produit', // -> modele
           duree:2600,
           //
           visuel:{
             src: './icono/DDW_868782.jpg',
-            className:'animated slideInRight',
+            className:'animated slideInRight', // supp
           },
           bloctitre:'mistral-bloc-titre',
           titre:{

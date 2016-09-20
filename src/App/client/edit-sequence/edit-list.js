@@ -11,25 +11,27 @@ import {
  class EditList extends Component {
 
   componentWillMount() {
-    let { sequence_id, initialState } = this.props ;
-  //  console.log('this.props', sequence_id, initialState);
-  if (!this.props.vignettes.length)
-    initialState( sequence_id ) ;
-  }
+    const { dispatch, sequence_id, initialState } = this.props ;
+    //  console.log('this.props', sequence_id, initialState);
+    if (!this.props.vignettes.length)
+      initialState( dispatch, sequence_id ) ;
+    }
 
   onChange(order){
-    this.props.orderList( order.filter( x=> x!=='ajouterBtn') )
+    const {dispatch,orderList, params:{sequence_id}} = this.props;
+    orderList( dispatch, order.filter( x=> x!=='ajouterBtn'), sequence_id ) ;
   }
 
   onAdd(){
     const {
+      dispatch,
       addVue,
       sequence_id,
       vignettes,
       router
      } = this.props ;
 
-    addVue(sequence_id, vignettes.length, router)
+    addVue(dispatch, sequence_id, vignettes.length, router)
   }
 
   onToggle(_id){ this.props.toggleVue( _id) }

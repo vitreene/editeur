@@ -17,7 +17,7 @@ function processSource( {composants, nom}, source, metas ){
       text : this[item],
       position: getPosition(item, metas),
       aspect : `${nom}-${item}`,
-      transition : '' // ajouter
+      transition : '' // tempo est défini dans séquence
     } ;
   },source) ;
 

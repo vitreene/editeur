@@ -12,11 +12,11 @@ import newVue from  'App/client/reducers/nouvelle-vue'
 
 // ajouter error, result en retour de meteor.call
 
-export function orderList(dispatch, list){
+export function orderList(dispatch, list, sequence_id){
 //  console.log('orderList(list)', list);
 
   return dispatch( () => {
-    Meteor.call('orderList', list) ;
+    Meteor.call('orderList', list, sequence_id) ;
     return dispatch({
       type: ORDER_VIGNETTES,
       list

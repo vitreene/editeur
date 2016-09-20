@@ -42,7 +42,7 @@ class EditSequence extends Component {
 function mapStateToProps(state) {
   return {
     vignettes: state.vignettes || [],
-    sequence_id : 'liste',
+    sequence_id : sequence_id,
     editMode : false,
     isPlaying : true
     }
@@ -50,11 +50,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addVue: (sequence_id, length,history)=>{addVue(dispatch,sequence_id, length,history)},
+    dispatch,
+    addVue,
+    //addVue: (sequence_id, length,history)=>{addVue(dispatch,sequence_id, length,history)},
     editVue: (_id, history)=>{editVue(dispatch, _id, history)},
-    orderList: (list)=>{orderList(dispatch,list)},
+    // orderList: (list)=>{orderList(dispatch,list)},
+    orderList,
     toggleVue: (_id)=>{toggleVue(dispatch,_id)},
-    initialState: (sequence_id)=> {initialState(dispatch,sequence_id)}
+    //initialState: (sequence_id)=> {initialState(dispatch,sequence_id)}
+    initialState
     }
 }
 

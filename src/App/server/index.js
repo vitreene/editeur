@@ -1,5 +1,9 @@
 //import { Meteor } from 'meteor/meteor'
 
+import Sequences from 'App/collections/sequences'
+import Zones from 'App/collections/zones'
+import ListeVues from 'App/collections/liste-vues'
+
 //import {source} from 'App/imports/import-sources'
 //import Sources from 'App/collections/sources'
 import  'App/collections/ikonos'

@@ -4,7 +4,7 @@ import editSequence from 'App/client/edit-sequence';
 import editVue from 'App/client/edit-vue';
 // import Instance from 'App/server/Instance';
 
-
+const sequence_id = 'liste' ;
 
 export class AppRoutes extends Component {
 
@@ -14,7 +14,7 @@ export class AppRoutes extends Component {
         <Router history={browserHistory} >
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
-          <Route path="sequence" component={editSequence} />
+          <Route path="sequence/:sequence_id" component={editSequence} />
           <Route path="sequence/vue/:_id" component={editVue} />
           <Route path="instance" component={ShowInstance} />
       </Route>
@@ -37,7 +37,7 @@ class Home extends Component {
     return(
       <div>
         <h2>  Bienvenue dans Diyapo </h2>
-        <Link to="/sequence">editer la sequence</Link>
+        <Link to={'/sequence/' + sequence_id }>editer la sequence</Link>
          {this.props.children}
      </div>
     )

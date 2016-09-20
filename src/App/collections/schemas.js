@@ -1,5 +1,14 @@
 import {SimpleSchema} from 'meteor/aldeed:simple-schema'
 
+export let SequenceSchema = new SimpleSchema({
+  _id:{type:String}, // mongoId
+  tempo:{type:String},
+  zone:{type:String}, // ou tableau ?
+
+
+});
+
+
 export let VueSchema = new SimpleSchema({
   _id:{type:String}, // mongoId
   ordre: {type:Number},
@@ -101,3 +110,19 @@ export let IkonoSchema = new SimpleSchema({
   "proxy.$.zone":{type:String},  // zone de projection
   cerne: {type:IkonoPubschema},
 })
+
+
+export let onAirSchema = new SimpleSchema({
+  play: {type:Boolean},
+  pointeur: {type:Number},
+  currentID:{type:String},
+  nextID:{type:String},
+  abortNext:{type:String}
+});
+
+export let ProjectionsSchema = new SimpleSchema({
+  _id:{type:String}, // mongoId
+  onAir:{type:onAirSchema}, // -> Projection
+  ordre :{type:[String]},
+  vuesData :{type:[Object], blackbox: true } // -> Projection
+});
