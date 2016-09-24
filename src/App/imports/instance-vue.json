@@ -6,59 +6,59 @@
         "text": "ma vignette de test",
         "position": "titre-position-BA",
         "aspect": "produit-titre",
-        "transition": ""
+        "transition": "titre-vivace"
     },
     "prix": {
         "text": 50,
         "position": "prix-position-BA",
         "aspect": "produit-prix",
-        "transition": ""
+        "transition": "prix-vivace"
     },
     "description": {
         "text": "Test de la source",
         "position": "description-position-lien-BA",
         "aspect": "produit-description",
-        "transition": ""
+        "transition": "description-vivace"
     },
     "prix_promo": {
         "text": 49.9,
         "position": "prix_promo-position-BA",
         "aspect": "produit-prix_promo",
-        "transition": ""
+        "transition": "prix_promo-vivace"
     },
     "offre": {
         "text": "trois pour le prix d’un !",
         "position": "offre-position-BA",
         "aspect": "produit-offre",
-        "transition": ""
+        "transition": "offre-vivace"
     },
     "bloc-titre": {
         "position": "bloc-titre-position-BA",
         "aspect": "produit-bloc-titre",
-        "transition": ""
+        "transition": "bloc-titre-vivace"
     },
     "bloc-prix": {
         "position": "bloc-prix-position-BA",
         "aspect": "produit-bloc-prix",
-        "transition": ""
+        "transition": "bloc-prix-vivace"
     },
     "bloc-message": {
         "position": "bloc-message-position-BA",
         "aspect": "produit-bloc-message",
-        "transition": ""
+        "transition": "bloc-message-vivace"
     },
     "bloc-offre": {
         "position": "bloc-offre-position-BA",
         "aspect": "produit-bloc-offre",
-        "transition": ""
+        "transition": "bloc-offre-vivace"
     },
     "bloc-zone": {
         "position": "bloc-zone-position-BA",
         "aspect": "produit-bloc-zone",
-        "transition": ""
+        "transition": "bloc-zone-vivace"
     },
     "visuel": {
-        "src": "http://localhost:3000/ufs/proxys/cz3qYfNGEMrKidN2T/12631408_783612511743183_4080592185077407688_n.jpg",
+        "src": "http://localhost:3000/ufs/proxys/sYdTWYMR6Chuc88cz/12631408_783612511743183_4080592185077407688_n.jpg",
         "placement": "cover"
     }
 }

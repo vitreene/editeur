@@ -15,7 +15,7 @@ export class AppRoutes extends Component {
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
           <Route path="sequence/:sequence_id" component={editSequence} />
-          <Route path="sequence/vue/:_id" component={editVue} />
+          <Route path="sequence/:sequence_id/:_id" component={editVue} />
           <Route path="instance" component={ShowInstance} />
       </Route>
     </Router>

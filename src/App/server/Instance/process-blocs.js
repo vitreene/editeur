@@ -8,7 +8,7 @@ import {
 
 // definit quels blocs vont englober les éléments de Source
 export default
-function processBlocs({composants, nom}, metas) {
+function processBlocs({composants, nom}, metas, tempo) {
 
   const composant = reCompose(composants) ;
   let blocs = [] ; // recueille la liste des blocs
@@ -37,7 +37,7 @@ function processBlocs({composants, nom}, metas) {
     out[bloc] = {
       position: getPosition(bloc, metas),
       aspect : `${nom}-${bloc}`,
-      transition : ''
+      transition : `${bloc}-${tempo}`
     };
   } )
 

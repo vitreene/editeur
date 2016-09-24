@@ -34,11 +34,14 @@ import {
     addVue(dispatch, sequence_id, vignettes.length, router)
   }
 
-  onToggle(_id){ this.props.toggleVue( _id) }
+  onToggle(_id){
+    const {dispatch,toggleVue, params:{sequence_id}} = this.props;
+    toggleVue(dispatch, _id, sequence_id) ;
+  }
 
   onEditVue(_id){
-    const {router,editVue} = this.props ;
-    editVue(_id, router) ;
+    const {dispatch,router,editVue, params:{sequence_id} } = this.props ;
+    editVue(dispatch, _id, sequence_id, router) ;
   }
 
   render() {

@@ -52,13 +52,15 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     addVue,
-    //addVue: (sequence_id, length,history)=>{addVue(dispatch,sequence_id, length,history)},
-    editVue: (_id, history)=>{editVue(dispatch, _id, history)},
-    // orderList: (list)=>{orderList(dispatch,list)},
+    editVue,
     orderList,
-    toggleVue: (_id)=>{toggleVue(dispatch,_id)},
-    //initialState: (sequence_id)=> {initialState(dispatch,sequence_id)}
+    toggleVue,
     initialState
+    //addVue: (sequence_id, length,history)=>{addVue(dispatch,sequence_id, length,history)},
+    // editVue: (_id, history)=>{editVue(dispatch, _id, history)},
+    // orderList: (list)=>{orderList(dispatch,list)},
+    //toggleVue: (_id)=>{toggleVue(dispatch,_id)},
+    //initialState: (sequence_id)=> {initialState(dispatch,sequence_id)}
     }
 }
 

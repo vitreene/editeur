@@ -8,7 +8,7 @@ import {
 
 
 export function saisie(dispatch,_id, name, value) {
-  console.log('ARGUMENTS', arguments);
+//  console.log('ARGUMENTS', arguments);
   return dispatch({
     type : SAISIE,
     saisie : {_id, name, value}
@@ -69,7 +69,7 @@ export function saveVue(dispatch, _id, vue, vignette, callback){
           vue
         });
 
-        Meteor.call('saveVignette',
+        Meteor.call('saveVueListe',
          _id,
         Object.assign({},
           vignette,

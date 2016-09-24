@@ -5,7 +5,7 @@ import {
 
 // definit les attributs de chaque élément de Source
 export default
-function processSource( {composants, nom}, source, metas ){
+function processSource( {composants, nom}, source, metas, tempo ){
   // composant = tous ou requis+facultatif
   const composant = reCompose(composants) ;
   let out = {} ;
@@ -17,7 +17,7 @@ function processSource( {composants, nom}, source, metas ){
       text : this[item],
       position: getPosition(item, metas),
       aspect : `${nom}-${item}`,
-      transition : '' // tempo est défini dans séquence
+      transition : `${item}-${tempo}` // tempo est défini dans séquence
     } ;
   },source) ;
 

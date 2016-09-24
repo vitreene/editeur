@@ -75,24 +75,28 @@ class EditVueContainer extends Component {
 
     // si submit un formulaire vide -> erreur !
     // formulaire vide = annuler.
+    // utiliser une valeur "pristine"
 
-    const path = '/sequence' ;
+    const {dispatch, _id, vue, saveVue, vignette, params:{sequence_id} } = this.props ;
+
+    const path = '/sequence/'+sequence_id ;
     const callback = ()=>this.context.router.push(path) ;
-    const {_id, vue, saveVue, vignette,dispatch} = this.props ;
     saveVue(dispatch,_id, vue,vignette, callback ) ;
 
     console.log('--> SUBMIT') ;
   }
 
   render() {
+    console.log('--PROPS', this.props );
     if (!this.props.vue)
       return(<h1> Chargement…</h1>) ;
 
-    const {_id, vue:{ikono}} = this.props ;
+    const {_id, vue:{ikono}, params:{sequence_id} } = this.props ;
       return (
         <div>
         <EditVueTop
-          onClick={this.onClick}
+          onClick = {this.onClick}
+          sequence_id = {sequence_id}
         />
         <EditVue
           ref={'editvue'}
@@ -160,10 +164,10 @@ export default connect(
 
 ////////////////////////////////////
 // barres d'etat provisoires
-const EditVueTop = ({onClick}) =>{
+const EditVueTop = ({onClick, sequence_id}) =>{
   return(
     <Toolbar>
-      <Link to="/sequence">retour</Link>
+      <Link to={"/sequence/"+sequence_id}>retour</Link>
       <Space  auto  x={1} />
       <NavItem onClick={onClick} >
         PUBLIER

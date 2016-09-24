@@ -24,7 +24,7 @@ export default function  vignettesReducer (state = [], action) {
       return toggleVisibility(state,action._id);
 
     case EDIT_VUE :
-      return editVue(state,action._id,action.history);
+      return editVue(state,action._id, action.sequence_id, action.history);
 
     case ADD_VUE :
       return addVue(state,action.vignette);
@@ -79,8 +79,8 @@ function addVue(state, vignette) {
   return state.concat([vignette]) ;
 }
 
-function editVue( state, _id, history) {
-  history.push('/sequence/vue/' + _id );
+function editVue( state, _id, sequence_id, history) {
+  history.push('/sequence/' + sequence_id + '/' + _id );
   return state ;
 }
 

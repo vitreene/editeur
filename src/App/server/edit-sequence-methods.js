@@ -16,7 +16,12 @@ function findListeVue(sequence_id) {
 
 Meteor.methods({
 
-  getCurrentSequence(sequence_id = 'liste'){
+  getSequence(sequence_id){
+    check(sequence_id, String);
+  return Sequences.findOne({_id:sequence_id}) ;
+  },
+
+  getCurrentSequence(sequence_id){
     /*
     recuperer la liste dans Sequences ;
     recupérer les vues,
@@ -65,25 +70,37 @@ Meteor.methods({
     ListeVues.update({_id:liste_id}, {$set:{liste:newOrder}});
   },
 
-  toggleVue(_id){
+  toggleVue(_id, sequence_id){
     check(_id, String) ;
-    
+    check(sequence_id, String);
+
     console.log('TOGGLE_VISIBILITY', _id);
 
-    const visible = Vues.findOne({_id:_id}).visible ;
-    Vues.update( {_id:_id}, {$set: {visible: !visible} }) ;
+    const {liste_id} = Sequences.findOne({_id:sequence_id}, {fields:{liste_id:1}} );
+
+    const {liste} = ListeVues.findOne(
+      { _id:liste_id, 'liste.vue_id':_id },
+      { fields:{'liste.$':1} }
+    ) ;
+    const visible = liste[0].visible ;
+
+    ListeVues.update(
+      { _id:liste_id, 'liste.vue_id':_id },
+      { $set:{'liste.$.visible' :!visible} }
+    );
   },
 
-  saveVignette(_id, vignette, ikono_id) {
-    // mettre à jour la vignette
+// ? c'est updateSequence plutot ?
+  saveVueListe(_id, vueListe, ikono_id) {
+    // mettre à jour la vue-liste
     const vgn = Ikonos.findOne(ikono_id) ;
 
     console.log('ikono_id, vgn',ikono_id, vgn );
 
-    vignette.vignette = vgn.vignette ;
-    VueSchema.clean(vignette) ;
-    check(vignette, VueSchema) ;
-    return Vues.upsert(vignette._id, vignette) ;
+    vueListe.vignette = vgn.vignette ;
+    VueSchema.clean(vueListe) ;
+    check(vueListe, VueSchema) ;
+    return Vues.upsert(vueListe._id, vueListe) ;
   }
 
 })

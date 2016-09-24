@@ -24,11 +24,11 @@ export function orderList(dispatch, list, sequence_id){
   })
 }
 
-export function toggleVue(dispatch, _id){
+export function toggleVue(dispatch, _id, sequence_id){
   console.log('TOGGLE_VISIBILITY', _id);
 
   return dispatch( () => {
-    Meteor.call('toggleVue', _id) ;
+    Meteor.call('toggleVue', _id, sequence_id) ;
     return dispatch({
       type: TOGGLE_VISIBILITY,
       _id: _id
@@ -40,7 +40,7 @@ export function addVue(dispatch,sequence_id,length, history) {
 //console.log('add vue history', history);
 
   const vue = newVue(sequence_id, length) ;
-  const {vignette, ...vueEdit} = vue ;
+  const {vignette, vignette:{_id}, ...vueEdit} = vue ;
 
   // console.log("NEWVUE", vueEdit );
 
@@ -56,18 +56,20 @@ export function addVue(dispatch,sequence_id,length, history) {
 
   return dispatch({
       type : EDIT_VUE,
-      history : history,
-      _id:vignette._id
+      history,
+      _id,
+      sequence_id
   });
 }
 
-export function editVue(dispatch, _id, history) {
+export function editVue(dispatch, _id, sequence_id,history) {
 //  const action ={type : EDIT_VUE, _id:_id};
 //  console.log('EDITER la Vue', history, _id);
 //  history.push(`/edit-vue/{_id}`);
   return dispatch({
     type : EDIT_VUE,
     history,
-    _id
+    _id,
+    sequence_id
   });
 }

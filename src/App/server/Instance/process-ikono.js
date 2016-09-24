@@ -28,11 +28,11 @@ export default function processIkono(ikono, metas, zone) {
     pivY : pivY || false,
 
     pristine : pristine || false,
-    zone: zone || 'ecran01',
+    zone: zone, // || 'ecran01',
     placement: placement || "libre"
   };
-console.log('placement', placement, metas );
-  /*
+  //console.log('placement', placement, metas );
+/*
   const transform = {
     pristine: false,
     zone:'ecran01',
@@ -60,6 +60,7 @@ console.log('placement', placement, metas );
     la methode copy ne permet pas de transferer des parametres supplementaires.
     La seule façon est de modifier l'enregistrement Ikono pour y rajouter les parametres, les lire, puis les effacer ensuite.
     */
+    
   return new Promise( (resolve, reject) => {
     // si l'image n'a pas été manipulée, renvoyer proxy[zone]
     if (pristine) {

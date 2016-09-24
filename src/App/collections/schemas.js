@@ -11,21 +11,22 @@ export let SequenceSchema = new SimpleSchema({
 
 export let VueSchema = new SimpleSchema({
   _id:{type:String}, // mongoId
-  ordre: {type:Number},
-  visible : {type:Boolean},
+  //ordre: {type:Number},
+  //visible : {type:Boolean},
   titre: {
     type: String,
     min:3,
     max:24
   },
   vignette: {type:String}, // idem ikono
+  couleur:{ type:String, optional: true },
+  
   sequence_id: {type:String},
   source_id: {type:String},
   metas_id: {type:String},
   //ikono_id: {type:String}, -> ikono est dans source
   modele: {type:String},
   skin: {type:String, optional: true },
-  couleur:{ type:String, optional: true }
 });
 
 export let SourceSchema = new SimpleSchema({

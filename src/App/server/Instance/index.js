@@ -36,21 +36,24 @@ import processBlocs  from 'App/server/Instance/process-blocs'
 import processIkono  from 'App/server/Instance/process-ikono'
 
 //temp : nom de la zone de diffusion
-const zone = 'ecran01' ;
+// const zone = 'ecran01' ;
 
 
-export default function Instance(_id) {
+export default function Instance(_id, sequence_id='liste') {
   // ->  source, ikono, metas, + vue
   const vue = Meteor.call('getVue', _id, 'vue') ;
-  return creerInstance(vue[_id]) ;
+  const seq = Meteor.call('getSequence', sequence_id ) ;
+  return creerInstance(vue[_id], seq) ;
 }
 
 
-function  creerInstance( { source, ikono, metas, vue } ){
+function  creerInstance( { source, ikono, metas, vue }, seq ){
 
   if (Meteor.isClient) console.log('INSTANCE est sur CLIENT');
   if (Meteor.isServer) console.log('INSTANCE est sur SERVEUR');
 
+  const {zone, tempo, rythme} = seq ;
+  const tempoTerme = termes.tempo[tempo] ;
   // identifier le modele selon la source
   const modele = findModele(source, profils) ;
   //console.log('modele', modele);
@@ -59,15 +62,15 @@ function  creerInstance( { source, ikono, metas, vue } ){
   const opt = {
     _id: vue._id,
     modele: modele.nom,
-    duree: vue.duree || 2600,
+    duree: vue.duree || 2600, // + rythme
   };
 
   // traiter la source
-  const instanceSource = processSource( modele, source, metas ) ;
+  const instanceSource = processSource( modele, source, metas, tempoTerme ) ;
   //console.log('instanceSource', instanceSource);
 
   // traiter les blocs de placement
-  const instanceBlocs = processBlocs( modele, metas ) ;
+  const instanceBlocs = processBlocs( modele, metas, tempoTerme ) ;
   //console.log('instanceBlocs', instanceBlocs);
 
   // traiter l'image

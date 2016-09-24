@@ -11,8 +11,9 @@ import Sources from 'App/collections/sources'
 
 Meteor.methods({
 
-  getVue(_id, option){
-    // option est 'complet' ou undefined
+  getVue(_id, etendu){
+    // option est 'vue' ou undefined
+
     check(_id, String);
     const vue = Vues.findOne({_id:_id}) ;
 
@@ -33,7 +34,7 @@ Meteor.methods({
 
     // console.log('VUE', vue);
 
-    if ('vue'===option) return {
+    if ('vue'===etendu) return {
       [_id]:{
         vue,
         source,
