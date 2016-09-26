@@ -13,7 +13,7 @@ import newVue from  'App/client/reducers/nouvelle-vue'
 // ajouter error, result en retour de meteor.call
 
 export function orderList(dispatch, list, sequence_id){
-//  console.log('orderList(list)', list);
+  console.log('orderList', list, sequence_id);
 
   return dispatch( () => {
     Meteor.call('orderList', list, sequence_id) ;
@@ -40,7 +40,7 @@ export function addVue(dispatch,sequence_id,length, history) {
 //console.log('add vue history', history);
 
   const vue = newVue(sequence_id, length) ;
-  const {vignette, vignette:{_id}, ...vueEdit} = vue ;
+  const {vignette, vignette:{vue_id}, ...vueEdit} = vue ;
 
   // console.log("NEWVUE", vueEdit );
 
@@ -57,19 +57,19 @@ export function addVue(dispatch,sequence_id,length, history) {
   return dispatch({
       type : EDIT_VUE,
       history,
-      _id,
+      vue_id,
       sequence_id
   });
 }
 
-export function editVue(dispatch, _id, sequence_id,history) {
+export function editVue(dispatch, vue_id, sequence_id, history) {
 //  const action ={type : EDIT_VUE, _id:_id};
 //  console.log('EDITER la Vue', history, _id);
 //  history.push(`/edit-vue/{_id}`);
   return dispatch({
     type : EDIT_VUE,
     history,
-    _id,
+    vue_id,
     sequence_id
   });
 }

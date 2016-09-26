@@ -6,6 +6,7 @@ import {Ikonos} from 'App/collections/ikonos'
 import {SourceSchema} from 'App/collections/schemas'
 import Sources from 'App/collections/sources'
 
+import {emptyVues} from 'App/client/reducers/vue-empty'
 /*
 */
 
@@ -16,6 +17,8 @@ Meteor.methods({
 
     check(_id, String);
     const vue = Vues.findOne({_id:_id}) ;
+
+console.log('new VUE', vue );
 
     if ('undefined'===vue)
       try {
@@ -52,11 +55,20 @@ Meteor.methods({
     };
 
   },
-  saveVue(vue){
+
+  saveVue(vue, _id, sequence_id){
     //check(vue, Object)
 
     //console.log('VUE',vue);
     const {source,metas,ikono} = vue ;
+    const vueUp = {
+      sequence_id: sequence_id,
+      source_id: source._id,
+      metas_id: metas._id,
+      // il manque :
+      modele:'',
+      skin: '',
+  };
 
     SourceSchema.clean(source) ;
     //console.log('Source clean', source);
@@ -65,27 +77,8 @@ Meteor.methods({
 
 // clean, puis check
     Metas.upsert(metas._id, metas) ;
+
+    Vues.upsert( {_id}, {$set:vueUp})
   },
 
-
-/// deprecié
-/*
-  updateVignetteFromServer(file_id){
-    check(file_id, String);
-
-    const uploaded = Ikonos.findOne(file_id) ;
-    const {preview,vignette} = uploaded ;
-
-    console.log('uploaded ',uploaded);
-    console.log('uploaded :vignette',vignette, 'preview',preview);
-
-    return {
-      preview,
-      vignette
-    }
-  }
-*/
 })
-
-/*
-*/

@@ -17,7 +17,7 @@ projection: {
     play,
     currentID
   },
-  ordre : [ ListeVues (sequence_id) ]
+  ordre : [ CardVues (sequence_id) ]
 }
 */
 
@@ -49,7 +49,7 @@ export default function Projection(sequence_id='liste') {
 
   const seq = Meteor.call('getSequence', sequence_id ) ;
   const {liste_id,zone,skin} = seq ;
-  const {liste} = ListeVues.findOne({_id:liste_id}, {fields:{liste:1}} ) ;
+  const {liste} = CardVues.findOne({_id:liste_id}, {fields:{liste:1}} ) ;
 
   console.log( 'liste', liste );
   console.log( 'ordre', ordre );

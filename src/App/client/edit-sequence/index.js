@@ -11,8 +11,6 @@ import initialState from 'App/client/actions/init-edit-sequence'
 
 import EditList from './edit-list'
 
-// uses the shorthand form of mapDispatchToProps where each property of the supplied object is expected to be an action creator and is wrapped in a call to dispatch.
-
 // simplifier les actions en envoyant l'index de l'élément qui génere l'action.
 // voir http://blog.scottlogic.com/2016/05/19/redux-reducer-arrays.html
 
@@ -42,7 +40,7 @@ class EditSequence extends Component {
 function mapStateToProps(state) {
   return {
     vignettes: state.vignettes || [],
-    sequence_id : sequence_id,
+    sequence_id : sequence_id, // est dans params
     editMode : false,
     isPlaying : true
     }
@@ -56,11 +54,6 @@ function mapDispatchToProps(dispatch) {
     orderList,
     toggleVue,
     initialState
-    //addVue: (sequence_id, length,history)=>{addVue(dispatch,sequence_id, length,history)},
-    // editVue: (_id, history)=>{editVue(dispatch, _id, history)},
-    // orderList: (list)=>{orderList(dispatch,list)},
-    //toggleVue: (_id)=>{toggleVue(dispatch,_id)},
-    //initialState: (sequence_id)=> {initialState(dispatch,sequence_id)}
     }
 }
 
@@ -71,7 +64,10 @@ export default connect(
 )(EditSequence) ;
 
 
+////////////////////////////
 // barres d'etat provisoires
+////////////////////////////
+
 const EditSequenceTop = ({editMode}) => {
   const edit = (editMode) ? 'MODE EDIT' : 'MODE VUE' ;
   return(

@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react'
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
-import editSequence from 'App/client/edit-sequence';
-import editVue from 'App/client/edit-vue';
+import EditSequence from 'App/client/edit-sequence';
+import EditVue from 'App/client/edit-vue';
 // import Instance from 'App/server/Instance';
 
 const sequence_id = 'liste' ;
@@ -14,8 +14,8 @@ export class AppRoutes extends Component {
         <Router history={browserHistory} >
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
-          <Route path="sequence/:sequence_id" component={editSequence} />
-          <Route path="sequence/:sequence_id/:_id" component={editVue} />
+          <Route path="sequence/:sequence_id" component={EditSequence} />
+          <Route path="sequence/:sequence_id/:vue_id" component={EditVue} />
           <Route path="instance" component={ShowInstance} />
       </Route>
     </Router>

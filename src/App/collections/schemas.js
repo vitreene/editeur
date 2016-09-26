@@ -2,17 +2,18 @@ import {SimpleSchema} from 'meteor/aldeed:simple-schema'
 
 export let SequenceSchema = new SimpleSchema({
   _id:{type:String}, // mongoId
+  liste_id:{type:String},
+  nom:{type:String},
+  vignette: {type:String}, // url, ou id d'une Vue
   tempo:{type:String},
-  zone:{type:String}, // ou tableau ?
-
-
+  skin:{type:String},
+  zone:{type:String},
 });
 
-
-export let VueSchema = new SimpleSchema({
-  _id:{type:String}, // mongoId
-  //ordre: {type:Number},
-  //visible : {type:Boolean},
+export let  CardSchema = new SimpleSchema({
+  vue_id:{type:String}, // mongoId
+  ordre: {type:Number},
+  visible : {type:Boolean},
   titre: {
     type: String,
     min:3,
@@ -20,7 +21,26 @@ export let VueSchema = new SimpleSchema({
   },
   vignette: {type:String}, // idem ikono
   couleur:{ type:String, optional: true },
-  
+})
+
+export let CardVueSchema = new SimpleSchema({
+  _id:{type:String}, // mongoId
+  liste:{type:[CardSchema]}
+});
+
+export let VueSchema = new SimpleSchema({
+  _id:{type:String}, // mongoId
+/////
+/*
+  titre: {
+    type: String,
+    min:3,
+    max:24
+  },
+  vignette: {type:String}, // idem ikono
+  couleur:{ type:String, optional: true },
+  */
+/////
   sequence_id: {type:String},
   source_id: {type:String},
   metas_id: {type:String},

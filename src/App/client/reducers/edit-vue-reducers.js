@@ -32,12 +32,12 @@ function loadEditVue(state, vue) {
   return {...state, ...vue} ;
 }
 
-function saisie(state,{_id, name, value}) {
+function saisie(state,{vue_id, name, value}) {
   /*
     recuperer le chemin en découpant 'name' et en ajoutant _id
   */
   let fields = name.split('.') ;
-  fields.unshift(_id) ;
+  fields.unshift(vue_id) ;
 
   const key = fields.splice(-1) ;
   /*
@@ -56,17 +56,16 @@ function saisie(state,{_id, name, value}) {
   return update( state, path ) ;
 }
 
-function importIMG(state,{_id, img_ID, preview,vignette }) {
+function importIMG(state,{vue_id, img_ID, preview }) {
   /*
-  _id, // id de la vue,
+  vue_id, // id de la vue,
   img_ID, // ajouter à source
   preview // à part, variable locale
   */
 
-  let vue = state[_id] ;
+  let vue = state[vue_id] ;
   vue.source.ikono_id = img_ID ;
   vue.ikono._id = img_ID ;
   vue.ikono.preview = preview.src ;
-  // vue.ikono.vignette = vignette.src ;
-  return {...state, [_id]:{...vue} }
+  return {...state, [vue_id]:{...vue} }
 }

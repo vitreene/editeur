@@ -9,7 +9,7 @@ import {
 } from 'rebass'
 import { Link } from 'react-router'
 
-import loadVue from 'App/client/actions/init-edit-vue'
+import getVue from 'App/client/actions/init-edit-vue'
 import {saveVue, saisie} from 'App/client/actions/edit-vue-actions'
 
 import {uploadFile} from 'App/client/actions/edit-image-actions'
@@ -40,9 +40,9 @@ class EditVueContainer extends Component {
   componentWillMount() {
     console.log('EDIT VUE PROPS',  this.props );
     // charger les sources si pas en cache
-    const {loadVue, _id, vue, dispatch } = this.props ;
+    const {getVue, vue_id, vue, dispatch } = this.props ;
     if(!vue)
-      loadVue(dispatch, _id);
+      getVue(dispatch, vue_id);
   }
 
   upload(){
@@ -52,7 +52,7 @@ class EditVueContainer extends Component {
 
   onSaisie(e){
   //  e.preventDefault() ;
-    const {saisie, _id ,dispatch} = this.props ;
+    const {saisie, vue_id ,dispatch} = this.props ;
     const {name, type} = e.target ;
 
     const filter = {
@@ -63,7 +63,7 @@ class EditVueContainer extends Component {
     }
     const value = filter[type] ;
 
-    saisie(dispatch,_id, name, value) ;
+    saisie(dispatch, vue_id, name, value) ;
   }
 
   onClick(e){
@@ -77,11 +77,11 @@ class EditVueContainer extends Component {
     // formulaire vide = annuler.
     // utiliser une valeur "pristine"
 
-    const {dispatch, _id, vue, saveVue, vignette, params:{sequence_id} } = this.props ;
-
+    const {dispatch, vue_id, vue, saveVue, vignette, params:{sequence_id} } = this.props ;
     const path = '/sequence/'+sequence_id ;
     const callback = ()=>this.context.router.push(path) ;
-    saveVue(dispatch,_id, vue,vignette, callback ) ;
+
+    saveVue(dispatch, sequence_id, vue, vignette, callback ) ;
 
     console.log('--> SUBMIT') ;
   }
@@ -125,10 +125,10 @@ function mapStateToProps(state,ownProps) {
   // la vue est en cache dans state
   // en cas de reload, on perd le contenu.
   // à mettre en localstate ?
-  const _id = ownProps.params._id ;
-  const vue = state.vue[_id] ;
+  const vue_id = ownProps.params.vue_id ;
+  const vue = state.vue[vue_id] ;
   const vignette = state.vignettes.find(
-    x=> x._id === _id
+    x=> x.vue_id === vue_id
   ) ;
   const init = vue ? vue.source : undefined ;
 /*
@@ -136,7 +136,7 @@ initialValues doit garder intactes les valeurs de départ, à partir desquelles 
 cependant, sa toute première valeur sera 'vide', cette variable doit etre intitialisée au résultat de getEdit, (ou avec un statut loaded)
 */
   return {
-    _id,
+    vue_id,
     vue,
     vignette,
     initialValues: init,
@@ -147,7 +147,7 @@ cependant, sa toute première valeur sera 'vide', cette variable doit etre intit
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    loadVue,
+    getVue,
     saveVue,
     saisie,
     uploadFile

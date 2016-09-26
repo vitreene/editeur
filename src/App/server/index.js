@@ -2,7 +2,7 @@
 
 import Sequences from 'App/collections/sequences'
 import Zones from 'App/collections/zones'
-import ListeVues from 'App/collections/liste-vues'
+import CardVues from 'App/collections/card-vues'
 
 //import {source} from 'App/imports/import-sources'
 //import Sources from 'App/collections/sources'

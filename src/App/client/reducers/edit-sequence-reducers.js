@@ -1,7 +1,7 @@
 import {
   SET_VIGNETTES,
   ORDER_VIGNETTES,
-  UPDATE_VIGNETTE,
+  UPDATE_CARDVUE,
   TOGGLE_VISIBILITY,
   ADD_VUE,
   EDIT_VUE,
@@ -10,6 +10,8 @@ import {
 
 
 export default function  vignettesReducer (state = [], action) {
+    // state : [vignettes]
+
   switch (action.type) {
     case SET_VIGNETTES:
       return action.vignettes;
@@ -17,14 +19,14 @@ export default function  vignettesReducer (state = [], action) {
     case ORDER_VIGNETTES :
       return setOrder(state,action.list);
 
-    case UPDATE_VIGNETTE :
-      return updateVignette(state,action.vignette);
+    case UPDATE_CARDVUE :
+      return updateCardVue(state,action.vignette);
 
     case TOGGLE_VISIBILITY :
       return toggleVisibility(state,action._id);
 
     case EDIT_VUE :
-      return editVue(state,action._id, action.sequence_id, action.history);
+      return editVue(state,action.vue_id, action.sequence_id, action.history);
 
     case ADD_VUE :
       return addVue(state,action.vignette);
@@ -41,7 +43,7 @@ function getVue (state, vue) {
   // remplacer, sinon ajouter la vue
   let flag = true ;
   const vignettes = state.map( vignette => {
-    if (vignette._id===vue._id) {
+    if (vignette.vue_id===vue._id) {
       flag = false ; return vue ;
     } else return vignette ;
   })
@@ -54,7 +56,7 @@ function getVue (state, vue) {
 function setOrder(state,list){
   return state
     .map( vignette => {
-      vignette.ordre = list.findIndex( x=>x===vignette._id ) ;
+      vignette.ordre = list.findIndex( x=>x===vignette.vue_id ) ;
       return vignette ;
     })
     .sort( (a,b)=>a.ordre-b.ordre ) ;
@@ -63,7 +65,7 @@ function setOrder(state,list){
 
 function toggleVisibility ( state , _id ) {
   return state.map( (vignette) => {
-      if (_id === vignette._id) {
+      if (_id === vignette.vue_id) {
         return {
           ...vignette,
           visible: !vignette.visible
@@ -79,11 +81,13 @@ function addVue(state, vignette) {
   return state.concat([vignette]) ;
 }
 
-function editVue( state, _id, sequence_id, history) {
-  history.push('/sequence/' + sequence_id + '/' + _id );
+function editVue( state, vue_id, sequence_id, history) {
+  history.push('/sequence/' + sequence_id + '/' + vue_id );
   return state ;
 }
 
-function updateVignette(state, vignette){
-  return state.map( vue => (vue._id === vignette._id) ? vignette : vue ) ;
+function updateCardVue(state, vignette){
+
+  console.log('updateCardVue -> state', state );
+  return state.map( vue => (vue.vue_id === vignette.vue_id) ? vignette : vue ) ;
 }

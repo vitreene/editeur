@@ -6,6 +6,12 @@ export default function newVue(sequence_id, length){
   const ikono = e.emptyIkono({preview:'#'}) ;
   const source = e.emptySources({ikono_id:ikono._id}) ;
   const metas = e.emptyMetas() ;
+  // remplacer par emptyCardvue
+  const vignette = e.emptyCards({
+    ordre: length+1,
+    vignette: '#'
+  });
+  /*
   const vignette = e.emptyVues({
     sequence_id : sequence_id,
     source_id : source._id,
@@ -14,10 +20,11 @@ export default function newVue(sequence_id, length){
     vignette: '#'
     // ikono_id : ikono._id
   })
+*/
 
 return {
   vignette,
-  [vignette._id]:{
+  [vignette.vue_id]:{
     source,
     metas,
     ikono

@@ -1,7 +1,7 @@
 
 import {
   IMPORT_IMG,
-  UPDATE_VIGNETTE,
+  UPDATE_CARDVUE,
 } from 'App/client/constants/actionTypes'
 
 import {UploadFS} from 'meteor/jalik:ufs';
@@ -26,7 +26,7 @@ export function uploadFile(dispatch,vignette) {
   */
 
   // _id = _id de la vue editée
-  const {_id} = vignette ;
+  const {vue_id} = vignette ;
   let img_ID ;
   let preview = new Image();
   let vignetteIMG = new Image();
@@ -68,7 +68,7 @@ export function uploadFile(dispatch,vignette) {
       return dispatch({
         type : IMPORT_IMG,
         img : {
-          _id, // id de la vue,
+          vue_id, // id de la vue,
           img_ID, // ajouter à source
           preview, // à part, variable locale
         }
@@ -78,7 +78,7 @@ export function uploadFile(dispatch,vignette) {
     vignetteIMG.onload = ()=>{
       vignette.vignette = vignetteIMG.src ;
       return dispatch({
-        type : UPDATE_VIGNETTE,
+        type : UPDATE_CARDVUE,
         vignette
       });
     } ;

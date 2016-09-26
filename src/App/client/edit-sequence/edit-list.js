@@ -2,16 +2,18 @@ import { Component, PropTypes } from 'react'
 import { withRouter } from 'react-router'
 import SortableList from './list-sortable'
 
+/*
 import {
   ADD_VUE,
   EDIT_VUE,
 } from 'App/client/constants/actionTypes'
 
+*/
 
  class EditList extends Component {
 
   componentWillMount() {
-    const { dispatch, sequence_id, initialState } = this.props ;
+    const { dispatch, params:{sequence_id}, initialState } = this.props;
     //  console.log('this.props', sequence_id, initialState);
     if (!this.props.vignettes.length)
       initialState( dispatch, sequence_id ) ;
@@ -26,7 +28,7 @@ import {
     const {
       dispatch,
       addVue,
-      sequence_id,
+      params:{sequence_id},
       vignettes,
       router
      } = this.props ;
@@ -39,9 +41,9 @@ import {
     toggleVue(dispatch, _id, sequence_id) ;
   }
 
-  onEditVue(_id){
-    const {dispatch,router,editVue, params:{sequence_id} } = this.props ;
-    editVue(dispatch, _id, sequence_id, router) ;
+  onEditVue(vue_id){
+    const {dispatch,router, editVue, params:{sequence_id}} = this.props;
+    editVue(dispatch, vue_id, sequence_id, router) ;
   }
 
   render() {
@@ -58,13 +60,3 @@ import {
   }
 
 export default withRouter(EditList)
-
-  /*
-function addVue() {
-  console.log('AJOUTER une vue');
-}
-
-function editVue(action, history) {
-  console.log('EDITER la vue', history, action._id);  history.push(`/edit-vue/{action._id}`);
-}
-*/

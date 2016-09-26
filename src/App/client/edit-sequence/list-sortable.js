@@ -25,8 +25,8 @@ const SortableList = (
     };
 
     const listItems = items.map( (item) => (
-      <Vignette
-        key={item._id}
+      <CardVue
+        key={item.vue_id}
         item={item}
         onToggle={onToggle}
         onEditVue = {onEditVue}
@@ -87,21 +87,21 @@ AjoutItem.propTypes = {
 };
 
 
-const Vignette = ({item, onToggle, onEditVue}) => {
+const CardVue = ({item, onToggle, onEditVue}) => {
 
-    const {_id,ordre,couleur, vignette, titre, visible} = item ;
+    const {vue_id, ordre, titre, couleur, vignette, visible} = item ;
 
     const bgImage = `url( ${vignette} )` ;
     // const bgImage = 'url('+require('App/ikono/'+vignette )+')' ;
     const estVisible = 'bg-circle ' +
      ( (visible) ? 'fa-eye-open' : 'fa-eye-close' );
 
-    const getToggle = ()=>{ return onToggle(_id) } ;
-    const getEditvue = ()=>{ return onEditVue(_id) } ;
+    const getToggle = ()=>{ return onToggle(vue_id) } ;
+    const getEditvue = ()=>{ return onEditVue(vue_id) } ;
 
     return (
       <li
-       data-id={_id}
+       data-id={vue_id}
         className='list-vue '
         style={ {backgroundColor:couleur} }
         >
@@ -120,6 +120,6 @@ const Vignette = ({item, onToggle, onEditVue}) => {
     )
 }
 
-Vignette.propTypes = {
+CardVue.propTypes = {
     item: PropTypes.object
 };

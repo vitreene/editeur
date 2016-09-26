@@ -14,6 +14,7 @@ import * as s from 'App/collections/schemas'
 
  export let emptyVues = (options) => new Empty(s.VueSchema, options) ;
 
+ export let emptyCards = (options) => new Empty(s.CardSchema, options) ;
  /*
  Empty cree un objet vide à partir du schéma passé en entrée.
  */
@@ -29,7 +30,7 @@ function Empty( {_schemaKeys }, options ){
     key = key.split('.$').join('[0]') ;
 
     let value = null ;
-    if  (key ==='_id') value = Random.id() ;
+    if  (key ==='_id' || key==='vue_id') value = Random.id() ;
 
     lodash.set(obj, key, value);
     //lodash.setWith(obj, key, value, Object);

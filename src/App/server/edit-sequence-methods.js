@@ -1,8 +1,11 @@
+import {lodash} from 'meteor/erasaur:meteor-lodash'
+
+
 import Sequences from 'App/collections/sequences'
-import ListeVues from 'App/collections/liste-vues'
+import CardVues from 'App/collections/card-vues'
 
 import Vues from 'App/collections/vues'
-import {VueSchema} from 'App/collections/schemas'
+import {VueSchema,CardSchema} from 'App/collections/schemas'
 import {Ikonos} from 'App/collections/ikonos'
 //import {Vue} from 'App/collections/vues'
 
@@ -10,8 +13,26 @@ console.log('METHODS');
 
 function findListeVue(sequence_id) {
   const {liste_id} = Sequences.findOne({_id:sequence_id}, {fields:{liste_id:1}} );
-  const {liste} = ListeVues.findOne({_id:liste_id}, {fields:{liste:1}} ) ;
+  const {liste} = CardVues.findOne({_id:liste_id}, {fields:{liste:1}} ) ;
   return liste ;
+}
+
+export function upsert (arr, obj, el){
+  const found = arr.map((x)=>x[el]).indexOf( obj[el] );
+/*
+  const finder = arr.map( (x)=>x[el] ) ;
+  const elObj = obj[el] ;
+  const found = finder.indexOf( obj[el] ) ;
+
+  console.log('finder', finder);
+  console.log('elObj', elObj);
+  console.log('found', found);
+*/  
+  if ( -1 < found ) {
+    let newArr = arr.slice() ;
+    newArr[found] = obj ;
+    return newArr ;
+  } else { return arr.concat(obj) } ;
 }
 
 Meteor.methods({
@@ -22,28 +43,28 @@ Meteor.methods({
   },
 
   getCurrentSequence(sequence_id){
-    /*
-    recuperer la liste dans Sequences ;
-    recupérer les vues,
-    leur attribuer l'ordre récupéré de Sequences
-    */
     check(sequence_id, String);
 
-    const liste = findListeVue(sequence_id) ;
-
-    const vues = liste.map( ({vue_id,visible,ordre}) => {
-
-      const vue = Vues.findOne ({ _id: vue_id });
-      vue.visible = visible ;
-      vue.ordre = ordre ;
-      //console.log('RESULTAT : ', vue);
-      return vue ;
-    })
+    const liste = findListeVue(sequence_id)
     .sort( (a,b) => a.ordre - b.ordre );
 
-    console.log('VUES', vues);
-
-    return vues ;
+  //  console.log('liste', liste);
+    /* --->
+    VUES = [ {
+    * _id: '01',
+    * ordre: 0,
+    * titre: 'vignette-01',
+    * couleur: 'blue',
+    * vignette: 'images-2iADQeK.jpg',
+    * visible: false,
+     sequence_id: 'liste',
+     source_id: '01',
+     metas_id: 'met01',
+     modele: 'affiche-produit',
+     skin: 'default' },
+   }]
+   */
+    return liste ;
   },
 
   getCurrentVue( _id){
@@ -59,15 +80,15 @@ Meteor.methods({
     //console.log('ORDERLIST', sequence_id, seq);
 
     const {liste_id} = Sequences.findOne({_id:sequence_id}, {fields:{liste_id:1}} );
-    const {liste} = ListeVues.findOne({_id:liste_id}, {fields:{liste:1}} ) ;
+    const {liste} = CardVues.findOne({_id:liste_id}, {fields:{liste:1}} ) ;
 
-    const newOrder = liste.map( (item)=>{
+    const newListe = liste.map( (item)=>{
       //console.log('item._id',item.vue_id, seq.indexOf( item.vue_id ) );
       item.ordre = seq.indexOf( item.vue_id ) ;
       return item;
     } ) ;
     //console.log('newOrder', newOrder);
-    ListeVues.update({_id:liste_id}, {$set:{liste:newOrder}});
+    CardVues.update({_id:liste_id}, {$set:{liste:newListe}});
   },
 
   toggleVue(_id, sequence_id){
@@ -78,29 +99,38 @@ Meteor.methods({
 
     const {liste_id} = Sequences.findOne({_id:sequence_id}, {fields:{liste_id:1}} );
 
-    const {liste} = ListeVues.findOne(
+    const {liste} = CardVues.findOne(
       { _id:liste_id, 'liste.vue_id':_id },
       { fields:{'liste.$':1} }
     ) ;
     const visible = liste[0].visible ;
 
-    ListeVues.update(
+    CardVues.update(
       { _id:liste_id, 'liste.vue_id':_id },
       { $set:{'liste.$.visible' :!visible} }
     );
   },
 
-// ? c'est updateSequence plutot ?
-  saveVueListe(_id, vueListe, ikono_id) {
-    // mettre à jour la vue-liste
-    const vgn = Ikonos.findOne(ikono_id) ;
+  addToSequence(sequence_id, cardVue, ikono_id) {
+    // ajouter un nouvel item à la liste des vues
+    const {vignette} = Ikonos.findOne(ikono_id) ;
+    cardVue.vignette = vignette ;
 
-    console.log('ikono_id, vgn',ikono_id, vgn );
 
-    vueListe.vignette = vgn.vignette ;
-    VueSchema.clean(vueListe) ;
-    check(vueListe, VueSchema) ;
-    return Vues.upsert(vueListe._id, vueListe) ;
+    //-> mettre à jour CardVues
+    check(cardVue, CardSchema) ;
+
+    const {liste_id} = Sequences.findOne({_id:sequence_id}, {fields:{liste_id:1}} );
+
+    //enlever l'ancienne valeur
+    const {liste} = CardVues.findOne( { _id:liste_id } );
+    /*
+    chercher dans la liste un élément qui à vue_id ;
+    si trouvé : remplacer, sinon, ajouter.
+    */
+    const newListe = upsert (liste, cardVue, 'vue_id') ;
+    //console.log('NEWLISTE', liste, newListe);
+    return CardVues.update({ _id:liste_id},{ $set:{'liste' :newListe} });
   }
 
 })
