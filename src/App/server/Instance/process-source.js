@@ -7,10 +7,10 @@ import {
 export default
 function processSource( {composants, nom}, source, metas, tempo ){
   // composant = tous ou requis+facultatif
-  const composant = reCompose(composants) ;
+  //const composant = reCompose(composants) ;
   let out = {} ;
   // donner les definitions precises des termes
-  composant.map(function (item) {
+  composants.map(function (item) {
     //ignorer ikono_id, ikono est traité à part.
     if (item==='ikono_id') return null ;
     out[item] = {

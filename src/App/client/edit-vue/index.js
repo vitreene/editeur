@@ -46,8 +46,22 @@ class EditVueContainer extends Component {
   }
 
   upload(){
+
+      const transform = {
+        pox :  0,
+        poy :  0,
+        rot :  0,
+        ech :  1,
+        pivX : false,
+        pivY : false,
+
+        pristine : false, // true,
+        zone:  'ecran01',
+        placement: "libre"
+      };
+
     const {vignette,  uploadFile, dispatch} = this.props ;
-    uploadFile(dispatch,vignette) ;
+    uploadFile(dispatch,vignette, transform) ;
   }
 
   onSaisie(e){
@@ -78,6 +92,7 @@ class EditVueContainer extends Component {
     // utiliser une valeur "pristine"
 
     const {dispatch, vue_id, vue, saveVue, vignette, params:{sequence_id} } = this.props ;
+
     const path = '/sequence/'+sequence_id ;
     const callback = ()=>this.context.router.push(path) ;
 

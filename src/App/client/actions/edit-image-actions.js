@@ -2,6 +2,7 @@
 import {
   IMPORT_IMG,
   UPDATE_CARDVUE,
+  UPDATE_METAS_IKONO,
 } from 'App/client/constants/actionTypes'
 
 import {UploadFS} from 'meteor/jalik:ufs';
@@ -16,7 +17,10 @@ import {IkonosStore} from 'App/collections/ikonos'
 //import {Previews} from 'App/collections/ikonos'
 //import {PreviewsStore} from 'App/collections/ikonos'
 
-export function uploadFile(dispatch,vignette) {
+export function uploadFile(dispatch, cardVue, transform) {
+//termes à changer :
+// vignette -> cardVue
+// vignetteIMG -> vignette
 
   /*
   - nettoyer les fonctions ;
@@ -26,13 +30,13 @@ export function uploadFile(dispatch,vignette) {
   */
 
   // _id = _id de la vue editée
-  const {vue_id} = vignette ;
+  const {vue_id} = cardVue ;
   let img_ID ;
   let preview = new Image();
   let vignetteIMG = new Image();
 
   UploadFS.selectFile( (file) => {
-  //  console.log('FILE', file);
+
     const ikono = {
         name: file.name,
         size: file.size,
@@ -41,16 +45,8 @@ export function uploadFile(dispatch,vignette) {
         preview:'',
         proxy:[],
         cerne:{},
-        transform:{}
     };
 
-/*
-    imageClipper(file, function() {
-        this.quality(10).crop(0, 0, 200, 150).toDataURL(function(dataUrl) {
-            vignette.src = dataUrl;
-        });
-    });
-*/
     processImage(
       file,
       500, 500, 0.5,
@@ -61,27 +57,6 @@ export function uploadFile(dispatch,vignette) {
       200, 150, 0.5,
       (dataUrl) => vignetteIMG.src = dataUrl
     ) ;
-    /*
-*/
-    // l'action est dispatchée dès la création de la preview
-    preview.onload = ()=>{
-      return dispatch({
-        type : IMPORT_IMG,
-        img : {
-          vue_id, // id de la vue,
-          img_ID, // ajouter à source
-          preview, // à part, variable locale
-        }
-      });
-    } ;
-
-    vignetteIMG.onload = ()=>{
-      vignette.vignette = vignetteIMG.src ;
-      return dispatch({
-        type : UPDATE_CARDVUE,
-        vignette
-      });
-    } ;
 
     const upSource = new UploadFS.Uploader({
         store: IkonosStore,
@@ -96,11 +71,41 @@ export function uploadFile(dispatch,vignette) {
             console.error(err);
         },
         onStart: (file) => {
-        img_ID = file._id ;
+        // img_id = file._id ;
+
+        // -> update Preview et vignette ?
+
+        // l'action est dispatchée dès la création de la preview
+        preview.onload = ()=>{
+          return dispatch({
+            type : IMPORT_IMG,
+            img : {
+              vue_id, // id de la vue,
+              img_id: file._id, // ajouter à source
+              preview, // à part, variable locale
+            }
+          });
+        } ;
+
+        vignetteIMG.onload = ()=>{
+          cardVue.vignette = vignetteIMG.src ;
+          return dispatch({
+            type : UPDATE_CARDVUE,
+            vignette : cardVue
+          });
+        } ;
+
+
         },
         onComplete: (file) => {
           console.log(file._id, file.name + ' has been uploaded');
-        //  updateVignetteFromServer (dispatch, vignette, file._id)
+
+          return dispatch({
+            type : UPDATE_METAS_IKONO,
+            vue_id,
+            transform
+          });
+
         },
         onProgress: (file, progress) => {
           //  comment faire passer cette valeur à state ?

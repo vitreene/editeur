@@ -17,17 +17,9 @@ function findListeVue(sequence_id) {
   return liste ;
 }
 
+// mettre à jour avec import update from 'immutability-helper'
 export function upsert (arr, obj, el){
   const found = arr.map((x)=>x[el]).indexOf( obj[el] );
-/*
-  const finder = arr.map( (x)=>x[el] ) ;
-  const elObj = obj[el] ;
-  const found = finder.indexOf( obj[el] ) ;
-
-  console.log('finder', finder);
-  console.log('elObj', elObj);
-  console.log('found', found);
-*/  
   if ( -1 < found ) {
     let newArr = arr.slice() ;
     newArr[found] = obj ;
@@ -113,8 +105,14 @@ Meteor.methods({
 
   addToSequence(sequence_id, cardVue, ikono_id) {
     // ajouter un nouvel item à la liste des vues
-    const {vignette} = Ikonos.findOne(ikono_id) ;
-    cardVue.vignette = vignette ;
+
+    // s'il y a une image
+    const ikonoFound = Ikonos.findOne({_id:ikono_id}) ;
+
+    cardVue.vignette =  ('undefined' === typeof ikonoFound ) ?
+    '#' :  ikonoFound.vignette ;
+
+    console.log('IGNETTE', cardVue.vignette );
 
 
     //-> mettre à jour CardVues

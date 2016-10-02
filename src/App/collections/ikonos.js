@@ -46,7 +46,6 @@ export let PreviewsStore = new UploadFS.store.Local({
     }
 });
 
-
 export let VignettesStore = new UploadFS.store.Local({
   collection: Vignettes,
   name: 'vignettes',
@@ -91,10 +90,10 @@ export let IkonosStore = new UploadFS.store.Local({
     copyTo: [PreviewsStore,VignettesStore],
 
     onCopyError: function (err, fileId, file) {
-      console.error('Cannot create copy ' + file.name);
+      console.error('Cannot create copy :', file._id, file.name );
     },
     onFinishUpload : function(file) {
-      console.log('onFinishUpload IkonosStore :', file.name);
+      console.log('onFinishUpload IkonosStore :', file._id, file.name);
 
     }
 });
@@ -137,28 +136,19 @@ export let ProxysStore = new UploadFS.store.Local({
         {zone: 'ecran01', src: file.url}
       ]
      */
-    //console.log('FILE', file);
-    let updateProxy;
+
     const {proxy} = Ikonos.findOne({_id:file.originalId}) ;
     const {transform:{zone}, url:src} = file ;
     const hasZone = proxy.filter ( x => x.zone === zone) ;
-
-    //console.log('proxy :', proxy);
     // proxy : [ { zone: 'ecran012', src: 'http://....jpg' } ]
-    //console.log('hasZone', hasZone);
+    let updateProxy= [];
 
     if(hasZone.length>0){
       updateProxy = proxy.map( x =>
         {if (x.zone === zone) x.src = src ; return x;}
       );
-    } else {
-      //console.log('--> src', src);
-      // --> src =  "http://localhost:3000/..._n.jpg"
-      //console.log('--> zone', zone);
-      // --> zone = ecran01
-      updateProxy = proxy.concat({zone,src});
     }
-      //console.log('updateProxy :', updateProxy);
+    else updateProxy = proxy.concat({zone, src}) ;
 
     Ikonos.update(
       { _id:file.originalId},
@@ -186,6 +176,6 @@ export let ProxysStore = new UploadFS.store.Local({
 });
 
 function errRes(err,res) {
-    if (err) console.log(err);
+    if (err) console.log('ERR', err);
     else console.log('RES', res) ;
   }

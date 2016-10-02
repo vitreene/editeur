@@ -10,18 +10,23 @@ import {
 export default
 function processBlocs({composants, nom}, metas, tempo) {
 
-  const composant = reCompose(composants) ;
+
+  // à nettoyer
+  const composant = composants ;
+  //const composant = reCompose(composants) ;
+
   let blocs = [] ; // recueille la liste des blocs
   let out = {} ;
 
-
   // ajouter les badges
-  const {accroche:{
-    accroche:accroche,
-    condition:condition
-    }} = metas ;
-  if (accroche ==='badge') composant.push('accroche') ;
-  if (condition ==='badge') composant.push('condition') ;
+  const {accroche: { action, condition, legal }} = metas ;
+
+  //console.log('accroche', action, condition, legal );
+  if (action.aspect) composant.push('action') ;
+  if (condition.aspect) composant.push('condition') ;
+  if (legal.aspect) composant.push('legal') ;
+
+  //console.log('COMPOSANT', composant );
 
   // identifier les blocs englobants
   for (const bloc of termes.blocs ){

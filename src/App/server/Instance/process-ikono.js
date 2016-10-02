@@ -3,20 +3,33 @@
 import {IkonosStore} from 'App/collections/ikonos'
 import {Ikonos} from 'App/collections/ikonos'
 import {ProxysStore} from 'App/collections/ikonos'
+import {Proxys} from 'App/collections/ikonos'
 
 function getTransformFromZone(metas, zone) {
   // console.log('metas, zone',metas, zone);
-  return metas.ikono.filter(
-    transform => transform.zone===zone
-  )[0]
+  return metas.ikono.filter( x => x.zone===zone)[0] ;
 }
 
 // creer un proxy à partir de la source, modifié par transform
 export default function processIkono(ikono, metas, zone) {
 
-  const fileId = ikono._id ;
+  // s'il n'y a pas d'image ;
+  const {_id:fileId} = ikono ;
+
+  console.log('fileId', fileId);
+
+  if ('undefined' == typeof fileId) return (
+    { visuel: {
+      src:'#',
+      placement:'vide'
+      }
+    } ) ;
+
+console.log('processIkono : ikono, metas, zone', ikono, metas, zone);
 
   const metaIkono = getTransformFromZone(metas, zone) ;
+
+  // à simplifier : passer simplement l'objet
   const { pristine, placement,pox,poy,rot,ech,pivX,pivY } = metaIkono ;
   // si la propriété transform n'est pas vide, alors appliquer proxy.
   const transform = {
@@ -60,8 +73,16 @@ export default function processIkono(ikono, metas, zone) {
     la methode copy ne permet pas de transferer des parametres supplementaires.
     La seule façon est de modifier l'enregistrement Ikono pour y rajouter les parametres, les lire, puis les effacer ensuite.
     */
-    
+
+
+/*
+si l'image a ete uploadee, mais la vue n'a pas encore eté enregistrée, alors pristine = false, mais proxy n'a pas été  défini ?
+le contexte ecran devrait exister : defaut au moins, sinon le nom.
+*/
   return new Promise( (resolve, reject) => {
+
+    console.log('PRISTINE', pristine);
+
     // si l'image n'a pas été manipulée, renvoyer proxy[zone]
     if (pristine) {
       const {proxy} = Ikonos.findOne(fileId) ;
@@ -71,12 +92,15 @@ export default function processIkono(ikono, metas, zone) {
     else {
     Ikonos.update( fileId, {$set:{transform:transform}},
       (err,res) => {
-        if (err) { console.log('ERREUR : ', err); }
+        if (err) { console.log('ERREUR : Ikonos.update', err); }
         else {
           IkonosStore.copy( fileId, ProxysStore,
           function(err, copyId, copyFile) {
-            const {src} = copyFile.proxy.filter( x => x.zone === zone)[0];
-            //console.log('SRC', proxSRC,copyFile.proxy);
+            if (err)
+            console.log('ERREUR : IkonosStore', err, copyId, copyFile);
+
+            const  {url:src} = Proxys.findOne(copyId) ;
+            // console.log('SRC', src );
             !err && resolve(src) ;
           });
         } // end else
@@ -87,6 +111,6 @@ export default function processIkono(ikono, metas, zone) {
     return ( { visuel: { src, placement } }  )
   })
   .catch( error => {
-    console.log("l'image n'a pu etre optimisée", fetchError) ;
+    console.log("l'image n'a pu etre optimisée", error) ;
   })
 } // fin de processIkono

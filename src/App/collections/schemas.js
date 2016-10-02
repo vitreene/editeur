@@ -102,7 +102,13 @@ const IkonoMetasSchema =  new SimpleSchema({
 */
 
 const AccrocheMetasSchema =  new SimpleSchema({
-  // à viendre
+  //type : {type:String}, // action | condition | legal
+  aspect : {type:String}, //badge | bandeau |
+  position : {type:Object},
+  'position.bandeau' : {type:String}, // haut | bas | flottant
+  'position.badge' : {type:String}, //libre | avant | après
+  modele : {type:String}, // nom d’un modele
+  texte : {type:String}
 })
 
 export let MetasSchema = new SimpleSchema({
@@ -110,7 +116,10 @@ export let MetasSchema = new SimpleSchema({
   source: {type:SourceMetasSchema},
   ikono : {type:[IkonoPositionMetasSchema]},
   // ikono : {type:IkonoMetasSchema},
-  accroche: {type:AccrocheMetasSchema}
+  accroche : {type:Object},
+  'accroche.action' : {type:AccrocheMetasSchema, optional: true },
+  'accroche.condition' : {type:AccrocheMetasSchema, optional: true },
+  'accroche.legal' : {type:AccrocheMetasSchema, optional: true },
 });
 
 const IkonoPubschema = new SimpleSchema({

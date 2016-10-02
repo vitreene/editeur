@@ -3,12 +3,11 @@
 import chai  from 'chai';
 //import { shallow } from 'enzyme';
 
-import  {aDansB, aSomeB, aTousB, getPosition} from 'App/server/Instance/utils';
+import  {aDansB, aSomeB, aTousB, getPosition, collecteComposants} from 'App/server/Instance/utils';
 // import {termes} from 'App/server/Instance/reglages'
 
 console.log("anybody out there ?");
 //import 'App/server/edit-vue-methods.js'
-
 
 
 /////////////////////
@@ -124,6 +123,7 @@ describe('attribue le style de position', function() {
      'toto-position-HA'
      );
    });
+
    it("lien est ignoré -> toto-position/ * /-HA ", function() {
      const item = 'toto' ;
      const metas = {
@@ -135,7 +135,6 @@ describe('attribue le style de position', function() {
      const res = getPosition(item, metas);
      chai.assert.strictEqual( res, 'toto-position-HA' ) ;
    });
-
 
    it("position -> description-position-lien-BA ", function() {
      const item = 'description' ;
@@ -165,12 +164,58 @@ describe('attribue le style de position', function() {
   });
 
 
-describe('Mocha', function () {
-  it('il fonctionne', function () {
-    // This code will be executed by the test driver when the app is started
-    // in the correct mode
-  })
+describe('collecteComposants', function () {
+
+  it('reconnait : produit', function () {
+    const modele = 'produit' ;
+    const composants = [
+      'titre',
+      'ikono_id',
+      'description',
+      'offre',
+      'prix',
+      'prix_promo'
+    ];
+    const profil = {
+      nom : 'produit',
+      composants : {
+        requis: ['titre', 'prix'],
+        facultatif: [
+          'description', // facultatif
+          'ikono_id', // facultatif
+          'prix_promo', // facultatif
+          'offre' // facultatif
+        ]
+      }
+    } ;
+
+    const res = collecteComposants(composants, profil) ;
+    chai.assert.strictEqual( res,  modele ) ;
+    });
+
+  it('reconnait : affiche', function () {
+    const modele = 'affiche' ;
+    const composants = [
+      'titre',
+      'ikono_id',
+      'description'
+    ];
+    const profil = {
+      nom : 'affiche',
+      composants : {
+        tous:[
+          'titre',
+          'description',
+          'ikono_id'
+        ]}
+    } ;
+
+    const res = collecteComposants(composants, profil) ;
+    chai.assert.strictEqual( res,  modele ) ;
+    });
+
 });
+
 /*
   describe('Hello', function() {
     it('should start with Hello', function() {

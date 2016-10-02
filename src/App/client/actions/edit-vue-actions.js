@@ -43,7 +43,7 @@ cardvue = cardVue : {
   visible: null
 }
 */
-console.log('saveVue : callback -> ',callback);
+  console.log('saveVue : callback -> ',callback);
 /*
 saveVue: callback - > callback() {
   return _this2.context.router.push(path);
@@ -55,7 +55,6 @@ saveVue: callback - > callback() {
   à completer :
   choisir le titre : titre, ou description, ou modele de vue
   */
-
   const titre = (vue.source.titre) ?
     vue.source.titre.slice(0,24) :
     'sans titre' ;
@@ -69,7 +68,6 @@ saveVue: callback - > callback() {
     //modele : 'produit',
     //skin: '',
   };
-
 
   /*
     -  call saveVue :

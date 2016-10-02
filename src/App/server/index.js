@@ -38,7 +38,7 @@ if (Sources.find({}).count()===0) Sources.insert(maSource[0]);
 */
 //const test = Proxys.find({}).fetch() ;
 // console.log('Proxys', test);
-
+/*
 if (Metas.find({}).count()===0) Metas.insert(metas[0]);
 
 Vues.remove({sequence_id:'liste'});
@@ -49,7 +49,7 @@ if (Vues.find({}).count()===0) {
     Vues.insert(vignette);
     })
 }
-
+*/
 console.log('PUBLISH');
 //console.log('__dirname', __dirname);
 //console.log('process.env.PWD ', process.env.PWD );

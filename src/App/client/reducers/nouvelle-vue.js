@@ -5,7 +5,10 @@ export default function newVue(sequence_id, length){
 
   const ikono = e.emptyIkono({preview:'#'}) ;
   const source = e.emptySources({ikono_id:ikono._id}) ;
-  const metas = e.emptyMetas() ;
+  const metas = e.emptyMetas({
+    'accroche.action.aspect' : 'badge',
+    'accroche.action.position.badge' : 'libre',
+  }) ;
   // remplacer par emptyCardvue
   const vignette = e.emptyCards({
     ordre: length+1,

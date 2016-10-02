@@ -55,6 +55,7 @@ function  creerInstance( { source, ikono, metas, vue }, seq ){
   const {zone, tempo, rythme} = seq ;
   const tempoTerme = termes.tempo[tempo] ;
   // identifier le modele selon la source
+
   const modele = findModele(source, profils) ;
   //console.log('modele', modele);
 
@@ -67,15 +68,16 @@ function  creerInstance( { source, ikono, metas, vue }, seq ){
 
   // traiter la source
   const instanceSource = processSource( modele, source, metas, tempoTerme ) ;
-  //console.log('instanceSource', instanceSource);
+  // console.log('instanceSource S: ', instanceSource);
 
   // traiter les blocs de placement
   const instanceBlocs = processBlocs( modele, metas, tempoTerme ) ;
-  //console.log('instanceBlocs', instanceBlocs);
+  // console.log('instanceBlocs', instanceBlocs);
 
   // traiter l'image
+  console.log('instanceIkono E :', ikono, metas, zone );
   const instanceIkono = processIkono(ikono, metas, zone) ;
-  //console.log('instanceIkono', instanceIkono);
+  console.log('instanceIkono', instanceIkono);
 
   // assembler le résultat
   return Promise.all ([
@@ -84,9 +86,11 @@ function  creerInstance( { source, ikono, metas, vue }, seq ){
     instanceIkono
   ])
   .then(([source,blocs,ikono]) => {
+    console.log('[source,blocs,ikono]', [source,blocs,ikono] );
     return Object.assign({}, opt, source, blocs, ikono)
   })
   .catch( err =>
+    // [ReferenceError: fetchError is not defined]
     console.log('La création de l’instance à échoué', err)
   )
   ;

@@ -23,4 +23,5 @@ export const SET_EDIT_VUE ='SET_EDIT_VUE'
 
 export const SAISIE ='SAISIE'
 export const IMPORT_IMG ='IMPORT_IMG'
+export const UPDATE_METAS_IKONO ='UPDATE_METAS_IKONO'
 export const RESET_VUE ='RESET_VUE'

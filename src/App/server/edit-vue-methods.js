@@ -1,13 +1,19 @@
 //import {Vue} from 'App/collections/vues'
 // import {Source} from 'App/collections/schemas'
+import Diyapo from 'App/collections/diyapo'
 import Vues from 'App/collections/vues'
 import Metas from 'App/collections/metas'
 import {Ikonos} from 'App/collections/ikonos'
-import {SourceSchema} from 'App/collections/schemas'
+import {
+  SourceSchema,
+  VueSchema
+  } from 'App/collections/schemas'
 import Sources from 'App/collections/sources'
 
-import {emptyVues} from 'App/client/reducers/vue-empty'
+import Instance from 'App/server/Instance'
+
 /*
+import {emptyVues} from 'App/client/reducers/vue-empty'
 */
 
 Meteor.methods({
@@ -18,9 +24,9 @@ Meteor.methods({
     check(_id, String);
     const vue = Vues.findOne({_id:_id}) ;
 
-console.log('new VUE', vue );
+// console.log('VUE', vue );
 
-    if ('undefined'===vue)
+    if ('undefined' == typeof vue)
       try {
         throw new Error('Il y a pas d‘enregistrement avec cet id');
       } catch (e) {
@@ -56,29 +62,56 @@ console.log('new VUE', vue );
 
   },
 
-  saveVue(vue, _id, sequence_id){
+  saveVue( {source,metas,ikono}, _id, sequence_id){
     //check(vue, Object)
 
     //console.log('VUE',vue);
-    const {source,metas,ikono} = vue ;
-    const vueUp = {
+
+    const vue = {
+      _id,
       sequence_id: sequence_id,
       source_id: source._id,
       metas_id: metas._id,
       // il manque :
-      modele:'',
+      modele:'affiche-produit',
       skin: '',
   };
 
     SourceSchema.clean(source) ;
-    //console.log('Source clean', source);
     check(source,SourceSchema);
     Sources.upsert(source._id, source) ;
 
 // clean, puis check
     Metas.upsert(metas._id, metas) ;
 
-    Vues.upsert( {_id}, {$set:vueUp})
+    VueSchema.clean(vue) ;
+    check(vue,VueSchema);
+    Vues.upsert( {_id}, {$set:vue}) ;
+
+    //mattre à jour la projection
+    // desactivé en attendant une description plus précise de accroche
+
+    // creer promise
+    const promesse = new Promise(
+      function(resolve, reject) {
+           resolve( Instance(_id) ) ;
+      }
+    )
+    .then(
+      (instance) => {
+        console.log('INSYANCE', instance, typeof(instance) );
+        Diyapo.upsert( {_id}, {$set:instance} ) ;
+      }
+    )
+    .catch( err =>
+      console.log('Diyapo : l’enregistrement de l’instance à échoué', err)
+    )
+    ;
+//       const instance = Instance(_id) ;
+
+
+
+
   },
 
 })

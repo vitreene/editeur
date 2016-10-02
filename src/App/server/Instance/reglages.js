@@ -19,6 +19,7 @@ export let termes = {
     haut:'HA',
     bas:'BA',
     centre:'CA',
+    defaut:'CA'
   },
   positionBadge : {
     gauche: 'DA',
