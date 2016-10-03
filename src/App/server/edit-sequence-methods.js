@@ -27,20 +27,22 @@ export function upsert (arr, obj, el){
   } else { return arr.concat(obj) } ;
 }
 
+
 Meteor.methods({
+
 
   getSequence(sequence_id){
     check(sequence_id, String);
   return Sequences.findOne({_id:sequence_id}) ;
   },
 
+
   getCurrentSequence(sequence_id){
     check(sequence_id, String);
 
     const liste = findListeVue(sequence_id)
-    .sort( (a,b) => a.ordre - b.ordre );
+      .sort( (a,b) => a.ordre - b.ordre );
 
-  //  console.log('liste', liste);
     /* --->
     VUES = [ {
     * _id: '01',
@@ -59,29 +61,33 @@ Meteor.methods({
     return liste ;
   },
 
+
   getCurrentVue( _id){
     //console.log('_ID', _id);
     check(_id, String);
     return Vues.findOne({ _id:_id }) ;
   },
 
+
+
   orderList(seq, sequence_id) {
     check(seq, [String]);
     check(sequence_id, String);
 
     //console.log('ORDERLIST', sequence_id, seq);
-
     const {liste_id} = Sequences.findOne({_id:sequence_id}, {fields:{liste_id:1}} );
     const {liste} = CardVues.findOne({_id:liste_id}, {fields:{liste:1}} ) ;
 
     const newListe = liste.map( (item)=>{
-      //console.log('item._id',item.vue_id, seq.indexOf( item.vue_id ) );
+    //console.log('item._id',item.vue_id, seq.indexOf( item.vue_id ) );
       item.ordre = seq.indexOf( item.vue_id ) ;
       return item;
     } ) ;
     //console.log('newOrder', newOrder);
     CardVues.update({_id:liste_id}, {$set:{liste:newListe}});
   },
+
+
 
   toggleVue(_id, sequence_id){
     check(_id, String) ;
@@ -103,17 +109,15 @@ Meteor.methods({
     );
   },
 
+
+
   addToSequence(sequence_id, cardVue, ikono_id) {
     // ajouter un nouvel item à la liste des vues
 
     // s'il y a une image
     const ikonoFound = Ikonos.findOne({_id:ikono_id}) ;
-
     cardVue.vignette =  ('undefined' === typeof ikonoFound ) ?
     '#' :  ikonoFound.vignette ;
-
-    console.log('IGNETTE', cardVue.vignette );
-
 
     //-> mettre à jour CardVues
     check(cardVue, CardSchema) ;

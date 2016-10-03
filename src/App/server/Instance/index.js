@@ -75,9 +75,8 @@ function  creerInstance( { source, ikono, metas, vue }, seq ){
   // console.log('instanceBlocs', instanceBlocs);
 
   // traiter l'image
-  console.log('instanceIkono E :', ikono, metas, zone );
   const instanceIkono = processIkono(ikono, metas, zone) ;
-  console.log('instanceIkono', instanceIkono);
+  //console.log('instanceIkono', instanceIkono);
 
   // assembler le résultat
   return Promise.all ([

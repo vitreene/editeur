@@ -1,4 +1,9 @@
 import { Component, PropTypes } from 'react'
+import {
+  Radio,
+  Select
+} from 'rebass'
+
 
 export default class EditImage extends Component {
   /*
@@ -27,7 +32,10 @@ export default class EditImage extends Component {
   */
 
   render() {
-    const {upload,ikono} = this.props ;
+    const {onSaisie,upload,ikono} = this.props ;
+    const {zone} = this.props ;
+  //  const {placement} = this.props.vue.metas.ikono['1'] ;
+  const placement = 'cover' ;
 
     return(
       <div>
@@ -38,7 +46,32 @@ export default class EditImage extends Component {
           >
           Charger
         </button>
+        <div>
+          <Select
+            label="Sélection de l'écran"
+            name="ecran"
+            options={[
+              {children: zone, value: 1},
+              {children: 'defaut', value: 0},
+            ]}
+            rounded
+          />
+          <Radio
+            name='metas.ikono.$[zone:ecran01].placement'
+            label='Couvrir'
+            checked = {placement == 'cover'}
+            value='cover'
+            onChange={onSaisie}
+            />
+          <Radio
+            name='metas.ikono.$[zone:ecran01].placement'
+            label='Contenir'
+            checked = {placement == 'contains'}
+            value='contains'
+            onChange={onSaisie}
+            />
 
+        </div>
         <img src={ikono.preview} />
         </div>
     )

@@ -30,34 +30,56 @@ export default function  vueReducer (state = {}, action) {
 
 
 function loadEditVue(state, vue) {
-
 //  console.log('loadEditVue', vue);
-
   return {...state, ...vue} ;
 }
 
+
 function saisie(state,{vue_id, name, value}) {
-  /*
-    recuperer le chemin en découpant 'name' et en ajoutant _id
-  */
+  // name : 'metas.ikono.$[zone:ecran01].placement'
+  // ou name : 'metas.source.position'
+
+  // pour etre conforme à la syntaxe JSON, les valeurs "string" doivent etre entourées de guillemets
+  value = (typeof value === 'string') ? `"${value}"` : value ;
+
+  // recuperer le chemin en découpant 'name' et en ajoutant _id
   let fields = name.split('.') ;
   fields.unshift(vue_id) ;
 
+  // propriété à modifier
   const key = fields.splice(-1) ;
+  let updater = '' ;
+
+  // si le chemein contient un tableau, identifié par "$"
+  const hasArray = fields.findIndex( x => x.charAt(0)==='$') ;
+  if ( hasArray ) {
+
+    const arrField = fields.splice(hasArray, 1,) ; // $[zone:ecran01]
+    const res = /(\w+):(\w+)/.exec(arrField) ; // extraire les valeurs
+    const cle = res[1] ; // zone
+    const val = res[2] ; // ecran01
+
+    // trouver l'index du tableau correspondant à zone:'ecran01'
+    const index = state[vue_id].metas.ikono.findIndex(
+      (el, i) => (el[cle] === val) );
+
+    // chaine servant à mettre à jour la valeur saisie
+    updater = `{"${index}":{ "$merge":{ "${key}": ${value}} } }` ;
+  } else
+    updater = `{"${key}": { "$set": ${value}}}` ;
+
+
   /*
     update n'accepte qu'un objet en second parametre.
     Pour transformer le resultat de path en objet, il doit se conformer strictment à la syntaxe JSON
   */
-  value = (typeof value === 'string') ? `"${value}"` : value ;
-
-  const path = JSON.parse(
-    fields.reduceRight( (prec, current) => {
+  const path = fields.reduceRight(
+    (prec, current) => {
       return `{"${current}":${prec}}` ;
-    },
-    `{"${key}": { "$set": ${value}}}`)
-  ) ;
+      },
+      updater );
 
-  return update( state, path ) ;
+  return update( state, JSON.parse( path ) ) ;
 }
 
 function importIMG(state,{vue_id, img_id, preview }) {
@@ -90,6 +112,7 @@ function updateMetasIkono(state, vue_id, transform) {
 // chercher l'index correspondant à zone ;
 const found = state[vue_id].metas.ikono.map((x)=>x.zone ).indexOf( transform.zone );
 // mettre à jour
+/*
 console.log('update ikono', found, {[vue_id] : {
   metas : {
     ikono : {
@@ -98,7 +121,7 @@ console.log('update ikono', found, {[vue_id] : {
   }
 }}
 );
-
+*/
 if (-1 < found )
   return update( state, {
     [vue_id] : {

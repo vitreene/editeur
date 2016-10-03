@@ -60,10 +60,10 @@ export default class EditVue extends Component {
           onChange={onSaisie}
           />
           <Checkbox
-            checked = {lien || ''}
-            label="lier"
             name="metas.source.lien"
+            label="lier"
             theme="primary"
+            checked = {lien || ''}
             onChange={onSaisie}
           />
           <Input
@@ -84,31 +84,31 @@ export default class EditVue extends Component {
           />
           <Radio
             name='metas.source.position'
-            value='gauche'
-            checked = {position == 'gauche'}
-            onChange={onSaisie}
             label='Gauche'
+            checked = {position == 'gauche'}
+            value='gauche'
+            onChange={onSaisie}
             />
           <Radio
             name='metas.source.position'
-            value='haut'
-            checked = {position == 'haut'}
-            onChange={onSaisie}
             label='Haut'
+            checked = {position == 'haut'}
+            value='haut'
+            onChange={onSaisie}
             />
           <Radio
             name='metas.source.position'
-            value='droite'
-            checked = {position == 'droite'}
-            onChange={onSaisie}
             label='Droite'
+            checked = {position == 'droite'}
+            value='droite'
+            onChange={onSaisie}
             />
           <Radio
             name='metas.source.position'
-            value='bas'
-            checked = {position == 'bas'}
-            onChange={onSaisie}
             label='Bas'
+            checked = {position == 'bas'}
+            value='bas'
+            onChange={onSaisie}
             />
 
       </form>

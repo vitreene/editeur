@@ -74,7 +74,7 @@ class EditVueContainer extends Component {
       number: Number(e.target.value),
       text : e.target.value,
       radio : e.target.value
-    }
+    } ;
     const value = filter[type] ;
 
     saisie(dispatch, vue_id, name, value) ;
@@ -106,7 +106,14 @@ class EditVueContainer extends Component {
     if (!this.props.vue)
       return(<h1> Chargement…</h1>) ;
 
-    const {_id, vue:{ikono}, params:{sequence_id} } = this.props ;
+    const {
+      _id,
+      vue:{ikono},
+      params:{sequence_id}
+    } = this.props ;
+
+    const zone='ecran01' ;
+
       return (
         <div>
         <EditVueTop
@@ -120,9 +127,11 @@ class EditVueContainer extends Component {
           {...this.props}
           />
         <EditImage
+          zone={zone}
           _id= {_id}
           ikono={ikono}
           upload = {this.upload}
+          onSaisie={this.onSaisie}
           />
         <EditVueBottom />
         </div>
