@@ -8,6 +8,7 @@ export default function newVue(sequence_id, length){
   const metas = e.emptyMetas({
     'accroche.action.aspect' : 'badge',
     'accroche.action.position.badge' : 'libre',
+    'ikono.zone' : 'defaut'
   }) ;
   // remplacer par emptyCardvue
   const vignette = e.emptyCards({

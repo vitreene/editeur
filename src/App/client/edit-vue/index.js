@@ -46,7 +46,7 @@ class EditVueContainer extends Component {
   }
 
   upload(){
-
+      // transform est destiné à proxy, je n'en ai pas besoin ici ?
       const transform = {
         pox :  0,
         poy :  0,
@@ -65,6 +65,7 @@ class EditVueContainer extends Component {
   }
 
   onSaisie(e){
+    
   //  e.preventDefault() ;
     const {saisie, vue_id ,dispatch} = this.props ;
     const {name, type} = e.target ;
@@ -108,7 +109,7 @@ class EditVueContainer extends Component {
 
     const {
       _id,
-      vue:{ikono},
+      vue:{ikono, metas},
       params:{sequence_id}
     } = this.props ;
 
@@ -130,6 +131,7 @@ class EditVueContainer extends Component {
           zone={zone}
           _id= {_id}
           ikono={ikono}
+          metasIkono={metas.ikono}
           upload = {this.upload}
           onSaisie={this.onSaisie}
           />
