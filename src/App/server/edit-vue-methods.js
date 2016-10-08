@@ -22,9 +22,7 @@ Meteor.methods({
     // option est 'vue' ou undefined
 
     check(_id, String);
-    const vue = Vues.findOne({_id:_id}) ;
-
-// console.log('VUE', vue );
+    const vue = Vues.findOne(_id) ;
 
     if ('undefined' == typeof vue)
       try {
@@ -35,63 +33,52 @@ Meteor.methods({
       }
 
     const {source_id,metas_id,ikono_id} = vue ;
-    // console.log('vue',source_id,metas_id,ikono_id);
 
-    const source = Sources.findOne({_id:source_id}) ;
-    const metas = Metas.findOne({_id:metas_id}) ;
-    const ikono = Ikonos.findOne({_id:source.ikono_id}) || {};
+    const source = Sources.findOne(source_id) ;
+    const metas =  Metas.findOne(metas_id) ;
+    const ikono =  Ikonos.findOne(source.ikono_id) || {};
 
     // console.log('VUE', vue);
 
     if ('vue'===etendu) return {
       [_id]:{
         vue,
-        source,
-        ikono,
-        metas
-      }
+        source, ikono, metas }
     };
 
     return {
-      [_id]:{
-        source,
-        ikono,
-        metas
-      }
+      [_id]:{ source, ikono, metas }
     };
 
   },
 
-  saveVue( {source,metas,ikono}, _id, sequence_id){
+  saveVue( {source,metas /*,ikono */}, _id, sequence_id){
     //check(vue, Object)
-
-    //console.log('VUE',vue);
-
-    const vue = {
-      _id,
-      sequence_id: sequence_id,
-      source_id: source._id,
-      metas_id: metas._id,
-      // il manque :
-      modele:'affiche-produit',
-      skin: '',
-  };
 
     SourceSchema.clean(source) ;
     check(source,SourceSchema);
     Sources.upsert(source._id, source) ;
 
-// clean, puis check
+    // clean, puis check desactivé tant que les specs ne sont pas figées
+    //check(metas,MetasSchema);
     Metas.upsert(metas._id, metas) ;
+
+    const vue = {
+      _id,
+      // sequence_id: sequence_id, // a supprimer ?
+      source_id: source._id,
+      metas_id: metas._id,
+      // il manque :
+      modele:'affiche-produit',
+      skin: '',
+    };
 
     VueSchema.clean(vue) ;
     check(vue,VueSchema);
-    Vues.upsert( {_id}, {$set:vue}) ;
+    Vues.upsert( _id, {$set:vue}) ;
 
-    //mattre à jour la projection
-    // desactivé en attendant une description plus précise de accroche
 
-    // creer promise
+    // Publier l'instance de la vue pour le pProjecteur
     const promesse = new Promise(
       function(resolve, reject) {
            resolve( Instance(_id) ) ;
@@ -100,17 +87,13 @@ Meteor.methods({
     .then(
       (instance) => {
         console.log('INSYANCE', instance, typeof(instance) );
-        Diyapo.upsert( {_id}, {$set:instance} ) ;
+        Diyapo.upsert( _id, {$set:instance} ) ;
       }
     )
     .catch( err =>
       console.log('Diyapo : l’enregistrement de l’instance à échoué', err)
     )
     ;
-//       const instance = Instance(_id) ;
-
-
-
 
   },
 

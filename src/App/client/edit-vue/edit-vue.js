@@ -5,6 +5,7 @@ import {
   Checkbox,
   Radio,
 } from 'rebass'
+import { Flex, Box } from 'reflexbox'
 
 /*
 faire passer le onchange par redux ;
@@ -33,13 +34,15 @@ export default class EditVue extends Component {
       titre,
       description,
       prix,
+      offre,
+      prix_promo
     } = this.props.vue.source ;
 
     const {
       lien,
       position,
     } = this.props.vue.metas.source ;
-    //console.log('PROPS', this.props);
+
     const {
       onSaisie,
      } = this.props ;
@@ -74,6 +77,23 @@ export default class EditVue extends Component {
            onChange={onSaisie}
            />
 
+          <Input
+           name='source.offre'
+           label='offre'
+           type='text'
+           value={offre  || ''}
+           onChange={onSaisie}
+           />
+
+         <Input
+          name='source.prix_promo'
+          label='promo'
+          type='number'
+          step="0.01"
+          value={prix_promo  || '' }
+          onChange={onSaisie}
+          />
+
          <Input
           name='source.prix'
           label='prix'
@@ -82,34 +102,41 @@ export default class EditVue extends Component {
           value={prix  || '' }
           onChange={onSaisie}
           />
-          <Radio
-            name='metas.source.position'
-            label='Gauche'
-            checked = {position == 'gauche'}
-            value='gauche'
-            onChange={onSaisie}
-            />
-          <Radio
-            name='metas.source.position'
-            label='Haut'
-            checked = {position == 'haut'}
-            value='haut'
-            onChange={onSaisie}
-            />
-          <Radio
-            name='metas.source.position'
-            label='Droite'
-            checked = {position == 'droite'}
-            value='droite'
-            onChange={onSaisie}
-            />
-          <Radio
-            name='metas.source.position'
-            label='Bas'
-            checked = {position == 'bas'}
-            value='bas'
-            onChange={onSaisie}
-            />
+
+          <Flex
+            align="center"
+            justify="space-between"
+            wrap
+          >
+            <Radio
+              name='metas.source.position'
+              label='Gauche'
+              checked = {position == 'gauche'}
+              value='gauche'
+              onChange={onSaisie}
+              />
+            <Radio
+              name='metas.source.position'
+              label='Haut'
+              checked = {position == 'haut'}
+              value='haut'
+              onChange={onSaisie}
+              />
+            <Radio
+              name='metas.source.position'
+              label='Droite'
+              checked = {position == 'droite'}
+              value='droite'
+              onChange={onSaisie}
+              />
+            <Radio
+              name='metas.source.position'
+              label='Bas'
+              checked = {position == 'bas'}
+              value='bas'
+              onChange={onSaisie}
+              />
+          </Flex>
 
       </form>
     )

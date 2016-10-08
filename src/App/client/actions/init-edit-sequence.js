@@ -1,7 +1,7 @@
 import {SET_VIGNETTES} from 'App/client/constants/actionTypes'
 
 export default (dispatch, sequence_id) => {
-  // console.log('EDITSEQthis', arguments);
+
   Meteor.call( 'getCurrentSequence', sequence_id,
     (error, initialState) => {
       if (error) { // handle error

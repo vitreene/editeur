@@ -1,8 +1,10 @@
 import { Component, PropTypes } from 'react'
 import {
   Radio,
-  Select
+  Select,
+  Button
 } from 'rebass'
+import { Flex } from 'reflexbox'
 
 
 export default class EditImage extends Component {
@@ -109,13 +111,6 @@ rendre les contenus de metas en choisissant par Select.
     const {zone} = this.props ; // provisoire
     return(
       <div>
-        <button
-          type="button"
-          name="upload"
-          onClick={upload}
-          >
-          Charger
-        </button>
         <div>
           <Select
             label="Sélection de l'écran"
@@ -125,24 +120,43 @@ rendre les contenus de metas en choisissant par Select.
             onChange = { this.onSelectZone }
             rounded
           />
-          <Radio
-            name={placementPath}
-            label='Couvrir'
-            checked = {placement == 'cover'}
-            value='cover'
-            onChange={this.onRadio}
-            />
-          <Radio
-            name= {placementPath}
-            label='Contenir'
-            checked = {placement == 'contains'}
-            value='contains'
-            onChange={this.onRadio}
-            />
+          <Flex
+            align="center"
+            justify="flex-start"
+            wrap
+          >
+            <Radio
+              name={placementPath}
+              label='Couvrir'
+              checked = {placement == 'cover'}
+              value='cover'
+              onChange={this.onRadio}
+              />
+            <Radio
+              name= {placementPath}
+              label='Contenir'
+              checked = {placement == 'contains'}
+              value='contains'
+              onChange={this.onRadio}
+              />
+          </Flex>
+        </div>
 
+        <Button
+          backgroundColor="primary"
+          color="white"
+          inverted
+          rounded
+          name="upload"
+          onClick={upload}
+        >
+          Charger
+        </Button>
+
+        <div>
+          <img src={ikono.preview} />
         </div>
-        <img src={ikono.preview} />
-        </div>
+      </div>
     )
   }
 }

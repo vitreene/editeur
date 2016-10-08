@@ -14,7 +14,7 @@ import * as s from 'App/collections/schemas'
 
  export let emptyVues = (options) => new Empty(s.VueSchema, options) ;
 
- export let emptyCards = (options) => new Empty(s.CardSchema, options) ;
+ export let emptyCards = (options) => new Empty(s.CardVueSchema, options) ;
  /*
  Empty cree un objet vide à partir du schéma passé en entrée.
  */

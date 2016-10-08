@@ -49,7 +49,7 @@ export default function Projection(sequence_id='liste') {
 
   const seq = Meteor.call('getSequence', sequence_id ) ;
   const {liste_id,zone,skin} = seq ;
-  const {liste} = CardVues.findOne({_id:liste_id}, {fields:{liste:1}} ) ;
+  const liste = CardVues.find({liste_id ) ;
 
   console.log( 'liste', liste );
   console.log( 'ordre', ordre );

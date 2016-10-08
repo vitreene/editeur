@@ -23,7 +23,7 @@ export default function  vignettesReducer (state = [], action) {
       return updateCardVue(state,action.vignette);
 
     case TOGGLE_VISIBILITY :
-      return toggleVisibility(state,action._id);
+      return toggleVisibility(state,action.vue_id);
 
     case EDIT_VUE :
       return editVue(state,action.vue_id, action.sequence_id, action.history);
@@ -63,9 +63,9 @@ function setOrder(state,list){
 }
 
 
-function toggleVisibility ( state , _id ) {
+function toggleVisibility ( state , vue_id ) {
   return state.map( (vignette) => {
-      if (_id === vignette.vue_id) {
+      if (vue_id === vignette.vue_id) {
         return {
           ...vignette,
           visible: !vignette.visible

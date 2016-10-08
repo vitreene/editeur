@@ -3,7 +3,6 @@ import {LOAD_EDIT_VUE} from 'App/client/constants/actionTypes'
 // tester si la vue est en cache : actionCreators.js
 // http://redux.js.org/docs/recipes/ReducingBoilerplate.html
 
-
 export default (dispatch, vue_id) => {
 
   Meteor.call( 'getVue',vue_id,

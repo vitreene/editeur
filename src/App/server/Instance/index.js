@@ -39,11 +39,11 @@ import processIkono  from 'App/server/Instance/process-ikono'
 // const zone = 'ecran01' ;
 
 
-export default function Instance(_id, sequence_id='liste') {
+export default function Instance(vue_id, sequence_id='liste') {
   // ->  source, ikono, metas, + vue
-  const vue = Meteor.call('getVue', _id, 'vue') ;
+  const vue = Meteor.call('getVue', vue_id, 'vue') ;
   const seq = Meteor.call('getSequence', sequence_id ) ;
-  return creerInstance(vue[_id], seq) ;
+  return creerInstance(vue[vue_id], seq) ;
 }
 
 
@@ -63,19 +63,20 @@ function  creerInstance( { source, ikono, metas, vue }, seq ){
   const opt = {
     _id: vue._id,
     modele: modele.nom,
-    duree: vue.duree || 2600, // + rythme
+    // vient de cardVue ! -> à retirer.
+    // duree: vue.duree || 2600, // + rythme
   };
 
   // traiter la source
-  const instanceSource = processSource( modele, source, metas, tempoTerme ) ;
+  const instanceSource = processSource( modele, source, metas, tempoTerme );
   // console.log('instanceSource S: ', instanceSource);
 
   // traiter les blocs de placement
-  const instanceBlocs = processBlocs( modele, metas, tempoTerme ) ;
+  const instanceBlocs = processBlocs( modele, metas, tempoTerme );
   // console.log('instanceBlocs', instanceBlocs);
 
   // traiter l'image
-  const instanceIkono = processIkono(ikono, metas, zone) ;
+  const instanceIkono = processIkono(ikono, metas, zone);
   //console.log('instanceIkono', instanceIkono);
 
   // assembler le résultat

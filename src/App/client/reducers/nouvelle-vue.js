@@ -3,32 +3,27 @@ import * as e from 'App/client/reducers/vue-empty'
 
 export default function newVue(sequence_id, length){
 
+// ce n'est pas ici qu'il faut attribuer un id à ikono,mais lors de l'upload.
+
   const ikono = e.emptyIkono({preview:'#'}) ;
   const source = e.emptySources({ikono_id:ikono._id}) ;
   const metas = e.emptyMetas({
     'accroche.action.aspect' : 'badge',
     'accroche.action.position.badge' : 'libre',
-    'ikono.zone' : 'defaut'
+    'ikono[0].zone' : 'defaut'
   }) ;
   // remplacer par emptyCardvue
-  const vignette = e.emptyCards({
+  const v = e.emptyCards({
     ordre: length+1,
     vignette: '#'
   });
-  /*
-  const vignette = e.emptyVues({
-    sequence_id : sequence_id,
-    source_id : source._id,
-    metas_id : metas._id,
-    ordre: length+1,
-    vignette: '#'
-    // ikono_id : ikono._id
-  })
-*/
+
+const {_id, ...vignette} = v ;
+vignette.vue_id =_id ;
 
 return {
   vignette,
-  [vignette.vue_id]:{
+  [_id]:{
     source,
     metas,
     ikono

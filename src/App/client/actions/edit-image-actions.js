@@ -6,31 +6,21 @@ import {
 } from 'App/client/constants/actionTypes'
 
 import {UploadFS} from 'meteor/jalik:ufs';
-
-//import {imageClipper} from 'image-clipper';
-
 import {processImage} from 'meteor/ccorcos:clientside-image-manipulation'
 
 import {Ikonos} from 'App/collections/ikonos'
 import {IkonosStore} from 'App/collections/ikonos'
 
-//import {Previews} from 'App/collections/ikonos'
-//import {PreviewsStore} from 'App/collections/ikonos'
-
 export function uploadFile(dispatch, cardVue, transform) {
-//termes à changer :
-// vignette -> cardVue
-// vignetteIMG -> vignette
-
-  /*
-  - nettoyer les fonctions ;
-  - etablir les relations entre les deux images ;
-  -creer store preview
-  - afficher l'image
-  */
+  //termes à changer :
+  // vignette -> cardVue
+  // vignetteIMG -> vignette
 
   // _id = _id de la vue editée
   const {vue_id} = cardVue ;
+  
+console.log('uploadFile : vue_id :', vue_id);
+
   let img_ID ;
   let preview = new Image();
   let vignetteIMG = new Image();
@@ -109,46 +99,13 @@ export function uploadFile(dispatch, cardVue, transform) {
         },
         onProgress: (file, progress) => {
           //  comment faire passer cette valeur à state ?
+          // sans redux, inutile ici
           //  console.log(file._id +' : ' +file.name + ' ' + (progress*100) + '% uploaded');
         }
     });
 
     upSource.start();
 
-
   }) ;
 
 }
-
-
-
-
-////////// HELPERS
-
-// https://github.com/ebidel/filer.js/blob/master/src/filer.js#L137
-/*
-function dataURLToBlob (dataURL) {
-    var BASE64_MARKER = ';base64,';
-    if (dataURL.indexOf(BASE64_MARKER) == -1) {
-      var parts = dataURL.split(',');
-      var contentType = parts[0].split(':')[1];
-      var raw = decodeURIComponent(parts[1]);
-
-      return new Blob([raw], {type: contentType});
-    }
-
-    var parts = dataURL.split(BASE64_MARKER);
-    var contentType = parts[0].split(':')[1];
-    var raw = window.atob(parts[1]);
-    var rawLength = raw.length;
-
-    var uInt8Array = new Uint8Array(rawLength);
-
-    for (var i = 0; i < rawLength; ++i) {
-      uInt8Array[i] = raw.charCodeAt(i);
-    }
-
-    return new Blob([uInt8Array], {type: contentType});
-  }
-
-*/

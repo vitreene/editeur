@@ -25,7 +25,7 @@ ici composer la vue avec :
 */
 class EditSequence extends Component {
   render() {
-    console.log('EditSequence this.props', this.props);
+    // console.log('EditSequence this.props', this.props);
       return (
         <div>
         <EditSequenceTop editMode= {this.props.editMode}/>

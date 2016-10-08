@@ -43,6 +43,7 @@ class EditVueContainer extends Component {
     const {getVue, vue_id, vue, dispatch } = this.props ;
     if(!vue)
       getVue(dispatch, vue_id);
+      // il faut aussi sa vignette
   }
 
   upload(){
@@ -65,7 +66,7 @@ class EditVueContainer extends Component {
   }
 
   onSaisie(e){
-    
+
   //  e.preventDefault() ;
     const {saisie, vue_id ,dispatch} = this.props ;
     const {name, type} = e.target ;
@@ -92,6 +93,8 @@ class EditVueContainer extends Component {
     // formulaire vide = annuler.
     // utiliser une valeur "pristine"
 
+    // en cas de reload de la page, vignette est vide et provoque une erreur
+
     const {dispatch, vue_id, vue, saveVue, vignette, params:{sequence_id} } = this.props ;
 
     const path = '/sequence/'+sequence_id ;
@@ -113,7 +116,7 @@ class EditVueContainer extends Component {
       params:{sequence_id}
     } = this.props ;
 
-    const zone='ecran01' ;
+    const zone='defaut' ; // 'ecran01' ;
 
       return (
         <div>

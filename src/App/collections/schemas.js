@@ -9,7 +9,7 @@ export let SequenceSchema = new SimpleSchema({
   skin:{type:String},
   zone:{type:String},
 });
-
+/*
 export let  CardSchema = new SimpleSchema({
   vue_id:{type:String}, // mongoId
   ordre: {type:Number},
@@ -22,16 +22,13 @@ export let  CardSchema = new SimpleSchema({
   vignette: {type:String}, // idem ikono
   couleur:{ type:String, optional: true },
 })
-
+*/
 export let CardVueSchema = new SimpleSchema({
   _id:{type:String}, // mongoId
-  liste:{type:[CardSchema]}
-});
-
-export let VueSchema = new SimpleSchema({
-  _id:{type:String}, // mongoId
-/////
-/*
+  liste_id:{type:String}, // mongoId
+  ordre: {type:Number},
+  duree: {type:String}, // sera un nombre ou une valeur relative
+  visible : {type:Boolean},
   titre: {
     type: String,
     min:3,
@@ -39,12 +36,16 @@ export let VueSchema = new SimpleSchema({
   },
   vignette: {type:String}, // idem ikono
   couleur:{ type:String, optional: true },
-  */
-/////
-  sequence_id: {type:String},
+  //liste:{type:[CardSchema]}
+});
+
+export let VueSchema = new SimpleSchema({
+  _id:{type:String}, // mongoId
+  //sequence_id: {type:String} -> vue ne dépend pas d'une séquence
+  //ikono_id: {type:String}, -> ikono est dans source
+  /////
   source_id: {type:String},
   metas_id: {type:String},
-  //ikono_id: {type:String}, -> ikono est dans source
   modele: {type:String},
   skin: {type:String, optional: true },
 });

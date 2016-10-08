@@ -52,29 +52,27 @@ function saisie(state,{vue_id, name, value}) {
 
   // si le chemein contient un tableau, identifié par "$"
   const hasArray = fields.findIndex( x => x.charAt(0)==='$') ;
-  if ( hasArray ) {
 
+  if ( -1 < hasArray ) {
     const arrField = fields.splice(hasArray, 1,) ; // $[zone:ecran01]
     const res = /(\w+):(\w+)/.exec(arrField) ; // extraire les valeurs
     const cle = res[1] ; // zone
     const val = res[2] ; // ecran01
-
     // trouver l'index du tableau correspondant à zone:'ecran01'
     const index = state[vue_id].metas.ikono.findIndex(
       (el, i) => (el[cle] === val) );
 
     // chaine servant à mettre à jour la valeur saisie
     updater = `{"${index}":{ "$merge":{ "${key}": ${value}} } }` ;
+
   } else
     updater = `{"${key}": { "$set": ${value}}}` ;
-
 
   /*
     update n'accepte qu'un objet en second parametre.
     Pour transformer le resultat de path en objet, il doit se conformer strictment à la syntaxe JSON
   */
-  const path = fields.reduceRight(
-    (prec, current) => {
+  const path = fields.reduceRight( (prec, current) => {
       return `{"${current}":${prec}}` ;
       },
       updater );
@@ -84,9 +82,9 @@ function saisie(state,{vue_id, name, value}) {
 
 function importIMG(state,{vue_id, img_id, preview }) {
   /*
-  vue_id, // id de la vue,
-  img_ID, // ajouter à source
-  preview // à part, variable locale
+    vue_id, // id de la vue,
+    img_ID, // ajouter à source
+    preview // à part, variable locale
   */
 
   let vue = state[vue_id] ;
@@ -98,7 +96,7 @@ function importIMG(state,{vue_id, img_id, preview }) {
 
 function updateMetasIkono(state, vue_id, transform) {
   // mettre a jour metas.ikono avec transform
-  /*
+  /* transform :
     zone:null
     placement:null
     pristine:null
@@ -110,18 +108,10 @@ function updateMetasIkono(state, vue_id, transform) {
     pivY:null
   */
 // chercher l'index correspondant à zone ;
-const found = state[vue_id].metas.ikono.map((x)=>x.zone ).indexOf( transform.zone );
+const found = state[vue_id].metas.ikono
+  .map((x)=>x.zone )
+  .indexOf( transform.zone ) ;
 // mettre à jour
-/*
-console.log('update ikono', found, {[vue_id] : {
-  metas : {
-    ikono : {
-      [found] : {transform }
-    }
-  }
-}}
-);
-*/
 if (-1 < found )
   return update( state, {
     [vue_id] : {
@@ -141,7 +131,5 @@ else
       }
     }
   });
-
-
 
 }

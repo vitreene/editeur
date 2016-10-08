@@ -16,39 +16,11 @@ export function saisie(dispatch, vue_id, name, value) {
 }
 
 export function saveVue(dispatch, sequence_id, vue, cardVue, callback){
-
+// il y a un conflit de nom avec vignette qui désigne :
+// - le thumbnail de la liste des vues,
+// - les vues abrégées que je renomme ici et coté serveur "cardVues"
   console.log('saveVue',sequence_id, vue, cardVue);
-/*
-saveVue
-_id : gfM2cTvZn4joCs7No
-vue :  {
-  source: Object,
-  metas: Object,
-  ikono: Object
-}
-------> Vue{
-    "sequence_id" : "liste",
-    "source_id" : "01",
-    "metas_id" : "met01",
-    "modele" : "affiche-produit", <------  choix utilisateur
-    "skin" : "default" <------  choix utilisateur
-}
 
-cardvue = cardVue : {
-  _id: "gfM2cTvZn4joCs7No"
-  couleur  : null,
-  ordre  :  4,
-  titre  :   null,
-  vignette  :    "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQAB...2cjbRRRQB/9k=",
-  visible: null
-}
-*/
-  console.log('saveVue : callback -> ',callback);
-/*
-saveVue: callback - > callback() {
-  return _this2.context.router.push(path);
-}
-*/
   vue.metas.date = Date.now() ;
 
   /*
@@ -60,13 +32,15 @@ saveVue: callback - > callback() {
     'sans titre' ;
 
   const report = {
+    // vue_id : devient _id coté serveur
+    //vignette: "#" pour le serveur, l'url pour le client
+    // ordre :
+    //"liste_id" : "ma-liste",
+
     titre,
-    //vignette: "images-2iADQeK.jpg",
-    // ref de l'image
     visible : true,
     couleur : 'blue', // <------  choix utilisateur
-    //modele : 'produit',
-    //skin: '',
+    duree: '2' //duree : moyenne
   };
 
   /*
