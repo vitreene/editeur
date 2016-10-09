@@ -17,9 +17,23 @@ function findListeVue(sequence_id) {
   return liste ;
 }
 */
+
+function updateVisibles(_id) {
+  // sortie : vues, tableau contenant la liste ordonnée des vues visibles avec leur duree.
+  console.log('updateVisibles id', _id);
+
+  const {liste_id} = CardVues.findOne(_id) ;
+  const vues = CardVues.find(
+    {liste_id:liste_id, visible:true},
+    {fields: {ordre:1, duree:1} }
+  ).fetch();
+  CardVues.update( liste_id, {$set:{vues}} ) ;
+}
+
 function findListeVue(sequence_id) {
   const {liste_id} = Sequences.findOne({_id:sequence_id} );
-  const liste = CardVues.find({liste_id:liste_id} ).fetch() ;
+  //const liste = CardVues.find({liste_id:liste_id, vues:{$exists:false}} ).fetch() ;
+  const liste = CardVues.find({liste_id:liste_id}).fetch() ;
 
   //console.log('LISTE-> ', liste_id, liste );
 
@@ -70,11 +84,12 @@ Meteor.methods({
     check(listeVue, [String]);
     //  check(sequence_id, String);
     //const {liste_id} = Sequences.findOne({_id:sequence_id});
-
     listeVue.map( (_id, index) => {
       CardVues.update(_id, {$set:{ordre:index}} ) ;
       // CardVues.update({liste_id:liste_id, _id:_id}, {$set:{ordre:index}} )
     }) ;
+
+    updateVisibles(listeVue[0]) ;
 
     /*
     const test = CardVues.find({liste_id:liste_id}, {fields:{ordre:1}}).fetch() ;
@@ -94,6 +109,8 @@ Meteor.methods({
 
     const {visible} = CardVues.findOne(_id ) ;
     CardVues.update(_id , {$set:{visible:!visible}}) ;
+
+    updateVisibles(_id) ;
 /*
     const {liste} = CardVues.findOne(
       { _id:liste_id, 'liste.vue_id':_id },
@@ -134,7 +151,7 @@ Meteor.methods({
 
     check(vue, CardVueSchema) ;
     CardVues.upsert(vue_id, vue) ;
-
+    updateVisibles(vue_id) ;
     /*
     const {liste_id} = Sequences.findOne({_id:sequence_id}, {fields:{liste_id:1}} );
 

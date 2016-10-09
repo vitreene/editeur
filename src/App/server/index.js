@@ -58,8 +58,14 @@ Meteor.publish('ex-projection', function() {
 });
 
 Meteor.publish('projection', function(liste_id) {
+/*
+  return CardVues.find(
+    {liste_id:liste_id, visible:true},
+    {fields: {duree:1,ordre:1} }
+  ) ;
+  */
+  return CardVues.find( liste_id ) ;
 
-  return CardVues.find({liste_id:liste_id} ) ;
 });
 
 /*

@@ -47,6 +47,8 @@ export function addVue(dispatch, sequence_id, ordre, history) {
   const vue = newVue(sequence_id, ordre) ;
   const {vignette, vignette:{vue_id}, ...vueEdit} = vue ;
 
+// la vignette doit n'etre créée qu'à l'enregistrement de la vue
+// à deplacer et ajouter à saveVue
   dispatch({
     type : ADD_VUE,
     vignette
