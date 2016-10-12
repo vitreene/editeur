@@ -53,8 +53,10 @@ if (Vues.find({}).count()===0) {
 console.log('PUBLISH');
 //console.log('__dirname', __dirname);
 //console.log('process.env.PWD ', process.env.PWD );
-Meteor.publish('ex-projection', function() {
-  return Projections.find({_id:'test'});
+
+Meteor.publish('diyapos', function(_id) {
+  //return Diyapos.find(userId) ;
+  return Diyapos.find() ;
 });
 
 Meteor.publish('projection', function(liste_id) {
@@ -67,9 +69,3 @@ Meteor.publish('projection', function(liste_id) {
   return CardVues.find( liste_id ) ;
 
 });
-
-/*
-Meteor.publish('vues', function(_id) {
-  return Vues.find({sequence_id:_id} );
-});
-*/

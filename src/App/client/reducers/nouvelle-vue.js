@@ -1,7 +1,7 @@
 import * as e from 'App/client/reducers/vue-empty'
 
 
-export default function newVue(sequence_id, length){
+export default function newVue(sequence_id, ordre){
 
 // ce n'est pas ici qu'il faut attribuer un id à ikono,mais lors de l'upload.
 
@@ -14,7 +14,7 @@ export default function newVue(sequence_id, length){
   }) ;
   // remplacer par emptyCardvue
   const v = e.emptyCards({
-    ordre: length+1,
+    ordre, // +1, compte tenu du comptage à partir de zero
     vignette: '#'
   });
 

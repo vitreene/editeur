@@ -71,12 +71,12 @@ export function saveVue(dispatch, sequence_id, vue, cardVue, callback){
         });
 
         Meteor.call('addToSequence',
-         sequence_id,
-        Object.assign({},
-          cardVue,
-          report,
-          // ne pas passer la vignette vers le serveur
-          {vignette: '#'}
+          sequence_id,
+          Object.assign({},
+            cardVue,
+            report,
+            // ne pas passer la vignette vers le serveur
+            {vignette: '#'}
         ),
          vue.source.ikono_id,
 
